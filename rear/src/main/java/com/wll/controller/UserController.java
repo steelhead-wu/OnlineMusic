@@ -2,7 +2,6 @@ package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.wll.pojo.User;
 import com.wll.service.impl.UserServiceImpl;
 import com.wll.utils.R;
@@ -67,7 +66,7 @@ public class UserController {
     @PostMapping("/registry")
     public R register(@RequestBody User registerUser) {
         String account = userService.register(registerUser);
-        return account != null ? R.success("success", account) : R.fatal("内部错误");
+        return account != null ? R.success("注册成功！快去登录吧~~", account) : R.fatal("内部错误");
     }
 
 
@@ -83,7 +82,7 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User loginUser) {
         User user = userService.login(loginUser);
-        return Objects.isNull(user) ? R.error("用户名或密码错误！") : R.success(user);
+        return Objects.isNull(user) ? R.error("用户名或密码错误！") : R.success("登录成功",user);
     }
 
 

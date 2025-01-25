@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import Login from "@/view/Login.vue";
-import Header from "@/layouts/BasicHeader.vue";
-import {addUser, getAllUser, login, register, updateUserByAccount, updateUserById} from "@/api/user/UserApi";
+
 import BasicLayout from "@/layouts/BasicLayout.vue";
-import {searchSong} from "@/api/song/SongApi";
+import {ref} from "vue";
 
 
 const user = {
@@ -15,11 +13,11 @@ const user = {
 }
 
 
-const song:Song = {
-  singerId:'1',
-  title:'光辉岁月',
-  id:'1',
-  album:'光辉岁月十五年'
+const song: Song = {
+  singerId: '1',
+  title: '光辉岁月',
+  id: '1',
+  album: '光辉岁月十五年'
 
 }
 
@@ -35,11 +33,12 @@ const song:Song = {
 
 // updateUserByAccount(user)
 // searchSong('你好');
-
+const k = ref(false);
 </script>
 
 <template>
-  <BasicLayout></BasicLayout>
+  <BasicLayout v-if="k"></BasicLayout>
+  <router-view v-else></router-view>
 </template>
 
 

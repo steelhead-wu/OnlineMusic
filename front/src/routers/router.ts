@@ -3,17 +3,21 @@ import {createMemoryHistory, createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../view/HomeView.vue'
 import AboutView from '../view/AboutView.vue'
 import BasicLayout from '../layouts/BasicLayout.vue'
-import Login from '../view/Login.vue'
+import Login from '../view/LoginView.vue'
 
 const routes = [
     {
         path: '/',
-        component: HomeView
+        component: AboutView,
+        alias: '/home',
     },
     {
-        path: '/login',
-        component: Login
+        path: '/sign-in',
+        component: Login,
+        alias: '/sign-up',
+
     },
+
 ]
 
 const router = createRouter({
