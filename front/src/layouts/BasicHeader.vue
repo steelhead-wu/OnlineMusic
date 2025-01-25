@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import {ref, watch} from 'vue'
+import {computed, ref, watch} from 'vue'
 import {Search, House} from '@element-plus/icons-vue'
 import {searchSong} from "@/api/song/SongApi";
+import {useRoute, useRouter} from "vue-router";
 
 
 const keyWord = ref<string>();
 const select = ref<string>('1');
+
+const router = useRouter()
+const route = useRoute()
 
 
 const search = () => {
@@ -16,7 +20,7 @@ const search = () => {
 }
 
 const login = () => {
-
+  router.push('/login');
 }
 
 </script>
@@ -30,11 +34,6 @@ const login = () => {
       <el-col>
         <img src="../assets/img/logo.png" alt="logo" style="height: 76px;left: 40px;position: fixed">
       </el-col>
-
-
-
-
-
 
 
       <!--      搜索框-->
@@ -60,15 +59,16 @@ const login = () => {
       <!--      主页-->
       <el-col>
         <a href="/" title="去主页">
-          <el-button :icon="House" circle style="position: fixed;left: 430px;top: 15px" size="large" tag="a"></el-button>
+          <el-button :icon="House" circle style="position: fixed;left: 430px;top: 15px" size="large"
+                     tag="a"></el-button>
         </a>
       </el-col>
 
       <!--      登录-->
       <el-col :span="3" class="sign-in">
-        <a href="/login" style="color: white ;background-color: black">
-          <el-button type="primary" color="black" round>登录</el-button>
-        </a>
+        <!--        <a href="/login" style="color: white ;background-color: black">-->
+        <el-button type="primary" color="black" round @click="login">登录</el-button>
+        <!--        </a>-->
       </el-col>
 
       <el-col :span="3" class="sign-up">
