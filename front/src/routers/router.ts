@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../view/HomeView.vue'
 import Login from '../view/LoginView.vue'
 import {Behavior} from "@/enum/Behavior";
+import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
 
 const routes = [
     {
@@ -35,19 +36,20 @@ const router = createRouter({
 });
 
 
-// const globalStatusStore = useGlobalStatusStore();
-
-// router.beforeEach((to, from, next) => {
-//     console.log(to);
-//     console.log(from);
-//     console.log(next);
-//     if (to.path === Behavior.SIGN_IN) {
-//
-//     } else if (to.path === Behavior.SIGN_UP) {
-//
-//     }
-//     return true;
-// })
+router.beforeEach((to, from, next) => {
+    console.log(to);
+    console.log(from);
+    console.log(next);
+    const globalStatusStore = useGlobalStatusStore();
+    if (to.path === Behavior.SIGN_IN) {
+        globalStatusStore.isLogin = true;
+        globalStatusStore.isLoginOrSignup = true;
+    } else if (to.path === Behavior.SIGN_UP) {
+        globalStatusStore.isLogin = false;
+        globalStatusStore.isLoginOrSignup = true;
+    }
+    return true;
+})
 
 
 export default router
