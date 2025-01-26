@@ -1,24 +1,26 @@
-import {createMemoryHistory, createRouter, createWebHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 
 import HomeView from '../view/HomeView.vue'
-import AboutView from '../view/AboutView.vue'
-import BasicLayout from '../layouts/BasicLayout.vue'
 import Login from '../view/LoginView.vue'
+import {Behavior} from "@/enum/Behavior";
 
 const routes = [
     {
-        path: '/',
-        component: AboutView,
+        path: Behavior.HOME,
+        // path: '/',
+        component: HomeView,
         alias: '/home',
     },
     {
-        path: '/sign-in',
+        path: Behavior.SIGN_IN,
+        // path: '/sign-in',
         component: Login,
-        alias: '/sign-up',
-
+        alias: Behavior.SIGN_UP,
+        // alias: '/sign-up',
     },
-
 ]
+
+// const routes = [{ path: '/home', redirect: '/' }]
 
 const router = createRouter({
     /*
@@ -30,6 +32,22 @@ const router = createRouter({
    */
     history: createWebHistory(),
     routes,
-})
+});
+
+
+// const globalStatusStore = useGlobalStatusStore();
+
+// router.beforeEach((to, from, next) => {
+//     console.log(to);
+//     console.log(from);
+//     console.log(next);
+//     if (to.path === Behavior.SIGN_IN) {
+//
+//     } else if (to.path === Behavior.SIGN_UP) {
+//
+//     }
+//     return true;
+// })
+
 
 export default router

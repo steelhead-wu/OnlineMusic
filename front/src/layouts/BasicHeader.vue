@@ -3,6 +3,8 @@ import {ref} from 'vue'
 import {Search, House} from '@element-plus/icons-vue'
 import {searchSong} from "@/api/song/SongApi";
 import {useRoute, useRouter} from "vue-router";
+import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
+import {Behavior} from "@/enum/Behavior";
 
 
 const keyWord = ref<string>();
@@ -10,7 +12,7 @@ const select = ref<string>('1');
 
 const router = useRouter()
 const route = useRoute()
-
+const globalStatusStore = useGlobalStatusStore();
 
 const search = () => {
   if (keyWord.value) {
@@ -20,7 +22,20 @@ const search = () => {
 }
 
 const login = () => {
-  router.push('/login');
+  console.log("进入login")
+  globalStatusStore.isLoginOrSignup = true;
+  globalStatusStore.isLogin = true;
+  // router.push('/sign-in');
+  router.push(Behavior.SIGN_IN);
+}
+
+const registry = () => {
+  console.log("进入registry")
+  globalStatusStore.isLoginOrSignup = true;
+  globalStatusStore.isLogin = false;
+  // router.push('/sign-up');
+  router.push(Behavior.SIGN_UP);
+
 }
 
 </script>
@@ -66,15 +81,16 @@ const login = () => {
 
       <!--      登录-->
       <el-col :span="3" class="sign-in">
-        <!--        <a href="/login" style="color: white ;background-color: black">-->
+
         <el-button type="primary" color="black" round @click="login">登录</el-button>
-        <!--        </a>-->
+
       </el-col>
 
       <el-col :span="3" class="sign-up">
-        <a href="/registry" style="color: black">
-          <el-button type="primary" color="#ffffff" round>注册</el-button>
-        </a>
+        <!--                <a href="/sign-up" style="color: black">-->
+        <!--                <a :href="Behavior.SIGN_UP" style="color: black">-->
+        <el-button type="primary" color="#ffffff" round @click="registry">注册</el-button>
+        <!--        </a>-->
       </el-col>
 
     </el-row>
@@ -100,7 +116,8 @@ const login = () => {
   position: fixed;
   right: 95px;
   top: 20px;
-  background: #1f1f1f;
+  /*background: #1f1f1f;*/
+  background: black;
 }
 
 .sign-up {

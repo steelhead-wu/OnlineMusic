@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import {reactive, ref, watch} from 'vue'
+import {computed, reactive, ref, watch} from 'vue'
 import type {ComponentSize, FormInstance, FormRules} from 'element-plus'
 import {login, register} from "@/api/user/UserApi";
 import {ElMessage} from "element-plus";
+import {House} from '@element-plus/icons-vue'
+import router from "@/routers/router";
+import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
+import {Behavior} from "@/enum/Behavior";
 
 interface NewUser extends User {
   rePassword: string
@@ -11,7 +15,7 @@ interface NewUser extends User {
 const formSize = ref<ComponentSize>('default');
 const form = ref<FormInstance>()
 
-const unable = ref(false);
+const globalStatusStore = useGlobalStatusStore();
 
 const newUser = reactive<NewUser>({
   account: '',
@@ -21,15 +25,8 @@ const newUser = reactive<NewUser>({
 });
 
 const isLogin = ref(true); // 登入=1 注册=0
+// const isLogin = globalStatusStore.isLogin // 登入=1 注册=0
 
-const validateUser = () => {
-  if (isLogin) {
-    console.log(newUser);
-    unable.value = newUser.account === '' || newUser.password === '';
-  } else {
-    unable.value = newUser.nickname === '' || newUser.password === '' || newUser.rePassword === '' || newUser.password !== newUser.rePassword
-  }
-}
 
 const toggle = () => {
   isLogin.value = !isLogin.value;
@@ -43,10 +40,7 @@ const min_len_nk = 1, max_len_nk = 10;
 const min_len_acc = 3, max_len_acc = 11;
 
 
-const bot = ref('500px');
 watch(isLogin, () => {
-  // console.log(bot.value);
-  // bot.value = isLogin.value ? '500px' : '550px';
   ad_word_h3.bottom = isLogin.value ? '500px' : '550px';
   ad_word_h1.bottom = isLogin.value ? '550px' : '600px';
 });
@@ -155,7 +149,9 @@ const singIn = () => {
         ElMessage({
           type: 'success',
           message: `提示: ${value.data.message}`,
-        })
+        });
+        // router.push(Behavior.HOME);
+        router.push(Behavior.HOME);
       }, reason => {
         ElMessage({
           type: 'info',
@@ -237,9 +233,14 @@ const signUp = () => {
             clearable
         />
       </el-form-item>
+
       <el-form-item>
-        <el-button type="primary" @click="singIn" :disabled="unable">登录</el-button>
+        <el-button type="primary" @click="singIn">登录</el-button>
         <el-button @click="toggle">返回注册</el-button>
+
+        <el-button>
+          <a href="/" title="去主页" class="goToHomePage">去主页</a>
+        </el-button>
       </el-form-item>
     </el-form>
 
@@ -290,7 +291,12 @@ const signUp = () => {
       <el-form-item>
         <el-button type="primary" @click="signUp">注册</el-button>
         <el-button @click="toggle">返回登录</el-button>
+        <el-button>
+          <a href="/" title="去主页" class="goToHomePage">去主页</a>
+        </el-button>
       </el-form-item>
+
+
     </el-form>
   </div>
 </template>
