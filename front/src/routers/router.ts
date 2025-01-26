@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
         globalStatusStore.isLogin = false;
         globalStatusStore.isLoginOrSignup = true;
     }
-    return true;
+    return next();
 })
 
 
