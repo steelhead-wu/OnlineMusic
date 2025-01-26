@@ -10,7 +10,7 @@ const routes = [
         path: Behavior.HOME,
         // path: '/',
         component: HomeView,
-        alias: '/home',
+        alias: Behavior.HOMEPAGE,
     },
     {
         path: Behavior.SIGN_IN,

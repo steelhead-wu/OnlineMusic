@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {computed, reactive, ref, watch} from 'vue'
+import {computed, reactive, ref, watch, watchEffect} from 'vue'
 import type {ComponentSize, FormInstance, FormRules} from 'element-plus'
 import {login, register} from "@/api/user/UserApi";
 import {ElMessage} from "element-plus";
@@ -29,7 +29,8 @@ const isLogin = ref(true); // 登入=1 注册=0
 
 
 const toggle = () => {
-  isLogin.value = !isLogin.value;
+  // isLogin.value = !isLogin.value;
+  globalStatusStore.isLogin = !globalStatusStore.isLogin;
   newUser.password = '';
 }
 // 密码长度
@@ -40,19 +41,22 @@ const min_len_nk = 1, max_len_nk = 10;
 const min_len_acc = 3, max_len_acc = 11;
 
 
-watch(isLogin, () => {
-  ad_word_h3.bottom = isLogin.value ? '500px' : '550px';
-  ad_word_h1.bottom = isLogin.value ? '550px' : '600px';
+watch(() => globalStatusStore.isLogin, () => {
+  console.log("s")
+// ad_word_h3.bottom = isLogin.value ? '500px' : '550px';
+// ad_word_h1.bottom = isLogin.value ? '550px' : '600px';
+  ad_word_h3.bottom = globalStatusStore.isLogin ? '500px' : '550px';
+  ad_word_h1.bottom = globalStatusStore.isLogin ? '550px' : '600px';
 });
 
 const ad_word_h3 = reactive({
   position: 'fixed',
-  bottom: undefined ?? '500px',
+  bottom: globalStatusStore.isLogin ? '500px' : '550px',
 });
 
 const ad_word_h1 = reactive({
   position: 'fixed',
-  bottom: undefined ?? '550px',
+  bottom: globalStatusStore.isLogin ? '550px' : '600px',
 })
 
 
@@ -196,7 +200,7 @@ const signUp = () => {
   <div id="userForm">
     <div class="Ad-word">
       <h1 :style="ad_word_h1">
-        欢迎{{ isLogin ? '登录' : '注册' }}XX音乐
+        欢迎{{ globalStatusStore.isLogin ? '登录' : '注册' }}XX音乐
       </h1>
       <h3 :style="/*{position:'fixed',bottom:bot}*/ad_word_h3">烦恼时，放松自己。</h3>
 
@@ -210,7 +214,7 @@ const signUp = () => {
         class="login"
         :size="formSize"
         status-icon
-        v-if="isLogin"
+        v-if="globalStatusStore.isLogin"
     >
 
       <el-form-item prop="account">
@@ -254,7 +258,7 @@ const signUp = () => {
         class="registry"
         :size="formSize"
         status-icon
-        v-if="!isLogin"
+        v-if="!globalStatusStore.isLogin"
     >
       <el-form-item prop="nickname">
         <el-input
