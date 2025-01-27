@@ -27,11 +27,14 @@ const search = () => {
 }
 
 const login = () => {
-  console.log("进入login")
+  console.log("进入login");
   globalStatusStore.isLoginOrSignup = true;
   globalStatusStore.isLogin = true;
   // router.push('/sign-in');
+  console.log(JSON.stringify(globalStatusStore));
+  console.log(JSON.stringify(userStore));
   router.push(Behavior.SIGN_IN);
+  console.log("退出login");
 }
 
 const registry = () => {
@@ -45,8 +48,13 @@ const registry = () => {
 
 
 const doDropDown = (dropdown) => {
+  console.log("进入doDropDown");
+  console.log(JSON.stringify(userStore));
+  console.log(JSON.stringify(globalStatusStore));
   if (dropdown.name === UserDropDown.SIGN_OUT) {
-
+    userStore.isOnline = false;
+    router.push(Behavior.HOME);
+    return;
   } else if (dropdown.name === UserDropDown.PERSONAL) {
 
   } else if (dropdown.name === UserDropDown.SETTINGS) {
@@ -99,7 +107,7 @@ const doDropDown = (dropdown) => {
       </el-col>
 
 
-      <div v-if="userStore.isLogin">
+      <div v-if="!userStore.isOnline">
         <!--      登录-->
         <el-col :span="3" class="sign-in">
 
@@ -114,7 +122,7 @@ const doDropDown = (dropdown) => {
           <!--        </a>-->
         </el-col>
       </div>
-
+<!--头像-->
       <el-col v-else class="avatar">
         <el-dropdown size="large" trigger="hover">
           <el-avatar alt="default avatar" :size="AvatarSize.LARGE"

@@ -7,6 +7,7 @@ import {House} from '@element-plus/icons-vue'
 import router from "@/routers/router";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
 import {Behavior} from "@/enum/Behavior";
+import {useUserStore} from "@/store/UserStore";
 
 interface NewUser extends User {
   rePassword: string
@@ -16,6 +17,7 @@ const formSize = ref<ComponentSize>('default');
 const form = ref<FormInstance>()
 
 const globalStatusStore = useGlobalStatusStore();
+const userStore = useUserStore();
 
 const newUser = reactive<NewUser>({
   account: '',
@@ -149,13 +151,23 @@ const rules = reactive<FormRules<NewUser>>({
 const singIn = () => {
   form.value.validate(pass => {
     if (pass) {
+      console.log("进入signIn");
       login(newUser).then(value => {
         ElMessage({
           type: 'success',
           message: `提示: ${value.data.message}`,
         });
-        // router.push(Behavior.HOME);
+
+        userStore.setLoginUser(value.data.data);
+        console.log(userStore.getLoginUser);
+        userStore.isOnline = true;
+        globalStatusStore.isLoginOrSignup = false;
+        console.log("globalStatusStore:" + JSON.stringify(globalStatusStore));
+        console.log("userStore:" + JSON.stringify(userStore));
+
         router.push(Behavior.HOME);
+        console.log("退出signIn");
+
       }, reason => {
         ElMessage({
           type: 'info',

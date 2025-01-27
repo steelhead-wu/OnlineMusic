@@ -1,24 +1,33 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
 import HomeView from '../view/HomeView.vue'
-import Login from '../view/LoginView.vue'
+import LoginView from '../view/LoginView.vue'
+import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
+
 
 const routes = [
     {
         path: Behavior.HOME,
-        // path: '/',
-        component: HomeView,
+        component: BasicLayout,
         alias: Behavior.HOMEPAGE,
+        children: [
+            {
+                path: Behavior.HOME,
+                component: HomeView,
+                alias: Behavior.HOMEPAGE,
+            },
+
+
+        ]
     },
     {
         path: Behavior.SIGN_IN,
-        // path: '/sign-in',
-        component: Login,
+        component: LoginView,
         alias: Behavior.SIGN_UP,
-        // alias: '/sign-up',
     },
+
 ]
 
 // const routes = [{ path: '/home', redirect: '/' }]

@@ -13,8 +13,8 @@ function() 就是 actions
 
  */
 export const useGlobalStatusStore = defineStore('globalStatusStore', () => {
-    const isLoginOrSignup = ref<boolean>(false); // 用于消除header
-    const isLogin = ref<boolean>(true); // 判断用户
+    const isLoginOrSignup = ref<boolean>(false); // 用于消除header,false出现header，否则不出现
+    const isLogin = ref<boolean>(false); // true用户要点击登录，0用户点击了注册
 
 
     return {isLoginOrSignup,isLogin};

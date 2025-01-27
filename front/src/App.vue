@@ -37,16 +37,20 @@ const song: Song = {
 // updateUserByAccount(user)
 // searchSong('你好');
 
-const globalStatusStore = useGlobalStatusStore();
-
-
+// const globalStatusStore = useGlobalStatusStore();
+// const userStore = useUserStore();
+// console.log("========app.vue=========");
+// console.log(JSON.stringify(globalStatusStore));
+// console.log(JSON.stringify(userStore));
+// console.log("========app.vue-out=========");
 </script>
 
 <template>
   <!--  用户点击登录或注册的话，展示登录或注册界面-->
-<!--  不是登录也不是注册会显示这个页面-->
-  <BasicLayout v-if="!globalStatusStore.isLoginOrSignup"></BasicLayout>
-  <router-view v-else></router-view>
+  <!--  不是登录也不是注册会显示这个页面-->
+  <!--  <BasicLayout v-if="!globalStatusStore.isLoginOrSignup"></BasicLayout>-->
+  <!--  <router-view v-else></router-view>-->
+  <router-view></router-view>
 </template>
 
 

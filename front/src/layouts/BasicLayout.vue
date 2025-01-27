@@ -7,7 +7,7 @@ import Test from "@/layouts/Test.vue";
 </script>
 
 <template>
-  <div class="basicLayout">
+  <div id="basicLayout">
     <el-container>
 
       <el-header>
