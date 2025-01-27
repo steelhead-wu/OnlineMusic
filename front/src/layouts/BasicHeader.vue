@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 import {Search, House} from '@element-plus/icons-vue'
 import {searchSong} from "@/api/song/SongApi";
 import {useRoute, useRouter} from "vue-router";
@@ -28,10 +28,9 @@ const search = () => {
 
 const login = () => {
   console.log("进入login");
-  globalStatusStore.isLoginOrSignup = true;
-  globalStatusStore.isLogin = true;
-  // router.push('/sign-in');
-  console.log(JSON.stringify(globalStatusStore));
+  // globalStatusStore.isLoginOrSignup = true;
+  // globalStatusStore.isLogin = true;
+  // console.log(JSON.stringify(globalStatusStore));
   console.log(JSON.stringify(userStore));
   router.push(Behavior.SIGN_IN);
   console.log("退出login");
@@ -107,8 +106,8 @@ const doDropDown = (dropdown) => {
       </el-col>
 
 
+      <!--      登录-->
       <div v-if="!userStore.isOnline">
-        <!--      登录-->
         <el-col :span="3" class="sign-in">
 
           <el-button type="primary" color="black" round @click="login">登录</el-button>
@@ -122,7 +121,7 @@ const doDropDown = (dropdown) => {
           <!--        </a>-->
         </el-col>
       </div>
-<!--头像-->
+      <!--头像-->
       <el-col v-else class="avatar">
         <el-dropdown size="large" trigger="hover">
           <el-avatar alt="default avatar" :size="AvatarSize.LARGE"

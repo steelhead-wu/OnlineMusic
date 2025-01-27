@@ -1,10 +1,5 @@
 <script setup lang="ts">
 
-import BasicLayout from "@/layouts/BasicLayout.vue";
-import {ref} from "vue";
-import {useGlobalStatusStore} from "@/store/GlobalStatusStore.js";
-import {storeToRefs} from "pinia";
-import {useUserStore} from "@/store/UserStore";
 
 
 const user = {
@@ -46,10 +41,7 @@ const song: Song = {
 </script>
 
 <template>
-  <!--  用户点击登录或注册的话，展示登录或注册界面-->
-  <!--  不是登录也不是注册会显示这个页面-->
-  <!--  <BasicLayout v-if="!globalStatusStore.isLoginOrSignup"></BasicLayout>-->
-  <!--  <router-view v-else></router-view>-->
+
   <router-view></router-view>
 </template>
 

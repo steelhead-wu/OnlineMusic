@@ -18,8 +18,6 @@ const routes = [
                 component: HomeView,
                 alias: Behavior.HOMEPAGE,
             },
-
-
         ]
     },
     {

@@ -159,10 +159,10 @@ const singIn = () => {
         });
 
         userStore.setLoginUser(value.data.data);
-        console.log(userStore.getLoginUser);
         userStore.isOnline = true;
-        globalStatusStore.isLoginOrSignup = false;
-        console.log("globalStatusStore:" + JSON.stringify(globalStatusStore));
+        console.log(userStore.getLoginUser)
+        // globalStatusStore.isLoginOrSignup = false;
+        // console.log("globalStatusStore:" + JSON.stringify(globalStatusStore));
         console.log("userStore:" + JSON.stringify(userStore));
 
         router.push(Behavior.HOME);
