@@ -37,9 +37,9 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-    console.log(to);
-    console.log(from);
-    console.log(next);
+    // console.log(to);
+    // console.log(from);
+    // console.log(next);
     const globalStatusStore = useGlobalStatusStore();
     if (to.path === Behavior.SIGN_IN) {
         globalStatusStore.isLogin = true;

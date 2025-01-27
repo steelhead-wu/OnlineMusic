@@ -5,6 +5,8 @@ import {searchSong} from "@/api/song/SongApi";
 import {useRoute, useRouter} from "vue-router";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
 import {Behavior} from "@/enum/Behavior";
+import {AvatarSize} from "@/enum/AvatarSize";
+import {useUserStore} from "@/store/UserStore";
 
 
 const keyWord = ref<string>();
@@ -13,6 +15,8 @@ const select = ref<string>('1');
 const router = useRouter()
 const route = useRoute()
 const globalStatusStore = useGlobalStatusStore();
+const userStore = useUserStore();
+const defaultAvatar = ref<string>('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
 
 const search = () => {
   if (keyWord.value) {
@@ -79,18 +83,27 @@ const registry = () => {
         </a>
       </el-col>
 
-      <!--      登录-->
-      <el-col :span="3" class="sign-in">
 
-        <el-button type="primary" color="black" round @click="login">登录</el-button>
+      <div v-if="userStore.isLogin">
+        <!--      登录-->
+        <el-col :span="3" class="sign-in">
 
-      </el-col>
+          <el-button type="primary" color="black" round @click="login">登录</el-button>
 
-      <el-col :span="3" class="sign-up">
-        <!--                <a href="/sign-up" style="color: black">-->
-        <!--                <a :href="Behavior.SIGN_UP" style="color: black">-->
-        <el-button type="primary" color="#ffffff" round @click="registry">注册</el-button>
-        <!--        </a>-->
+        </el-col>
+        <!--注册-->
+        <el-col :span="3" class="sign-up">
+          <!--                <a href="/sign-up" style="color: black">-->
+          <!--                <a :href="Behavior.SIGN_UP" style="color: black">-->
+          <el-button type="primary" color="#ffffff" round @click="registry">注册</el-button>
+          <!--        </a>-->
+        </el-col>
+      </div>
+
+      <el-col v-else class="avatar">
+        <el-button circle>
+          <el-avatar alt="default avatar" :size="AvatarSize.LARGE" :src="userStore.loginUser.avatar"/>
+        </el-button>
       </el-col>
 
     </el-row>
@@ -105,6 +118,11 @@ const registry = () => {
   /*background: ;*/
 }
 
+.avatar {
+  position: fixed;
+  right: 30px;
+  top: 20px;
+}
 
 .input-with-select {
   left: 30%;

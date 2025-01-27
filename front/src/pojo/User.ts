@@ -2,5 +2,6 @@ interface User {
     id?: string,
     account?: string,
     password: string,
-    nickname?: string
+    nickname?: string,
+    avatar?: string
 }

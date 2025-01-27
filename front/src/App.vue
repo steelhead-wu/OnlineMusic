@@ -4,6 +4,7 @@ import BasicLayout from "@/layouts/BasicLayout.vue";
 import {ref} from "vue";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore.js";
 import {storeToRefs} from "pinia";
+import {useUserStore} from "@/store/UserStore";
 
 
 const user = {
