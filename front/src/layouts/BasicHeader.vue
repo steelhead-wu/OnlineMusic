@@ -6,8 +6,9 @@ import {useRoute, useRouter} from "vue-router";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
 import {Behavior} from "@/enum/Behavior";
 import {AvatarSize} from "@/enum/AvatarSize";
+import {dropDownList, UserDropDown} from "@/enum/UserDropDown";
 import {useUserStore} from "@/store/UserStore";
-
+import {ArrowDown} from '@element-plus/icons-vue'
 
 const keyWord = ref<string>();
 const select = ref<string>('1');
@@ -40,6 +41,20 @@ const registry = () => {
   // router.push('/sign-up');
   router.push(Behavior.SIGN_UP);
 
+}
+
+
+const doDropDown = (dropdown) => {
+  if (dropdown.name === UserDropDown.SIGN_OUT) {
+
+  } else if (dropdown.name === UserDropDown.PERSONAL) {
+
+  } else if (dropdown.name === UserDropDown.SETTINGS) {
+
+  } else {
+
+  }
+  router.push(dropdown.path);
 }
 
 </script>
@@ -101,9 +116,19 @@ const registry = () => {
       </div>
 
       <el-col v-else class="avatar">
-        <el-button circle>
-          <el-avatar alt="default avatar" :size="AvatarSize.LARGE" :src="userStore.loginUser.avatar"/>
-        </el-button>
+        <el-dropdown size="large" trigger="hover">
+          <el-avatar alt="default avatar" :size="AvatarSize.LARGE"
+                     :src="userStore.loginUser.avatar"/>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item v-for="(dropdown,idx) in dropDownList" :key="idx" @click="doDropDown(dropdown)">
+                {{ dropdown.name }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+
+
       </el-col>
 
     </el-row>
@@ -120,8 +145,8 @@ const registry = () => {
 
 .avatar {
   position: fixed;
-  right: 30px;
-  top: 20px;
+  right: 15px;
+  top: 10px;
 }
 
 .input-with-select {
