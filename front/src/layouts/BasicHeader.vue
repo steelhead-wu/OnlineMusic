@@ -121,11 +121,12 @@ const doDropDown = (dropdown) => {
           <!--        </a>-->
         </el-col>
       </div>
-      <!--头像-->
+      <!--右上角头像-->
       <el-col v-else class="avatar">
         <el-dropdown size="large" trigger="hover">
           <el-avatar alt="default avatar" :size="AvatarSize.LARGE"
                      :src="userStore.loginUser.avatar"/>
+          <!--                     src="http://localhost/asset/img/avatorImages/1547476912596tou.jpg"/>-->
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item v-for="(dropdown,idx) in dropDownList" :key="idx" @click="doDropDown(dropdown)">
@@ -192,6 +193,7 @@ const doDropDown = (dropdown) => {
 
 #basicHeader {
   /*background-color: #b20f96;*/
+  width: 100%;
   position: fixed;
   top: 0;
   right: 0;

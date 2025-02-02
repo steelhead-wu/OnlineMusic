@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 import HomeView from '../view/HomeView.vue'
 import LoginView from '../view/LoginView.vue'
+import PersonalView from '../view/user/PersonalView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
@@ -14,9 +15,14 @@ const routes = [
         alias: Behavior.HOMEPAGE,
         children: [
             {
+                // 主页
                 path: Behavior.HOME,
                 component: HomeView,
                 alias: Behavior.HOMEPAGE,
+            },
+            {// 用户中心
+                path: Behavior.PERSONAL,
+                component: PersonalView,
             },
         ]
     },
