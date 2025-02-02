@@ -2,6 +2,7 @@
 import {useUserStore} from "@/store/UserStore";
 import {AvatarSize} from "@/enum/AvatarSize";
 import SongList from "@/components/song/SongList.vue";
+import Update from "@/components/user/Update.vue";
 
 const userStore = useUserStore();
 
@@ -10,12 +11,11 @@ const userStore = useUserStore();
 <template>
   <div>
     <div class="avatar-area">
-      <el-avatar class="personal-avatar" alt="default avatar" :size="AvatarSize.LARGE"
-                 :src="userStore.loginUser.avatar"/>
+      <Update/>
       <span class="personal-nickname">
-        <h1 style="font-size: 6rem;white-space: nowrap;">{{
-            userStore.loginUser.nickname === '' ? 'orzzro' : ''
-          }}</h1>
+        <h1 style="font-size: 6rem;white-space: nowrap;">
+          {{ userStore.loginUser.nickname === '' ? 'orzzro' : '' }}
+        </h1>
       </span>
     </div>
 
