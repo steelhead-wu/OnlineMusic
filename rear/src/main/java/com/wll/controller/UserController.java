@@ -20,7 +20,7 @@ import java.util.Objects;
  * @since 2025-01-20
  */
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 @CrossOrigin(value = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
 public class UserController {
     @Resource

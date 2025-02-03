@@ -21,7 +21,7 @@ import java.util.Objects;
  * @since 2025-01-23
  */
 @RestController
-@RequestMapping("/api/song")
+@RequestMapping("/song")
 @CrossOrigin(value = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
 public class SongController {
     @Resource
