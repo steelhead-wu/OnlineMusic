@@ -6,14 +6,25 @@ import {Plus} from '@element-plus/icons-vue'
 import type {UploadProps} from 'element-plus'
 import {AvatarSize} from "@/enum/AvatarSize";
 import {useUserStore} from "@/store/UserStore";
+import {baseURL} from "@/api/request";
+import {updateUserById} from "@/api/user/UserApi";
+
 
 const imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
+const act = ref(baseURL + '/api/files/upload');
+const middle_path = '/asset/img/avatarImages';
 const userStore = useUserStore();
 const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
 ) => {
-  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+  console.log(uploadFile);
+  console.log(response);
+  userStore.getLoginUser.value.avatar = baseURL + middle_path + '/' + response.data + '_' + uploadFile.name;
+  console.log(userStore.getLoginUser.value);
+  updateUserById(userStore.getLoginUser.value).then(value => {
+    console.log(value);
+  })
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
@@ -31,16 +42,18 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 <template>
   <el-upload
       class="avatar-uploader"
-      action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+      name="user-avatar"
+      :action="act"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
       limit="1"
 
+
   >
-<!--        <img v-if="imageUrl" :src="imageUrl" class="avatar"/>-->
-    <el-avatar v-if="userStore.loginUser.avatar" class="avatar" alt="default avatar" :size="AvatarSize.LARGE"
-               :src="userStore.loginUser.avatar" @click="xxx"/>
+    <!--        <img v-if="imageUrl" :src="imageUrl" class="avatar"/>-->
+    <el-avatar v-if="userStore.getLoginUser.value.avatar" class="avatar" alt="default avatar" :size="AvatarSize.LARGE"
+               :src="userStore.getLoginUser.value.avatar"/>
     <el-icon v-else class="avatar-uploader-icon">
       <Plus/>
     </el-icon>
@@ -58,12 +71,14 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
 <style>
 .avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
+  border: 1px var(--el-border-color);
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
+  left: 100px;
+  top: 46px;
 }
 
 .avatar-uploader .el-upload:hover {
