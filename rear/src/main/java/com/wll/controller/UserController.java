@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(value = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", maxAge = 3600)
 public class UserController {
     @Resource
     private UserServiceImpl userService;
