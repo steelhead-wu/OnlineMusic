@@ -15,7 +15,9 @@ spring:
   devtools:
     restart:
       enabled: true # 开启 hot swapping
-      log-condition-evaluation-delta: true  # 记录条件评估的变化
+      log-condition-evaluation-delta: true  #  Whether to log the condition evaluation delta upon restart.
+    #      additional-paths:
+    #        - resources/static/**
     livereload:
       enabled: true # 开启资源重载
 
@@ -23,6 +25,10 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant-path-matcher
+
+  web:
+    resources:
+      static-locations: file:src/main/resources/static # Locations of static resources.Defaults to classpath:[/META-INF/resources/, /resources/, /static/, /public/].
 
 
 

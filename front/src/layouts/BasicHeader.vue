@@ -31,7 +31,6 @@ const login = () => {
   // globalStatusStore.isLoginOrSignup = true;
   // globalStatusStore.isLogin = true;
   // console.log(JSON.stringify(globalStatusStore));
-  console.log(JSON.stringify(userStore));
   router.push(Behavior.SIGN_IN);
   console.log("退出login");
 }
@@ -48,10 +47,12 @@ const registry = () => {
 
 const doDropDown = (dropdown) => {
   console.log("进入doDropDown");
-  console.log(JSON.stringify(userStore));
-  console.log(JSON.stringify(globalStatusStore));
+  // console.log(JSON.stringify(userStore));
+  // console.log(JSON.stringify(globalStatusStore));
+  console.log(userStore.getLoginUser.value);
   if (dropdown.name === UserDropDown.SIGN_OUT) {
-    userStore.isOnline = false;
+    // userStore.isOnline = false;
+    userStore.$reset();
     router.push(Behavior.HOME);
     return;
   } else if (dropdown.name === UserDropDown.PERSONAL) {
@@ -125,7 +126,7 @@ const doDropDown = (dropdown) => {
       <el-col v-else class="avatar">
         <el-dropdown size="large" trigger="hover">
           <el-avatar alt="default avatar" :size="AvatarSize.LARGE"
-                     :src="userStore.loginUser.avatar"/>
+                     :src="userStore.getLoginUser.value.avatar"/>
           <!--                     src="http://localhost/asset/img/avatorImages/1547476912596tou.jpg"/>-->
           <template #dropdown>
             <el-dropdown-menu>

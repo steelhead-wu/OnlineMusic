@@ -1,12 +1,13 @@
 import {defineStore} from "pinia";
 import {reactive, ref, computed} from "vue";
 import {baseURL} from "@/api/request";
+import {login} from "@/api/user/UserApi";
 
 
 export const useUserStore = defineStore('userStore', () => {
         // 是否登录状态
         let isOnline = ref<boolean>(false);
-        let loginUser = reactive<User>({
+        let loginUser = ref<User>({
             id: '',
             account: '',
             password: '',
@@ -17,10 +18,26 @@ export const useUserStore = defineStore('userStore', () => {
         const getLoginUser = computed(() => loginUser);
 
         const setLoginUser = (user: User) => {
-            loginUser = user;
+            loginUser.value = user;
+            // loginUser.id = user.id;
+            // loginUser.account = user.account;
+            // loginUser.password = user.password;
+            // loginUser.nickname = user.nickname;
+            // loginUser.avatar = user.avatar;
         }
 
-        return {loginUser, isOnline, setLoginUser, getLoginUser};
+
+        function $reset() {
+            isOnline.value = false;
+            // loginUser.value
+            loginUser.value.id = '';
+            loginUser.value.account = '';
+            loginUser.value.password = '';
+            loginUser.value.nickname = '';
+            loginUser.value.avatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
+        }
+
+        return {loginUser, isOnline, setLoginUser, getLoginUser, $reset};
     },
     {
         persist: true,

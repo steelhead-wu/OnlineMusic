@@ -1,8 +1,18 @@
 package com.wll.controller;
 
+import ch.qos.logback.core.util.FileUtil;
+import com.baomidou.mybatisplus.generator.util.FileUtils;
+import com.wll.pojo.User;
+import com.wll.utils.FilesUtils;
 import com.wll.utils.R;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @time 2025/2/3 15:06 周一
@@ -10,13 +20,33 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/files")
 public class FileController {
+    private static final String USER_DIRECTORY = System.getProperty("user.dir");
+    private static final String MIDDLE_PATH = "\\src\\main\\resources\\static\\asset\\img\\avatarImages\\";
+
 
     @PostMapping("/upload")
     public synchronized R upload(@RequestParam(name = "user-avatar") MultipartFile multipartFile) {
-        System.out.println("ContentType:" + multipartFile.getContentType());
-        System.out.println("name:" + multipartFile.getName());
-        System.out.println("OriginalFilename:" + multipartFile.getOriginalFilename());
-        System.out.println("ContentType:" + multipartFile.getResource());
+
+        String filePrefix = USER_DIRECTORY + MIDDLE_PATH;
+        Path filePath = Paths.get(filePrefix);
+        long timeMillis = System.currentTimeMillis();
+        String filename = filePrefix + timeMillis + "_" + multipartFile.getOriginalFilename();
+        try (OutputStream outputStream = new FileOutputStream(filename)) {
+            if (!Files.exists(filePath)) {
+                Files.createDirectories(filePath);
+            }
+            outputStream.write(multipartFile.getBytes());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return R.success(timeMillis);
+    }
+
+
+    @GetMapping("/{timestamp}")
+    public synchronized R download(@PathVariable("timestamp") String timestamp, HttpServletResponse response) {
         return R.success();
     }
 }
