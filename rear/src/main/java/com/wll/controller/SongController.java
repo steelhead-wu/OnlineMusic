@@ -1,11 +1,13 @@
 package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.Song;
-import com.wll.pojo.User;
 import com.wll.service.impl.SongServiceImpl;
 import com.wll.utils.R;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,7 +38,7 @@ public class SongController {
 
 
     @PostMapping
-    public R addUser(@RequestBody Song song) {
+    public R addSong(@RequestBody Song song) {
         boolean res;
         try {
             res = songService.save(song);
@@ -47,7 +49,7 @@ public class SongController {
     }
 
     @PutMapping
-    public R updateUserById(@RequestBody Song song) {
+    public R updateSongById(@RequestBody Song song) {
         boolean res = songService.updateById(song);
         return res ? R.success() : R.error();
     }
@@ -61,5 +63,35 @@ public class SongController {
         return Objects.isNull(res) ? R.error() : R.success(res);
     }
 
+
+    @GetMapping("/{id}")
+    public R getSongById(@PathVariable(name = "id") Integer id) {
+        Song song = songService.getById(id);
+        return Objects.isNull(song) ? R.error() : R.success(song);
+    }
+
+
+    @PostMapping("/download")
+    public ResponseEntity<org.springframework.core.io.Resource> download(@RequestBody Song song) {
+        String url = song.getUrl();
+        // 从类路径加载文件
+        org.springframework.core.io.Resource resource = new ClassPathResource("static/asset" + url);
+        // 检查文件是否存在
+        if (resource.exists()) {
+            // 设置响应头
+//            return R.success(ResponseEntity.ok()
+//                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+//                    .body(resource));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM) // 二进制流类型
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        }
+//            ("",ResponseEntity.notFound().build());
+//        return R.error("未找到");
+        return ResponseEntity.notFound().build();
+
+    }
 
 }
