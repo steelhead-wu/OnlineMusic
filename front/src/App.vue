@@ -2,6 +2,8 @@
 
 
 
+import PlayBar from "@/components/play/PlayBar.vue";
+
 const user = {
   password: '2',
   // id: '1882054264398209025', // 根据id更新

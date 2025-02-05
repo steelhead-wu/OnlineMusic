@@ -25,6 +25,8 @@ const tableData = [
 
 <template>
   <div id="song-list">
+<!--    <h2>我的喜欢</h2>-->
+<!--    <br>-->
     <el-table class="song-list" :data="tableData" stripe>
       <el-table-column prop="date" label="歌曲" width="350"/>
       <el-table-column prop="name" label="歌手" width="350"/>
