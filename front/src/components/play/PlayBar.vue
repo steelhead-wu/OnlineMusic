@@ -72,19 +72,21 @@ const formatTooltip = (val: number) => {
   height: 100px;
   border-radius: 50%;
   /*background-color: #fff;*/
-  background-color: green;
+  background-color: snow;
   /*margin-top: -60px;*/
   padding: 6px;
   position: relative;
   bottom: 0;
-  /*animation: 5s infinite linear;*/
-  animation: 3s linear 1s slidein;
+  animation: spin 5s infinite linear;
+  /*animation:  3s linear 1s slidein;*/
   animation-play-state: running;
 }
 
 .cover img {
   width: 100%;
   border-radius: 50%;
+  position: relative;
+  left: 17px;
 }
 
 
