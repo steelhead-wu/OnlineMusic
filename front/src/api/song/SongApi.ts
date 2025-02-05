@@ -9,3 +9,10 @@ export const searchSong = async (keyword) => {
         }
     })
 }
+
+
+export const download = async (song: Song) => {
+    return await myAxios.post(prefix + '/download', song, {
+        responseType: "blob"
+    });
+}
