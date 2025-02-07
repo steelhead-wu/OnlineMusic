@@ -75,7 +75,7 @@ public class SongController {
     public ResponseEntity<org.springframework.core.io.Resource> download(@RequestBody Song song) {
         String url = song.getUrl();
         // 从类路径加载文件
-        org.springframework.core.io.Resource resource = new ClassPathResource("static/asset" + url);
+        org.springframework.core.io.Resource resource = new ClassPathResource("static" + url);
         // 检查文件是否存在
         if (resource.exists()) {
             // 设置响应头

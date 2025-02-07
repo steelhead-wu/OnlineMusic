@@ -1,15 +1,14 @@
 package com.wll.controller;
 
-import ch.qos.logback.core.util.FileUtil;
-import com.baomidou.mybatisplus.generator.util.FileUtils;
-import com.wll.pojo.User;
-import com.wll.utils.FilesUtils;
 import com.wll.utils.R;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;

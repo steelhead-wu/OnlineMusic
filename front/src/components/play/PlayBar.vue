@@ -3,25 +3,27 @@ import {reactive, ref} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
 import {download} from "@/api/song/SongApi";
+import {useSongStore} from "@/store/SongStore";
+import MusicAudio from "@/components/play/MusicAudio.vue";
 
-
+const songStore = useSongStore()
 const value4 = ref(0)
-const isPlay = ref(false);
+
 const formatTooltip = (val: number) => {
-  return val / 100
-}
-const url = "/song/梁耀燮-Shadow (그림자).mp3";
-const song = reactive<Song>(
-    {
-      url: url
-    });
+      return val / 100
+    }
+
+;
+
+const song = songStore.getCurrentSong.value;
+
 const doDownloadMusic = () => {
+  if (song.title === '') return;
   try {
     download(song).then(value => {
       console.log("开始下载...");
       const eleLink = document.createElement("a");
-      const info_arr = song.url.split("/");
-      eleLink.download = info_arr[info_arr.length - 1];
+      eleLink.download = song.url.slice(song.url.lastIndexOf('/') + 1);
       eleLink.style.display = "none";
       // // 字符内容转变成 blob 地址
       const blob = new Blob([value.data]);
@@ -64,18 +66,24 @@ const doDownloadMusic = () => {
         <!--        上一首-->
         <FontAwesomeIcon class="control-btn-each" icon="fa-step-backward" size="2x"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <!--        播放-->
-        <FontAwesomeIcon v-if="isPlay" icon="fa-play" size="2x"/>
         <!--        暂停-->
-        <FontAwesomeIcon v-else icon="fa-pause" size="2x"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <FontAwesomeIcon class="control-btn-each" v-if="songStore.isPlay" icon="fa-pause" size="2x"
+                         @click="songStore.isPlay = !songStore.isPlay"/>
+
+        <!--        播放-->
+        <FontAwesomeIcon v-else icon="fa-play" size="2x" @click="songStore.isPlay = !songStore.isPlay"/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下一首-->
-        <FontAwesomeIcon icon="fa-step-forward" size="2x"/>
+        <FontAwesomeIcon class="control-btn-each" icon="fa-step-forward" size="2x"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <FontAwesomeIcon icon="fa-navicon" size="2x"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下载-->
         <FontAwesomeIcon icon="fa-cloud-download" size="2x" @click="doDownloadMusic"/>
+
+        <MusicAudio/>
+
+
       </div>
     </div>
   </div>

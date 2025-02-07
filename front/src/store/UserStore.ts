@@ -1,7 +1,5 @@
 import {defineStore} from "pinia";
-import {reactive, ref, computed} from "vue";
-import {baseURL} from "@/api/request";
-import {login} from "@/api/user/UserApi";
+import {ref, computed} from "vue";
 
 
 export const useUserStore = defineStore('userStore', () => {
