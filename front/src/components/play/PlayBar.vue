@@ -71,6 +71,10 @@ function play() {
   // console.log(audio);
   // audio.play();
 }
+
+
+const showPlayList = ref(true);
+
 </script>
 
 <template>
@@ -105,12 +109,25 @@ function play() {
         <!--        下一首-->
         <FontAwesomeIcon class="control-btn-each" icon="fa-step-forward" size="2x"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <FontAwesomeIcon icon="fa-navicon" size="2x"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下载-->
         <FontAwesomeIcon icon="fa-cloud-download" size="2x" @click="doDownloadMusic"/>
 
-        <audio ref="music" controls id="myAudio">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--        歌曲列表-->
+        <FontAwesomeIcon @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>
+        <transition name="slide-fade">
+          <div v-if="showPlayList" id="showPlayList">
+            <h2>当前播放</h2>
+            <div class="control">共 xxx 首</div>
+            <ul id="playlist">
+              <li>
+                sds
+              </li>
+            </ul>
+          </div>
+        </transition>
+
+        <audio ref="music" id="myAudio">
           <source :src="music_src" type="audio/mpeg">
         </audio>
 
@@ -223,5 +240,49 @@ function play() {
 
 .slider-demo-block .demonstration + .el-slider {
   flex: 0 0 70%;
+}
+
+
+#showPlayList {
+  font-size: 14px;
+  width: 350px;
+  position: fixed;
+  right: 0;
+  top: 80px;
+  bottom: 180px;
+  padding-bottom: 100px;
+  z-index: 99;
+  background-color: white;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+#playlist {
+  width: 100%;
+  /*height: calc(100% - 10px);*/
+  height: 100%;
+  cursor: pointer;
+  z-index: 100;
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+#playlist li {
+  display: block;
+
 }
 </style>

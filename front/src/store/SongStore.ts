@@ -5,7 +5,8 @@ export const useSongStore = defineStore('songStore', () => {
     const isPlay = ref(false);
 
 
-    let currentSong = ref<Song>(
+    let currentSongIdx = ref(0);
+    const songList = ref<Array<Song>>([
         {
             id: '',
             singerId: '',
@@ -15,7 +16,18 @@ export const useSongStore = defineStore('songStore', () => {
             lyric: '',
             url: '/asset/song/孝琳 - 안녕 (再见).mp3'
         }
-    );
+    ]);
+
+    let currentSong = ref<Song>(songList.value[currentSongIdx.value]);
+    // let currentSong = ref<Song>({
+    //     id: '',
+    //     singerId: '',
+    //     title: '孝琳 - 안녕 (再见)',
+    //     album: '',
+    //     picture: '/asset/img/songPic/109951169493800260.jpg',
+    //     lyric: '',
+    //     url: '/asset/song/孝琳 - 안녕 (再见).mp3'
+    // })
 
     const getCurrentSong = computed(() => currentSong);
 
@@ -34,5 +46,5 @@ export const useSongStore = defineStore('songStore', () => {
         currentSong.value.url = '';
     }
 
-    return {isPlay, currentSong, getCurrentSong, setCurrentSong, $reset};
+    return {isPlay, currentSong, getCurrentSong, setCurrentSong, $reset, songList, currentSongIdx};
 });

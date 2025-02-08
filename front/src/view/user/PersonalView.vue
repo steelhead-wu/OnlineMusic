@@ -14,7 +14,7 @@ const userStore = useUserStore();
       <Update/>
       <span class="personal-nickname">
         <h1 style="font-size: 6rem;white-space: nowrap;">
-          {{ userStore.loginUser.nickname === '' ? 'orzzro' : '' }}
+          {{ userStore.getLoginUser.value.nickname === '' ? 'orzzro' : userStore.getLoginUser.value.nickname }}
         </h1>
       </span>
     </div>
