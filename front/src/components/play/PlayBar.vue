@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref} from 'vue'
+import {computed, ref} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
 import {download} from "@/api/song/SongApi";
@@ -8,28 +8,28 @@ import MusicAudio from "@/components/play/MusicAudio.vue";
 
 const songStore = useSongStore()
 const value4 = ref(0)
-const music = ref();
+const music = ref(null);
 const cover = ref();
-// music link
-const music_src = ref(baseURL + songStore.getCurrentSong.value.url);
 
-const music_pic_src = ref(baseURL + songStore.getCurrentSong.value.picture);
+// current song play
+const song = computed(() => songStore.getCurrentSong.value);
+// music link
+const music_src = computed(() => baseURL + song.value.url);
+
+const music_pic_src = computed(() => baseURL + song.value.picture);
 
 const formatTooltip = (val: number) => {
-      return val / 100
-    }
+  return val / 100
+}
 
-;
-
-const song = songStore.getCurrentSong.value;
 
 const doDownloadMusic = () => {
-  if (song.title === '') return;
+  if (song.value.title === '') return;
   try {
-    download(song).then(value => {
+    download(song.value).then(value => {
       console.log("开始下载...");
       const eleLink = document.createElement("a");
-      eleLink.download = song.url.slice(song.url.lastIndexOf('/') + 1);
+      eleLink.download = song.value.url.slice(song.value.url.lastIndexOf('/') + 1);
       eleLink.style.display = "none";
       // // 字符内容转变成 blob 地址
       const blob = new Blob([value.data]);
@@ -49,9 +49,11 @@ const doDownloadMusic = () => {
   }
 }
 const toggle_music_status = () => {
-  songStore.isPlay = !songStore.isPlay;
-
-  if (songStore.isPlay) {
+  songStore.setIsPlay();
+  console.log("current song is")
+  console.log(songStore.getCurrentSong.value);
+  console.log('----------------')
+  if (songStore.getIsPlay.value) {
     cover.value.style['animationPlayState'] = 'running';
     music.value.play();
   } else {
@@ -62,14 +64,43 @@ const toggle_music_status = () => {
 }
 
 
-function play() {
-  console.log("comi")
-  console.log(music.value);
-  songStore.isPlay = !songStore.isPlay;
-  music.value.play();
-  // const audio = document.getElementById("myAudio");
-  // console.log(audio);
-  // audio.play();
+const playMusic = () => {
+  music.value.load(); // 强制加载新资源
+  music.value.addEventListener('canplay', () => {
+    if (!songStore.getIsPlay.value) {
+      songStore.setIsPlay();
+    }
+    music.value.play();
+  }, {once: true});
+}
+
+const next = () => {
+  console.log("cur song:")
+  console.log(song.value);
+  console.log('--------------')
+  console.log(songStore.getCurrentSongIdx.value);
+  songStore.incSongIdx();
+  console.log(songStore.getCurrentSongIdx.value);
+  console.log("next song:")
+  console.log(song.value);
+  console.log('--------------')
+  // music.value.play();
+  playMusic();
+}
+
+
+const previous = () => {
+  console.log("cur song:")
+  console.log(song.value);
+  console.log('--------------')
+  console.log(songStore.getCurrentSongIdx.value);
+  songStore.decSongIdx();
+  console.log(songStore.getCurrentSongIdx.value);
+  console.log("next song:")
+  console.log(song.value);
+  console.log('--------------')
+  // music.value.play();
+  playMusic();
 }
 
 
@@ -97,17 +128,17 @@ const showPlayList = ref(true);
         <FontAwesomeIcon class="control-btn-each" icon="fa-refresh" size="2x"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        上一首-->
-        <FontAwesomeIcon class="control-btn-each" icon="fa-step-backward" size="2x"/>
+        <FontAwesomeIcon class="control-btn-each" icon="fa-step-backward" size="2x" @click="previous"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        暂停-->
-        <FontAwesomeIcon class="control-btn-each" v-if="songStore.isPlay" icon="fa-pause" size="2x"
+        <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay.value" icon="fa-pause" size="2x"
                          @click="toggle_music_status"/>
 
         <!--        播放-->
         <FontAwesomeIcon v-else icon="fa-play" size="2x" @click="toggle_music_status"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下一首-->
-        <FontAwesomeIcon class="control-btn-each" icon="fa-step-forward" size="2x"/>
+        <FontAwesomeIcon class="control-btn-each" icon="fa-step-forward" size="2x" @click="next"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下载-->
         <FontAwesomeIcon icon="fa-cloud-download" size="2x" @click="doDownloadMusic"/>
@@ -127,9 +158,11 @@ const showPlayList = ref(true);
           </div>
         </transition>
 
-        <audio ref="music" id="myAudio">
-          <source :src="music_src" type="audio/mpeg">
-        </audio>
+        <audio ref="music" id="myAudio" :src="music_src" controls type="audio/mpeg"></audio>
+        <!--        <audio ref="music" id="myAudio" controls>-->
+        <!--          <source :src="music_src" type="audio/mpeg">-->
+        <!--          <source :src="music_src" type="audio/mpeg">-->
+        <!--        </audio>-->
 
       </div>
     </div>
