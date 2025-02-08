@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {reactive, ref} from 'vue'
+import {ref} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
 import {download} from "@/api/song/SongApi";
@@ -8,6 +8,12 @@ import MusicAudio from "@/components/play/MusicAudio.vue";
 
 const songStore = useSongStore()
 const value4 = ref(0)
+const music = ref();
+const cover = ref();
+// music link
+const music_src = ref(baseURL + songStore.getCurrentSong.value.url);
+
+const music_pic_src = ref(baseURL + songStore.getCurrentSong.value.picture);
 
 const formatTooltip = (val: number) => {
       return val / 100
@@ -42,6 +48,29 @@ const doDownloadMusic = () => {
     }
   }
 }
+const toggle_music_status = () => {
+  songStore.isPlay = !songStore.isPlay;
+
+  if (songStore.isPlay) {
+    cover.value.style['animationPlayState'] = 'running';
+    music.value.play();
+  } else {
+    cover.value.style['animationPlayState'] = 'paused';
+    music.value.pause();
+  }
+
+}
+
+
+function play() {
+  console.log("comi")
+  console.log(music.value);
+  songStore.isPlay = !songStore.isPlay;
+  music.value.play();
+  // const audio = document.getElementById("myAudio");
+  // console.log(audio);
+  // audio.play();
+}
 </script>
 
 <template>
@@ -51,8 +80,8 @@ const doDownloadMusic = () => {
     </div>
 
     <div class="control-box">
-      <div class="cover">
-        <img src="../../assets/img/logo.jpg" alt="" srcset="">
+      <div class="cover" ref="cover">
+        <img id="cover_img" :src="music_pic_src" alt="" srcset="">
       </div>
 
       <div class="control-btn-area">
@@ -68,10 +97,10 @@ const doDownloadMusic = () => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        暂停-->
         <FontAwesomeIcon class="control-btn-each" v-if="songStore.isPlay" icon="fa-pause" size="2x"
-                         @click="songStore.isPlay = !songStore.isPlay"/>
+                         @click="toggle_music_status"/>
 
         <!--        播放-->
-        <FontAwesomeIcon v-else icon="fa-play" size="2x" @click="songStore.isPlay = !songStore.isPlay"/>
+        <FontAwesomeIcon v-else icon="fa-play" size="2x" @click="toggle_music_status"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下一首-->
         <FontAwesomeIcon class="control-btn-each" icon="fa-step-forward" size="2x"/>
@@ -81,8 +110,9 @@ const doDownloadMusic = () => {
         <!--        下载-->
         <FontAwesomeIcon icon="fa-cloud-download" size="2x" @click="doDownloadMusic"/>
 
-        <MusicAudio/>
-
+        <audio ref="music" controls id="myAudio">
+          <source :src="music_src" type="audio/mpeg">
+        </audio>
 
       </div>
     </div>
@@ -135,8 +165,8 @@ const doDownloadMusic = () => {
   left: 20px;
   bottom: 0;
   animation: spin 5s infinite linear;
-  /*animation-play-state: paused;*/
-  animation-play-state: running;
+  animation-play-state: paused;
+  /*animation-play-state: running;*/
 
 }
 
