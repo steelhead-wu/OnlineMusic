@@ -74,13 +74,24 @@ const playMusic = () => {
     music.value.play();
   }, {once: true});
 }
+const randomIdx = (): number => {
+  let number;
+  do {
+    number = Math.floor(Math.random() * songStore.getSongList.value.length);
+  } while (number === songStore.getCurrentSongIdx.value);
+  return number;
+}
 
 const next = () => {
   console.log("cur song:")
   console.log(song.value);
   console.log('--------------')
   console.log(songStore.getCurrentSongIdx.value);
-  songStore.incSongIdx();
+  if (isLoop.value) {
+    songStore.incSongIdx();
+  } else {
+    songStore.setCurrentSongIdx(randomIdx());
+  }
   console.log(songStore.getCurrentSongIdx.value);
   console.log("next song:")
   console.log(song.value);
@@ -118,6 +129,9 @@ const ended = () => {
 
 const showPlayList = ref(true);
 
+// loop playback
+const isLoop = ref(true);
+
 </script>
 
 <template>
@@ -137,7 +151,11 @@ const showPlayList = ref(true);
         <FontAwesomeIcon icon="fa fa-heart" size="2x" style="color: red;"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--      循环播放  -->
-        <FontAwesomeIcon class="control-btn-each" icon="fa-refresh" size="2x"/>
+        <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>
+
+        <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>
+
+
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        上一首-->
         <FontAwesomeIcon class="control-btn-each" icon="fa-step-backward" size="2x" @click="previous"/>
@@ -161,16 +179,16 @@ const showPlayList = ref(true);
         <transition name="slide-fade">
           <div v-if="showPlayList" id="showPlayList">
             <h2 class="title">当前播放</h2>
-            <div class="control">共 {{ songStore.songList.length }} 首</div>
+            <div class="control">共 {{ songStore.getSongList.value.length }} 首</div>
             <ul id="playlist">
-              <li v-for="(asong,song_idx) in songStore.songList"
+              <li v-for="(asong,song_idx) in songStore.getSongList.value"
                   :key="asong.id"
                   @click="playThisMusic(asong,song_idx)"
                   :class="{'current-play' : song.id === asong.id}"
               >
                 {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
               </li>
-              <!--              <li v-for="(song,song_idx) in songStore.songList"-->
+              <!--              <li v-for="(song,song_idx) in songStore.getSongList.value"-->
               <!--                  :key="song.id"-->
               <!--                  @click="playThisMusic(song,song_idx)"-->
               <!--                  :class="{'current-play' : song.id === $data.song.id}"-->
