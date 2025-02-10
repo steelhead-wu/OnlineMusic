@@ -10,7 +10,7 @@ export const useSongStore = defineStore('songStore', () => {
             {
                 id: '1',
                 singerId: '',
-                title: '孝琳 - 안녕 (再见)',
+                title: '孝琳-안녕 (再见)',
                 album: '',
                 picture: '/asset/img/songPic/109951169493800260.jpg',
                 lyric: '',
@@ -24,6 +24,15 @@ export const useSongStore = defineStore('songStore', () => {
                 picture: '/asset/img/songPic/109951163187405670.jpg',
                 lyric: '',
                 url: '/asset/song/林俊杰-一千年以后.mp3'
+            },
+            {
+                id: '3',
+                singerId: '',
+                title: '周杰伦-告白气球',
+                album: '床边故事',
+                picture: '/asset/img/songPic/gaobaiqiqui.jpg',
+                lyric: '',
+                url: '/asset/song/周杰伦-告白气球.mp3'
             },
         ]);
 

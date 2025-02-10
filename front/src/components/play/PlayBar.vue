@@ -70,6 +70,7 @@ const playMusic = () => {
     if (!songStore.getIsPlay.value) {
       songStore.setIsPlay();
     }
+    cover.value.style['animationPlayState'] = 'running';
     music.value.play();
   }, {once: true});
 }
@@ -103,6 +104,17 @@ const previous = () => {
   playMusic();
 }
 
+const playThisMusic = (song: Song, song_idx: number) => {
+  songStore.setCurrentSongIdx(song_idx);
+  songStore.setCurrentSong(song);
+  playMusic();
+}
+
+
+const ended = () => {
+  console.log("come ended");
+  music.value.addEventListener('ended', next);
+}
 
 const showPlayList = ref(true);
 
@@ -148,21 +160,29 @@ const showPlayList = ref(true);
         <FontAwesomeIcon @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>
         <transition name="slide-fade">
           <div v-if="showPlayList" id="showPlayList">
-            <h2>当前播放</h2>
-            <div class="control">共 xxx 首</div>
+            <h2 class="title">当前播放</h2>
+            <div class="control">共 {{ songStore.songList.length }} 首</div>
             <ul id="playlist">
-              <li>
-                sds
+              <li v-for="(asong,song_idx) in songStore.songList"
+                  :key="asong.id"
+                  @click="playThisMusic(asong,song_idx)"
+                  :class="{'current-play' : song.id === asong.id}"
+              >
+                {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
               </li>
+              <!--              <li v-for="(song,song_idx) in songStore.songList"-->
+              <!--                  :key="song.id"-->
+              <!--                  @click="playThisMusic(song,song_idx)"-->
+              <!--                  :class="{'current-play' : song.id === $data.song.id}"-->
+              <!--              >-->
+              <!--                {{$options.song}}-->
+              <!--                {{ song.title.split('-')[1] + '-  ' + song.title.split('-')[0] }}-->
+              <!--              </li>-->
             </ul>
           </div>
         </transition>
 
-        <audio ref="music" id="myAudio" :src="music_src" controls type="audio/mpeg"></audio>
-        <!--        <audio ref="music" id="myAudio" controls>-->
-        <!--          <source :src="music_src" type="audio/mpeg">-->
-        <!--          <source :src="music_src" type="audio/mpeg">-->
-        <!--        </audio>-->
+        <audio controls ref="music" id="myAudio" :src="music_src" type="audio/mpeg" @ended="ended"></audio>
 
       </div>
     </div>
@@ -171,6 +191,46 @@ const showPlayList = ref(true);
 
 
 <style scoped>
+
+.current-play {
+  color: black;
+  font-weight: bold;
+}
+
+.title, .control {
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+
+#playlist {
+  width: 100%;
+  /*height: calc(100% - 10px);*/
+  height: 100%;
+  cursor: pointer;
+  z-index: 100;
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+
+#playlist li {
+  display: block;
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+}
+
+
+#playlist li:hover {
+  background-color: #EFEFEF;
+}
+
+.control {
+  margin: 3px 0;
+  color: grey;
+}
+
 #playBar {
   /*width: 100%;*/
   /*position: fixed;*/
@@ -304,18 +364,5 @@ const showPlayList = ref(true);
   opacity: 0;
 }
 
-#playlist {
-  width: 100%;
-  /*height: calc(100% - 10px);*/
-  height: 100%;
-  cursor: pointer;
-  z-index: 100;
-  overflow: scroll;
-  white-space: nowrap;
-}
 
-#playlist li {
-  display: block;
-
-}
 </style>
