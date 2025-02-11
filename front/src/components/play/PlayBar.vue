@@ -135,6 +135,7 @@ const showPlayList = ref(true);
 const isLoop = ref(true);
 
 const changeTime = () => {
+  console.log("come changeTime");
   music.value.currentTime = progress.value;
   songStore.setIsPlay(true);
   cover.value.style['animationPlayState'] = 'running';
@@ -144,19 +145,50 @@ const changeTime = () => {
 
 const songTime = ref<number>();
 
+const isUserChanging = ref<boolean>(false);
+
 onMounted(() => {
   console.log('mounted');
-  music.value.addEventListener('loadedmetadata', () => {
-    songTime.value = music.value.duration;
-    console.log(`music duration:${music.value.duration} sec`);
-  });
+  if (music.value) {
+    music.value.addEventListener('loadedmetadata', () => {
+      songTime.value = music.value.duration;
+      console.log(`music duration:${music.value.duration} sec`);
+    });
 
-  music.value.addEventListener('timeupdate', () => {
-    progress.value = music.value.currentTime;
-    console.log('Current Time:', music.value.currentTime);
-  });
-})
+    music.value.addEventListener('timeupdate', () => {
+      if (!isUserChanging.value) {
+        progress.value = music.value.currentTime;
+        console.log('Current Time:', music.value.currentTime);
+      }
+    });
+  }
+});
 
+// handle progress bar when progress changed
+const onProgressChange = (value: number) => {
+  console.log('onProgressChange');
+  //  when user manually changed the progress bar
+  isUserChanging.value = true;
+  progress.value = value;
+  if (music.value) {
+    music.value.currentTime = value;
+  }
+  // user's OP has finished
+  isUserChanging.value = false;
+};
+
+const formatTooltip = (progress: number) => {
+  progress = Math.round(progress);
+  console.log('progress:' + progress);
+  let min = Math.floor(progress / 60), sec = progress % 60;
+  console.log('min:' + min);
+  console.log('sec:' + sec);
+  if (min) {
+    return `0${min}:` + (sec < 10 ? `0${sec}` : sec);
+  } else {
+    return `00:` + (sec < 10 ? `0${sec}` : sec);
+  }
+}
 
 </script>
 
@@ -164,7 +196,9 @@ onMounted(() => {
   <div id="playBar">
     <!--    progress bar-->
     <div class="song-progress">
-      <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"/>
+      <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"
+                 @input="onProgressChange" :format-tooltip="formatTooltip"
+      />
     </div>
 
     <div class="control-box">
@@ -218,9 +252,8 @@ onMounted(() => {
               <!--              <li v-for="(song,song_idx) in songStore.getSongList.value"-->
               <!--                  :key="song.id"-->
               <!--                  @click="playThisMusic(song,song_idx)"-->
-              <!--                  :class="{'current-play' : song.id === $data.song.id}"-->
+              <!--                  :class="{'current-play' : song.id === song.value.value.id}"-->
               <!--              >-->
-              <!--                {{$options.song}}-->
               <!--                {{ song.title.split('-')[1] + '-  ' + song.title.split('-')[0] }}-->
               <!--              </li>-->
             </ul>
