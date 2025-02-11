@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import {computed, ref} from 'vue'
+import {computed, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
 import {download} from "@/api/song/SongApi";
 import {useSongStore} from "@/store/SongStore";
-import MusicAudio from "@/components/play/MusicAudio.vue";
 
 const songStore = useSongStore()
-const value4 = ref(0)
+
 const music = ref(null);
 const cover = ref();
+
+const progress = ref(0);
 
 // current song play
 const song = computed(() => songStore.getCurrentSong.value);
@@ -17,10 +18,6 @@ const song = computed(() => songStore.getCurrentSong.value);
 const music_src = computed(() => baseURL + song.value.url);
 
 const music_pic_src = computed(() => baseURL + song.value.picture);
-
-const formatTooltip = (val: number) => {
-  return val / 100
-}
 
 
 const doDownloadMusic = () => {
@@ -49,7 +46,7 @@ const doDownloadMusic = () => {
   }
 }
 const toggle_music_status = () => {
-  songStore.setIsPlay();
+  songStore.flipIsPlay();
   console.log("current song is")
   console.log(songStore.getCurrentSong.value);
   console.log('----------------')
@@ -68,7 +65,7 @@ const playMusic = () => {
   music.value.load(); // 强制加载新资源
   music.value.addEventListener('canplay', () => {
     if (!songStore.getIsPlay.value) {
-      songStore.setIsPlay();
+      songStore.flipIsPlay();
     }
     cover.value.style['animationPlayState'] = 'running';
     music.value.play();
@@ -106,9 +103,13 @@ const previous = () => {
   console.log(song.value);
   console.log('--------------')
   console.log(songStore.getCurrentSongIdx.value);
-  songStore.decSongIdx();
+  if (isLoop.value) {
+    songStore.decSongIdx();
+  } else {
+    songStore.setCurrentSongIdx(randomIdx());
+  }
   console.log(songStore.getCurrentSongIdx.value);
-  console.log("next song:")
+  console.log("previous song:")
   console.log(song.value);
   console.log('--------------')
   // music.value.play();
@@ -124,6 +125,7 @@ const playThisMusic = (song: Song, song_idx: number) => {
 
 const ended = () => {
   console.log("come ended");
+  progress.value = 0;
   music.value.addEventListener('ended', next);
 }
 
@@ -132,12 +134,37 @@ const showPlayList = ref(true);
 // loop playback
 const isLoop = ref(true);
 
+const changeTime = () => {
+  music.value.currentTime = progress.value;
+  songStore.setIsPlay(true);
+  cover.value.style['animationPlayState'] = 'running';
+  music.value.play();
+}
+
+
+const songTime = ref<number>();
+
+onMounted(() => {
+  console.log('mounted');
+  music.value.addEventListener('loadedmetadata', () => {
+    songTime.value = music.value.duration;
+    console.log(`music duration:${music.value.duration} sec`);
+  });
+
+  music.value.addEventListener('timeupdate', () => {
+    progress.value = music.value.currentTime;
+    console.log('Current Time:', music.value.currentTime);
+  });
+})
+
+
 </script>
 
 <template>
   <div id="playBar">
-    <div class="song-process">
-      <el-slider v-model="value4" :format-tooltip="formatTooltip"/>
+    <!--    progress bar-->
+    <div class="song-progress">
+      <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"/>
     </div>
 
     <div class="control-box">
@@ -200,7 +227,8 @@ const isLoop = ref(true);
           </div>
         </transition>
 
-        <audio controls ref="music" id="myAudio" :src="music_src" type="audio/mpeg" @ended="ended"></audio>
+        <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"
+               @ended="ended"></audio>
 
       </div>
     </div>
@@ -317,7 +345,7 @@ const isLoop = ref(true);
   background-color: snow;
 }
 
-#playBar .song-process {
+#playBar .song-progress {
   position: fixed;
   z-index: 100;
   bottom: 150px;

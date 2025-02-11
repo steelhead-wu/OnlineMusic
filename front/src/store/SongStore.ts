@@ -34,6 +34,15 @@ export const useSongStore = defineStore('songStore', () => {
                 lyric: '',
                 url: '/asset/song/周杰伦-告白气球.mp3'
             },
+            {
+                id: '4',
+                singerId: '',
+                title: '权志龙-HOME SWEET HOME',
+                album: 'HOME SWEET HOME',
+                picture: '/asset/img/songPic/48c3318938d448503898feef740373c7.jpg',
+                lyric: '',
+                url: '/asset/song/权志龙-HOMESWEETHOME.mp3'
+            },
         ]);
 
 
@@ -57,8 +66,12 @@ export const useSongStore = defineStore('songStore', () => {
         const getSongList = computed(() => songList);
         // const getCurrentSong = computed(() => songList.value[currentSongIdx.value]);
 
-        const setIsPlay = () => {
+        const flipIsPlay = () => {
             isPlay.value = !isPlay.value;
+        }
+
+        const setIsPlay = (play: boolean) => {
+            isPlay.value = play;
         }
 
         const setCurrentSongIdx = (idx: number) => {
@@ -105,6 +118,7 @@ export const useSongStore = defineStore('songStore', () => {
             isPlay,
             getIsPlay,
             setIsPlay,
+            flipIsPlay,
             currentSong,
             getCurrentSong,
             setCurrentSong,
