@@ -3,6 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../view/HomeView.vue'
 import LoginView from '../view/LoginView.vue'
 import PersonalView from '../view/user/PersonalView.vue'
+import SingerView from '../view/singer/SingerView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
@@ -24,6 +25,15 @@ const routes = [
                 path: Behavior.PERSONAL,
                 component: PersonalView,
             },
+            {// 设置
+                path: Behavior.SETTINGS,
+                component: PersonalView,
+            },
+            {// 歌手
+                path: Behavior.SINGER,
+                component: SingerView,
+            },
+
         ]
     },
     {
@@ -34,7 +44,7 @@ const routes = [
 
 ]
 
-// const routes = [{ path: '/home', redirect: '/' }]
+// const routes = [{ path: '/singer', redirect: '/' }]
 
 const router = createRouter({
     /*

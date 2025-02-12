@@ -236,7 +236,7 @@ const formatTooltip = (progress: number) => {
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        歌曲列表-->
-        <FontAwesomeIcon @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>
+        <FontAwesomeIcon title="queue" @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>
         <transition name="slide-fade">
           <div v-if="showPlayList" id="showPlayList">
             <h2 class="title">当前播放</h2>

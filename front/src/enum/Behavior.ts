@@ -6,4 +6,5 @@ export enum Behavior {
     PERSONAL = '/personal',
     SETTINGS = '/settings',
     SIGN_OUT = '/sign-out',
+    SINGER = '/singer',
 }

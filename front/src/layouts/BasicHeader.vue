@@ -100,10 +100,15 @@ const doDropDown = (dropdown) => {
       </el-col>
       <!--      主页-->
       <el-col>
-        <a href="/" title="去主页">
-          <el-button :icon="House" circle style="position: fixed;left: 430px;top: 15px" size="large"
-                     tag="a"></el-button>
-        </a>
+        <el-button :icon="House" circle style="position: fixed;left: 430px;top: 15px" size="large"
+                   tag="a" @click="router.push(Behavior.HOMEPAGE)"></el-button>
+      </el-col>
+
+      <el-col>
+        <el-button @click="router.push(Behavior.SINGER)" tag="a" style="position: fixed;left: 300px;top: 15px"
+                   size="large">
+          歌手
+        </el-button>
       </el-col>
 
 
