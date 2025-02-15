@@ -45,4 +45,16 @@ const emits = defineEmits<{
   color: black;
   font-weight: 600;
 }
+
+@media screen and (min-width: 668px) {
+  #navigation ul li {
+    margin: 0.5rem 1rem;
+  }
+}
+
+@media screen and (max-width: 668px) {
+  #navigation ul li {
+    margin: 0.3rem 0.4rem;
+  }
+}
 </style>

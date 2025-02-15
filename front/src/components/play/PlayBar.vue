@@ -128,8 +128,8 @@ const ended = () => {
   progress.value = 0;
   music.value.addEventListener('ended', next);
 }
-
-const showPlayList = ref(true);
+// song play bar in right aside
+const showPlayList = ref(false);
 
 // loop playback
 const isLoop = ref(true);

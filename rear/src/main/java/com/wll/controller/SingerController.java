@@ -29,14 +29,12 @@ public class SingerController {
     @GetMapping
     public R getAllSinger() {
         List<Singer> singers = singerService.list();
-
         return Objects.isNull(singers) ? R.error() : R.success(singers);
     }
 
     @GetMapping(params = "sex")
     public R getSingerBySex(Integer sex) {
         List<Singer> res = singerService.listByMap(Map.of("sex", sex));
-
         return R.success(res);
     }
 }

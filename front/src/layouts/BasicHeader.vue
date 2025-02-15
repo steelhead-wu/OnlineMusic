@@ -105,9 +105,18 @@ const doDropDown = (dropdown) => {
       </el-col>
 
       <el-col>
-        <el-button @click="router.push(Behavior.SINGER)" tag="a" style="position: fixed;left: 300px;top: 15px"
+        <el-button @click="router.push(Behavior.SINGER)" tag="a"
+                   style="position: fixed;left: 300px;top: 15px;background-color: black;border: black;color: white"
                    size="large">
           歌手
+        </el-button>
+      </el-col>
+
+      <el-col>
+        <el-button @click="router.push(Behavior.SINGER)" tag="a"
+                   style="position: fixed;left: 200px;top: 15px;background-color: black;border: black;color: white"
+                   size="large">
+          歌单
         </el-button>
       </el-col>
 
@@ -199,6 +208,7 @@ const doDropDown = (dropdown) => {
 
 #basicHeader {
   /*background-color: #b20f96;*/
+  z-index: 10;
   width: 100%;
   position: fixed;
   top: 0;

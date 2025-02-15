@@ -3,6 +3,7 @@
 import {computed, ref} from "vue";
 import {baseURL} from "@/api/request";
 import {useSongStore} from "@/store/SongStore";
+import {getSingerBySex} from "@/api/singer/SingerApi";
 
 
 // const songStore = useSongStore()
@@ -17,14 +18,19 @@ import {useSongStore} from "@/store/SongStore";
 //   progress.value = 0;
 //   music.value.addEventListener('ended', next);
 // }
+
+
+// getSingerBySex(2).then(value => {
+//   console.log(value);
+// })
 </script>
 
 <template>
 
   <router-view></router-view>
 
-<!--  <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"-->
-<!--         @ended="ended"></audio>-->
+  <!--  <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"-->
+  <!--         @ended="ended"></audio>-->
 </template>
 
 
