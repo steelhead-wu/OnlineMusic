@@ -113,7 +113,7 @@ const doDropDown = (dropdown) => {
       </el-col>
 
       <el-col>
-        <el-button @click="router.push(Behavior.SINGER)" tag="a"
+        <el-button @click="router.push(Behavior.SONG_LIST)" tag="a"
                    style="position: fixed;left: 200px;top: 15px;background-color: black;border: black;color: white"
                    size="large">
           歌单

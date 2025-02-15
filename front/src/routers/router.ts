@@ -4,6 +4,8 @@ import HomeView from '../view/HomeView.vue'
 import LoginView from '../view/LoginView.vue'
 import PersonalView from '../view/user/PersonalView.vue'
 import SingerView from '../view/singer/SingerView.vue'
+import SingerDetailView from '../view/singer/SingerDetailView.vue'
+import SongListView from '../view/songList/SongListView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
@@ -33,6 +35,14 @@ const routes = [
                 path: Behavior.SINGER,
                 component: SingerView,
             },
+            {// 歌手细节
+                path: Behavior.SINGER_DETAIL + '/:idx(\\d+)',
+                component: SingerDetailView,
+            },
+            {// 歌单
+                path: Behavior.SONG_LIST,
+                component: SongListView,
+            },
 
         ]
     },
@@ -58,7 +68,9 @@ const router = createRouter({
     routes,
 });
 
-
+/*
+ Add a navigation guard that executes before any navigation. Returns a function that removes the registered guard.
+ */
 router.beforeEach((to, from, next) => {
     // console.log(to);
     // console.log(from);

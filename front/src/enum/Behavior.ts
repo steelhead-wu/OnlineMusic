@@ -7,4 +7,6 @@ export enum Behavior {
     SETTINGS = '/settings',
     SIGN_OUT = '/sign-out',
     SINGER = '/singer',
+    SINGER_DETAIL = '/singer-detail',
+    SONG_LIST = '/song-list',
 }

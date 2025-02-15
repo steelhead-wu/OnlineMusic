@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import Navigation from "@/layouts/Navigation.vue";
-import {onMounted, ref, watch} from "vue";
+import {onMounted, provide, ref, watch} from "vue";
 import {Singer, singer_style_list} from "@/enum/Singer";
 import {getAllSinger, getSingerBySex} from "@/api/singer/SingerApi";
 import PlayBody from "@/layouts/PlayBody.vue";
+import {Behavior} from "@/enum/Behavior";
+import {useRouter} from "vue-router";
 
 
 const nameOpt = ref('全部歌手');
 const playList = ref<Array<Singer>>();
+const router = useRouter();
 
 const doClick = (item) => {
   nameOpt.value = item.name;
@@ -32,6 +35,10 @@ onMounted(
     }
 )
 
+const doSingerDetail = (idx) => {
+
+  router.push(Behavior.SINGER_DETAIL + '/' + idx);
+}
 
 </script>
 
@@ -39,7 +46,8 @@ onMounted(
 <template>
   <Navigation style="position: absolute;top: 96px;left: 0" :name="nameOpt" :style-list="singer_style_list"
               @click="doClick"/>
-  <PlayBody style="position: absolute;top: 146px;left: 0" :play-list="playList"/>
+  <PlayBody style="position: absolute;top: 146px;left: 0" :play-list="playList"
+            @click="doSingerDetail"/>
 </template>
 
 

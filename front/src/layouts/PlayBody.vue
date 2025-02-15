@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import {baseURL} from "@/api/request";
-import {onMounted} from "vue";
 
 const props = defineProps<{
   playList: Array<any>
 }>();
+
+
+const emits = defineEmits<{
+  click: [item: Singer]
+}>();
+
 
 
 </script>
@@ -13,7 +18,7 @@ const props = defineProps<{
   <div class="play-list">
     <!--    <div class="play-title" v-if="title">{{ title }}</div>-->
     <ul class="play-body">
-      <li class="card-frame" v-for="(item) in playList" :key="item.id">
+      <li class="card-frame" v-for="(item,idx) in playList" :key="item.id" @click="emits('click',idx)">
         <div class="card">
           <el-image class="card-img" fit="contain" loading="lazy" :src="baseURL + item.pic"/>
           <div class="mask">
