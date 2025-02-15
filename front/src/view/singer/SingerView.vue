@@ -5,11 +5,17 @@ import {ref} from "vue";
 import {Singer, singer_style_list} from "@/enum/Singer";
 
 
+const nameOpt = ref('全部歌手');
+
+const doClick = (item) => {
+  console.log(item);
+  nameOpt.value = item.name;
+}
 </script>
 
 
 <template>
-  <Navigation :style-list="singer_style_list"/>
+  <Navigation :name="nameOpt" :style-list="singer_style_list" @click="doClick"/>
   <h1>singer</h1>
 </template>
 

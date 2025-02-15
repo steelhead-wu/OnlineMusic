@@ -24,7 +24,7 @@ public class CodeGenerator {
                             .xml("resources.mapper"); // 设置 Mapper XML 文件包名
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("song") // 设置需要生成的表名
+                    builder.addInclude("singer") // 设置需要生成的表名
                             .entityBuilder()
                             .enableLombok() // 启用 Lombok
                             .enableTableFieldAnnotation() // 启用字段注解

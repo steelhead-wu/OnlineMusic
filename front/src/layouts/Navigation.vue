@@ -10,17 +10,15 @@ const emits = defineEmits<{
   click: [item: string]
 }>();
 
-const handleChangeView = (val) => {
-  emits('click', val);
-}
+
 </script>
 
 
 <template>
   <div id="navigation">
     <ul>
-      <li v-for="(item, index) in styleList" :key="index" :class="{ active: item.name === name }"
-          @click="handleChangeView(item.name)">
+      <li v-for="(item, index) in props.styleList" :key="index" :class="{ active: item.name === props.name }"
+          @click="emits('click', item)">
         {{ item.name }}
       </li>
     </ul>
@@ -35,7 +33,7 @@ const handleChangeView = (val) => {
 
 
 #navigation ul li {
-  /*display: inline;*/
+  display: inline;
   line-height: 2rem;
   font-size: 1rem;
   color: grey;
