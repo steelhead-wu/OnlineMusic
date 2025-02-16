@@ -6,6 +6,19 @@ import Update from "@/components/user/Update.vue";
 
 const userStore = useUserStore();
 
+
+const tableData = [
+  {
+    song: '2016-05-03',
+    singer: 'Tom',
+    album: 'No. 189, Grove St, Los Angeles',
+  },
+  {
+    song: '2016-05-03',
+    singer: 'Tom',
+    album: 'No. 189, Grove St, Los Angeles',
+  },
+]
 </script>
 
 <template>
@@ -21,7 +34,7 @@ const userStore = useUserStore();
 
     <div class="main-body">
       <div class="like-song">
-        <SongList/>
+        <SongList :table-data="tableData"/>
       </div>
     </div>
   </div>

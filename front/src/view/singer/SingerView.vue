@@ -6,11 +6,14 @@ import {getAllSinger, getSingerBySex} from "@/api/singer/SingerApi";
 import PlayBody from "@/layouts/PlayBody.vue";
 import {Behavior} from "@/enum/Behavior";
 import {useRouter} from "vue-router";
+import {useSingersStore} from "@/store/SingersStore";
 
 
 const nameOpt = ref('全部歌手');
 const playList = ref<Array<Singer>>();
 const router = useRouter();
+
+const singersStores = useSingersStore();
 
 const doClick = (item) => {
   nameOpt.value = item.name;
@@ -30,13 +33,13 @@ onMounted(
     () => {
       getAllSinger().then(value => {
         playList.value = value.data.data
-        console.log(playList.value.length)
+        singersStores.setSingers(playList.value);
+        console.log(playList.value.length);
       });
     }
 )
 
 const doSingerDetail = (idx) => {
-
   router.push(Behavior.SINGER_DETAIL + '/' + idx);
 }
 

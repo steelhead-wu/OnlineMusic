@@ -1,37 +1,75 @@
 <script lang="ts" setup>
-const tableData = [
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-  },
-]
+import {download} from "@/api/song/SongApi";
+import {useRoute} from "vue-router";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
+const props = defineProps<{
+  tableData: Song & {
+    singer: string
+  }
+}>();
+
+const route = useRoute();
+
+
+const doRowClick = (row: any, column: any, event: Event) => {
+  console.log(row);
+  console.log(column);
+  console.log(event);
+}
+
+
+const doDownloadMusic = (song: Song) => {
+  console.log('song', song);
+  if (song.title === '') return;
+  try {
+    download(song).then(value => {
+      console.log("开始下载...");
+      const eleLink = document.createElement("a");
+      eleLink.download = song.url?.slice(song.url?.lastIndexOf('/') + 1);
+      eleLink.style.display = "none";
+      // // 字符内容转变成 blob 地址
+      const blob = new Blob([value.data]);
+      eleLink.href = URL.createObjectURL(blob);
+      document.body.appendChild(eleLink); // 触发点击
+      eleLink.click();
+      document.body.removeChild(eleLink); // 移除
+
+    })
+  } catch (error) {
+    console.error('下载失败:', error);
+    if (error.response && error.response.status === 404) {
+      alert('文件不存在！');
+    } else {
+      alert('文件下载失败，请稍后重试！');
+    }
+  }
+}
+
 </script>
 
 <template>
   <div id="song-list">
     <!--    <h2>我的喜欢</h2>-->
     <!--    <br>-->
-    <el-table class="song-list" :data="tableData" stripe>
-      <el-table-column prop="date" label="歌曲" width="350"/>
-      <el-table-column prop="name" label="歌手" width="350"/>
-      <el-table-column prop="address" label="专辑" width="350"/>
-      <el-table-column prop="address" label="编辑" width="350"/>
+    <el-table highlight-current-row class="song-list" :data="props.tableData" stripe @row-click="doRowClick">
+      <el-table-column prop="song" label="歌曲" width="350"/>
+      <el-table-column prop="singer" label="歌手" width="350"/>
+      <el-table-column prop="album" label="专辑" width="350"/>
+      <el-table-column prop="op" label="操作" width="350">
+        <template #default="table">
+          <el-dropdown>
+            <FontAwesomeIcon icon="fa-edit" size="2x"/>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="doDownloadMusic(table.row)">
+                  <FontAwesomeIcon icon="fa-download" size="lg"/> &nbsp; 下载
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -48,4 +86,6 @@ const tableData = [
   width: 1500px;
 
 }
+
+
 </style>

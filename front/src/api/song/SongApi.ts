@@ -16,3 +16,11 @@ export const download = async (song: Song) => {
         responseType: "blob"
     });
 }
+
+export const getAllSongBySingerId = async (singerId: number) => {
+    return await myAxios.get(prefix, {
+        params: {
+            singerId
+        }
+    });
+}
