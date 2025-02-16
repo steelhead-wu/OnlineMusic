@@ -2,12 +2,12 @@ package com.wll.controller;
 
 import com.wll.pojo.Singer;
 import com.wll.service.ISingerService;
-import com.wll.service.impl.SingerServiceImpl;
 import com.wll.utils.R;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

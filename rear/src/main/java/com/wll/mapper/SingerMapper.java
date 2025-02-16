@@ -1,7 +1,7 @@
 package com.wll.mapper;
 
-import com.wll.pojo.Singer;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.wll.pojo.Singer;
 
 /**
  * <p>

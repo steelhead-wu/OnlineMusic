@@ -94,4 +94,10 @@ public class SongController {
 
     }
 
+
+    @GetMapping(params = "singerId")
+    public R getAllSongBySingerId(Integer singerId) {
+        return R.success(songService.list(new LambdaQueryWrapper<Song>().select(Song::getTitle, Song::getAlbum, Song::getUrl).eq(Song::getSingerId, singerId)));
+    }
+
 }
