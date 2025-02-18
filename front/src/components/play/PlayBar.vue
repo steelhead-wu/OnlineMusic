@@ -89,7 +89,7 @@ const randomIdx = (): number => {
   let number;
   do {
     number = Math.floor(Math.random() * songStore.getSongList.value.length);
-  } while (number === songStore.getCurrentSongIdx.value);
+  } while (number === songStore.getCurrentSongIdx);
   return number;
 }
 
@@ -97,13 +97,13 @@ const next = () => {
   console.log("cur song:")
   console.log(songStore.getCurrentSong);
   console.log('--------------')
-  console.log(songStore.getCurrentSongIdx.value);
+  console.log(songStore.getCurrentSongIdx);
   if (isLoop.value) {
     songStore.incSongIdx();
   } else {
     songStore.setCurrentSongIdx(randomIdx());
   }
-  console.log(songStore.getCurrentSongIdx.value);
+  console.log(songStore.getCurrentSongIdx);
   console.log("next song:")
   console.log(songStore.getCurrentSong);
   console.log('--------------')
@@ -116,13 +116,13 @@ const previous = () => {
   console.log("cur song:")
   console.log(songStore.getCurrentSong);
   console.log('--------------')
-  console.log(songStore.getCurrentSongIdx.value);
+  console.log(songStore.getCurrentSongIdx);
   if (isLoop.value) {
     songStore.decSongIdx();
   } else {
     songStore.setCurrentSongIdx(randomIdx());
   }
-  console.log(songStore.getCurrentSongIdx.value);
+  console.log(songStore.getCurrentSongIdx);
   console.log("previous song:")
   console.log(songStore.getCurrentSong);
   console.log('--------------')
@@ -206,11 +206,11 @@ const formatTooltip = (progress: number) => {
 
 
 const doRemoveSong = (song_idx: number) => {
-  if (song_idx < songStore.getCurrentSongIdx.value) {
-    songStore.setCurrentSongIdx(songStore.getCurrentSongIdx.value - 1);
-  } else if (song_idx === songStore.getCurrentSongIdx.value) {
-    if (songStore.getCurrentSongIdx.value + 1 === songStore.getSongList.value.length) {
-      songStore.setCurrentSongIdx(songStore.getCurrentSongIdx.value - 1);
+  if (song_idx < songStore.getCurrentSongIdx) {
+    songStore.setCurrentSongIdx(songStore.getCurrentSongIdx - 1);
+  } else if (song_idx === songStore.getCurrentSongIdx) {
+    if (songStore.getCurrentSongIdx + 1 === songStore.getSongList.value.length) {
+      songStore.setCurrentSongIdx(songStore.getCurrentSongIdx - 1);
     }
   }
   songStore.getSongList.value.splice(song_idx, 1);
@@ -281,7 +281,7 @@ const doRemoveSong = (song_idx: number) => {
               <li v-for="(asong,song_idx) in songStore.getSongList.value"
                   :key="asong.id"
                   @click="playThisMusic(asong,song_idx)"
-                  :class="{'current-play' : song.id === asong.id && song_idx === songStore.getCurrentSongIdx.value}"
+                  :class="{'current-play' : song.id === asong.id && song_idx === songStore.getCurrentSongIdx}"
               >
                 {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
                 <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>

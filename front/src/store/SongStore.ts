@@ -46,7 +46,7 @@ export const useSongStore = defineStore('songStore', () => {
 
 
         const getIsPlay = computed(() => isPlay);
-        const getCurrentSongIdx = computed(() => currentSongIdx);
+        const getCurrentSongIdx = computed(() => currentSongIdx.value);
         const getCurrentSong = computed(() => {
             if (currentSongIdx.value > -1) {
                 setCurrentSong(songList.value[currentSongIdx.value]);
