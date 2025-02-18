@@ -7,7 +7,7 @@ import {baseURL} from "@/api/request";
 const songStore = useSongStore();
 
 const music = ref();
-const music_src = ref(baseURL + songStore.getCurrentSong.value.url);
+const music_src = ref(baseURL + songStore.getCurrentSong.url);
 
 
 function play() {

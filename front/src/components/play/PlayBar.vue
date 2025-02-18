@@ -14,25 +14,33 @@ const cover = ref();
 const progress = ref(0);
 
 // current song play
-const song = computed(() => songStore.getCurrentSong.value);
+// const song = computed(() => songStore.getCurrentSong);
+// console.log('song.value:',song.value);
 // music link
 const music_src = computed(() => {
-  if (song.value === undefined) {
+  if (songStore.getCurrentSong === null) {
     songStore.$reset();
+    return;
   }
-  return baseURL + song.value.url;
+  return baseURL + songStore.getCurrentSong.url;
 });
 
-const music_pic_src = computed(() => baseURL + song.value.picture);
+const music_pic_src = computed(() => {
+  if (songStore.getCurrentSong === null) {
+    songStore.$reset();
+    return;
+  }
+  return baseURL + songStore.getCurrentSong.picture;
+});
 
 
 const doDownloadMusic = () => {
-  if (song.value.title === '') return;
+  if (songStore.getCurrentSong == null || songStore.getCurrentSong.title === '') return;
   try {
-    download(song.value).then(value => {
+    download(songStore.getCurrentSong).then(value => {
       console.log("开始下载...");
       const eleLink = document.createElement("a");
-      eleLink.download = song.value.url.slice(song.value.url.lastIndexOf('/') + 1);
+      eleLink.download = songStore.getCurrentSong.url.slice(songStore.getCurrentSong.url.lastIndexOf('/') + 1);
       eleLink.style.display = "none";
       // // 字符内容转变成 blob 地址
       const blob = new Blob([value.data]);
@@ -54,7 +62,7 @@ const doDownloadMusic = () => {
 const toggle_music_status = () => {
   songStore.flipIsPlay();
   console.log("current song is")
-  console.log(songStore.getCurrentSong.value);
+  console.log(songStore.getCurrentSong);
   console.log('----------------')
   if (songStore.getIsPlay.value) {
     cover.value.style['animationPlayState'] = 'running';
@@ -87,7 +95,7 @@ const randomIdx = (): number => {
 
 const next = () => {
   console.log("cur song:")
-  console.log(song.value);
+  console.log(songStore.getCurrentSong);
   console.log('--------------')
   console.log(songStore.getCurrentSongIdx.value);
   if (isLoop.value) {
@@ -97,7 +105,7 @@ const next = () => {
   }
   console.log(songStore.getCurrentSongIdx.value);
   console.log("next song:")
-  console.log(song.value);
+  console.log(songStore.getCurrentSong);
   console.log('--------------')
   // music.value.play();
   playMusic();
@@ -106,7 +114,7 @@ const next = () => {
 
 const previous = () => {
   console.log("cur song:")
-  console.log(song.value);
+  console.log(songStore.getCurrentSong);
   console.log('--------------')
   console.log(songStore.getCurrentSongIdx.value);
   if (isLoop.value) {
@@ -116,7 +124,7 @@ const previous = () => {
   }
   console.log(songStore.getCurrentSongIdx.value);
   console.log("previous song:")
-  console.log(song.value);
+  console.log(songStore.getCurrentSong);
   console.log('--------------')
   // music.value.play();
   playMusic();
@@ -207,7 +215,7 @@ const doRemoveSong = (song_idx: number) => {
   }
   songStore.getSongList.value.splice(song_idx, 1);
   console.log('song_idx:', song_idx)
-  console.log('song:', song.value);
+  console.log('song:', songStore.getCurrentSong);
   console.log(songStore.getSongList.value);
 }
 </script>

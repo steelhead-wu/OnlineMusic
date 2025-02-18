@@ -3,8 +3,6 @@ import {computed, ref} from "vue";
 
 export const useSongStore = defineStore('songStore', () => {
         const isPlay = ref(false);
-
-
         let currentSongIdx = ref(0);
         const songList = ref<Array<Song>>([
             {
@@ -44,24 +42,17 @@ export const useSongStore = defineStore('songStore', () => {
                 url: '/asset/song/权志龙-HOMESWEETHOME.mp3'
             },
         ]);
-
-
         let currentSong = ref<Song>(songList.value[currentSongIdx.value]);
-        // let currentSong = ref<Song>({
-        //     id: '',
-        //     singerId: '',
-        //     title: '孝琳 - 안녕 (再见)',
-        //     album: '',
-        //     picture: '/asset/img/songPic/109951169493800260.jpg',
-        //     lyric: '',
-        //     url: '/asset/song/孝琳 - 안녕 (再见).mp3'
-        // })
-        // const getCurrentSongIdx = computed(() => currentSongIdx);
+
+
         const getIsPlay = computed(() => isPlay);
         const getCurrentSongIdx = computed(() => currentSongIdx);
         const getCurrentSong = computed(() => {
-            setCurrentSong(songList.value[currentSongIdx.value]);
-            return currentSong;
+            if (currentSongIdx.value > -1) {
+                setCurrentSong(songList.value[currentSongIdx.value]);
+                return songList.value[currentSongIdx.value];
+            }
+            return null;
         });
         const getSongList = computed(() => songList);
         // const getCurrentSong = computed(() => songList.value[currentSongIdx.value]);
