@@ -18,8 +18,8 @@ const doRowClick = (row: any, column: any, event: Event) => {
   console.log(row);
   console.log(column);
   console.log(event);
-  songStore.getSongList.value.push(row);
-  songStore.setCurrentSongIdx(songStore.getSongList.value.length - 1);
+  songStore.getSongList.push(row);
+  songStore.setCurrentSongIdx(songStore.getSongList.length - 1);
 }
 
 

@@ -54,7 +54,7 @@ export const useSongStore = defineStore('songStore', () => {
             }
             return null;
         });
-        const getSongList = computed(() => songList);
+        const getSongList = computed(() => songList.value);
         // const getCurrentSong = computed(() => songList.value[currentSongIdx.value]);
 
         const flipIsPlay = () => {

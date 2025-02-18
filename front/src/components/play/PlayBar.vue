@@ -88,7 +88,7 @@ const playMusic = () => {
 const randomIdx = (): number => {
   let number;
   do {
-    number = Math.floor(Math.random() * songStore.getSongList.value.length);
+    number = Math.floor(Math.random() * songStore.getSongList.length);
   } while (number === songStore.getCurrentSongIdx);
   return number;
 }
@@ -209,14 +209,14 @@ const doRemoveSong = (song_idx: number) => {
   if (song_idx < songStore.getCurrentSongIdx) {
     songStore.setCurrentSongIdx(songStore.getCurrentSongIdx - 1);
   } else if (song_idx === songStore.getCurrentSongIdx) {
-    if (songStore.getCurrentSongIdx + 1 === songStore.getSongList.value.length) {
+    if (songStore.getCurrentSongIdx + 1 === songStore.getSongList.length) {
       songStore.setCurrentSongIdx(songStore.getCurrentSongIdx - 1);
     }
   }
-  songStore.getSongList.value.splice(song_idx, 1);
+  songStore.getSongList.splice(song_idx, 1);
   console.log('song_idx:', song_idx)
   console.log('song:', songStore.getCurrentSong);
-  console.log(songStore.getSongList.value);
+  console.log(songStore.getSongList);
 }
 </script>
 
@@ -276,9 +276,9 @@ const doRemoveSong = (song_idx: number) => {
         <transition name="slide-fade">
           <div v-if="showPlayList" id="showPlayList">
             <h2 class="title">当前播放</h2>
-            <div class="control">共 {{ songStore.getSongList.value.length }} 首</div>
+            <div class="control">共 {{ songStore.getSongList.length }} 首</div>
             <ul id="playlist">
-              <li v-for="(asong,song_idx) in songStore.getSongList.value"
+              <li v-for="(asong,song_idx) in songStore.getSongList"
                   :key="asong.id"
                   @click="playThisMusic(asong,song_idx)"
                   :class="{'current-play' : song.id === asong.id && song_idx === songStore.getCurrentSongIdx}"
@@ -286,7 +286,7 @@ const doRemoveSong = (song_idx: number) => {
                 {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
                 <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>
               </li>
-              <!--              <li v-for="(song,song_idx) in songStore.getSongList.value"-->
+              <!--              <li v-for="(song,song_idx) in songStore.getSongList"-->
               <!--                  :key="song.id"-->
               <!--                  @click="playThisMusic(song,song_idx)"-->
               <!--                  :class="{'current-play' : song.id === song.value.value.id}"-->
