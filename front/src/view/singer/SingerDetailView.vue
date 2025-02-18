@@ -16,14 +16,10 @@ const tableData = ref<Array<unknown>>([]);
 
 onMounted(() => {
   getAllSongBySingerId(current_singer.value.id).then(value => {
+    console.log(value.data.data);
     for (const song: Song of value.data.data) {
-      let title = song.title?.slice(song.title?.indexOf('-') + 1);
-      tableData.value.push({
-        song: title,
-        singer: current_singer.value.name,
-        album: song.album,
-        url: song.url,
-      });
+      song['song'] = song.title?.slice(song.title?.indexOf('-') + 1);
+      tableData.value.push(song);
     }
   })
 })
@@ -48,11 +44,11 @@ onMounted(() => {
       </div>
     </el-aside>
     <el-main class="album-main">
-      <h1>{{ current_singer.name }}</h1>
-      <el-text>
+      <h1 class="singer-name">{{ current_singer.name }}</h1>
+      <el-text class="singer-introduction">
         {{ current_singer.introduction }}
       </el-text>
-      <SongList :table-data="tableData"/>
+      <SongList class="songList" :table-data="tableData"/>
     </el-main>
   </el-container>
 </template>
@@ -84,6 +80,7 @@ onMounted(() => {
     ul {
       position: fixed;
       left: 70px;
+
       li {
         display: inline-block;
         width: 100%;
@@ -97,11 +94,28 @@ onMounted(() => {
 .album-main {
   position: fixed;
   //top: 0;
-  el-text {
+  .singer-name {
     position: fixed;
-    top: 100px;
+    top: 175px;
+    left: 375px;
+    font-weight: bold;
+  }
+
+  .singer-introduction {
+    width: 50%;
+    position: fixed;
+    top: 200px;
+    left: 375px;
     color: black;
     margin: 10px 0 20px 0;
+  }
+
+  .songList {
+    position: relative;
+    //left: 200px;
+    //top: 0;
+    //right:  200px;
+
   }
 }
 

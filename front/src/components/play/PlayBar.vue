@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import {Picture as IconPicture} from '@element-plus/icons-vue'
 import {computed, onMounted, ref, useTemplateRef, watch} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
@@ -15,7 +16,12 @@ const progress = ref(0);
 // current song play
 const song = computed(() => songStore.getCurrentSong.value);
 // music link
-const music_src = computed(() => baseURL + song.value.url);
+const music_src = computed(() => {
+  if (song.value === undefined) {
+    songStore.$reset();
+  }
+  return baseURL + song.value.url;
+});
 
 const music_pic_src = computed(() => baseURL + song.value.picture);
 
@@ -190,6 +196,20 @@ const formatTooltip = (progress: number) => {
   }
 }
 
+
+const doRemoveSong = (song_idx: number) => {
+  if (song_idx < songStore.getCurrentSongIdx.value) {
+    songStore.setCurrentSongIdx(songStore.getCurrentSongIdx.value - 1);
+  } else if (song_idx === songStore.getCurrentSongIdx.value) {
+    if (songStore.getCurrentSongIdx.value + 1 === songStore.getSongList.value.length) {
+      songStore.setCurrentSongIdx(songStore.getCurrentSongIdx.value - 1);
+    }
+  }
+  songStore.getSongList.value.splice(song_idx, 1);
+  console.log('song_idx:', song_idx)
+  console.log('song:', song.value);
+  console.log(songStore.getSongList.value);
+}
 </script>
 
 <template>
@@ -203,7 +223,15 @@ const formatTooltip = (progress: number) => {
 
     <div class="control-box">
       <div class="cover" ref="cover">
-        <img id="cover_img" :src="music_pic_src" alt="" srcset="">
+        <el-image id="cover_img" :src="music_pic_src" alt="" srcset="">
+          <template #error>
+            <div class="image-slot">
+              <el-icon>
+                <icon-picture/>
+              </el-icon>
+            </div>
+          </template>
+        </el-image>
       </div>
 
       <div class="control-btn-area">
@@ -245,9 +273,10 @@ const formatTooltip = (progress: number) => {
               <li v-for="(asong,song_idx) in songStore.getSongList.value"
                   :key="asong.id"
                   @click="playThisMusic(asong,song_idx)"
-                  :class="{'current-play' : song.id === asong.id}"
+                  :class="{'current-play' : song.id === asong.id && song_idx === songStore.getCurrentSongIdx.value}"
               >
                 {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
+                <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>
               </li>
               <!--              <li v-for="(song,song_idx) in songStore.getSongList.value"-->
               <!--                  :key="song.id"-->
@@ -270,6 +299,29 @@ const formatTooltip = (progress: number) => {
 
 
 <style scoped>
+
+
+.remove {
+  height: 15px;
+  width: 15px;
+  padding-right: 10px;
+  margin-left: auto; /* 将图标推到最右侧 */
+  cursor: pointer;
+  transition: opacity 0.3s; /* 添加悬停效果 */
+
+  pointer-events: auto; /* 确保图标可以点击 */
+  /*默认隐藏*/
+  display: none;
+}
+
+#playlist li:hover .remove {
+  display: block; /* 鼠标悬停时显示图标 */
+  opacity: 0.8; /* 轻微透明度效果 */
+}
+
+.remove:hover {
+  opacity: 1;
+}
 
 .current-play {
   color: black;
@@ -294,7 +346,11 @@ const formatTooltip = (progress: number) => {
 
 
 #playlist li {
-  display: block;
+  display: flex;
+  justify-content: space-between; /* 左右内容分列两端 */
+  padding: 0;
+  align-items: center; /* 垂直居中 */
+  position: relative; /* 为绝对定位图标提供定位基准 */
   width: 100%;
   height: 40px;
   line-height: 40px;
@@ -359,7 +415,7 @@ const formatTooltip = (progress: number) => {
 
 }
 
-.cover img {
+.cover #cover_img {
   width: 100%;
   height: 100%;
   border-radius: 50%;

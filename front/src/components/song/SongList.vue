@@ -2,6 +2,7 @@
 import {download} from "@/api/song/SongApi";
 import {useRoute} from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import {useSongStore} from "@/store/SongStore";
 
 const props = defineProps<{
   tableData: Song & {
@@ -9,13 +10,16 @@ const props = defineProps<{
   }
 }>();
 
-const route = useRoute();
+
+const songStore = useSongStore();
 
 
 const doRowClick = (row: any, column: any, event: Event) => {
   console.log(row);
   console.log(column);
   console.log(event);
+  songStore.getSongList.value.push(row);
+  songStore.setCurrentSongIdx(songStore.getSongList.value.length - 1);
 }
 
 

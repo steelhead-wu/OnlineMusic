@@ -104,6 +104,8 @@ export const useSongStore = defineStore('songStore', () => {
 
         function $reset() {
             isPlay.value = false;
+            currentSongIdx.value = -1;
+            songList.value = [];
             currentSong.value.id = '';
             currentSong.value.singerId = '';
             currentSong.value.title = '';

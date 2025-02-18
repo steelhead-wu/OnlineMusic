@@ -3,6 +3,7 @@
 import BasicFooter from "@/layouts/BasicFooter.vue";
 import BasicHeader from "@/layouts/BasicHeader.vue";
 import PlayBar from "@/components/play/PlayBar.vue";
+import Test from "@/layouts/Test.vue";
 
 
 </script>
@@ -18,6 +19,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
       <el-main>
         <RouterView/>
         <PlayBar/>
+<!--        <Test/>-->
       </el-main>
 
       <el-footer>
