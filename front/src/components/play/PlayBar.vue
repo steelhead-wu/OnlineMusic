@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import {Picture as IconPicture} from '@element-plus/icons-vue'
-import {computed, onMounted, ref, useTemplateRef, watch} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
 import {download} from "@/api/song/SongApi";
@@ -20,7 +20,7 @@ const progress = ref(0);
 const music_src = computed(() => {
   if (songStore.getCurrentSong === null) {
     songStore.$reset();
-    return;
+    return '';
   }
   return baseURL + songStore.getCurrentSong.url;
 });
@@ -28,7 +28,7 @@ const music_src = computed(() => {
 const music_pic_src = computed(() => {
   if (songStore.getCurrentSong === null) {
     songStore.$reset();
-    return;
+    return '';
   }
   return baseURL + songStore.getCurrentSong.picture;
 });
@@ -245,7 +245,8 @@ const doRemoveSong = (song_idx: number) => {
       <div class="control-btn-area">
 
         <!--        收藏-->
-        <FontAwesomeIcon icon="fa fa-heart" size="2x" style="color: red;"/>
+        <FontAwesomeIcon icon="fa fa-heart" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                         style="color: red;"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--      循环播放  -->
         <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>
@@ -255,20 +256,25 @@ const doRemoveSong = (song_idx: number) => {
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        上一首-->
-        <FontAwesomeIcon class="control-btn-each" icon="fa-step-backward" size="2x" @click="previous"/>
+        <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"
+                         icon="fa-step-backward" size="2x" @click="previous"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        暂停-->
         <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay" icon="fa-pause" size="2x"
                          @click="toggle_music_status"/>
 
         <!--        播放-->
-        <FontAwesomeIcon v-else icon="fa-play" size="2x" @click="toggle_music_status"/>
+        <FontAwesomeIcon v-else icon="fa-play" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                         @click="toggle_music_status"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下一首-->
-        <FontAwesomeIcon class="control-btn-each" icon="fa-step-forward" size="2x" @click="next"/>
+        <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"
+                         icon="fa-step-forward" size="2x" @click="next"
+        />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        下载-->
-        <FontAwesomeIcon icon="fa-cloud-download" size="2x" @click="doDownloadMusic"/>
+        <FontAwesomeIcon icon="fa-cloud-download" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                         @click="doDownloadMusic"/>
 
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        歌曲列表-->
@@ -281,7 +287,7 @@ const doRemoveSong = (song_idx: number) => {
               <li v-for="(asong,song_idx) in songStore.getSongList"
                   :key="asong.id"
                   @click="playThisMusic(asong,song_idx)"
-                  :class="{'current-play' : song.id === asong.id && song_idx === songStore.getCurrentSongIdx}"
+                  :class="{'current-play' : songStore.getCurrentSong.id === asong.id && song_idx === songStore.getCurrentSongIdx}"
               >
                 {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
                 <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>
@@ -307,7 +313,10 @@ const doRemoveSong = (song_idx: number) => {
 
 
 <style scoped>
-
+.fa-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 .remove {
   height: 15px;
