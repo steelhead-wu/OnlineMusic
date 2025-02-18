@@ -9,14 +9,15 @@ import {useRouter} from "vue-router";
 import {useSingersStore} from "@/store/SingersStore";
 
 
-const nameOpt = ref('全部歌手');
+// const nameOpt = ref('全部歌手');
 const playList = ref<Array<Singer>>();
 const router = useRouter();
 
 const singersStores = useSingersStore();
 
 const doClick = (item) => {
-  nameOpt.value = item.name;
+  console.log(item);
+  singersStores.setCurrentNameOptIdx(item.id);
   if (item.id === Singer.ALL_SINGER) {
     getAllSinger().then(value => {
       playList.value = value.data.data;
@@ -33,11 +34,20 @@ const doClick = (item) => {
 
 onMounted(
     () => {
-      getAllSinger().then(value => {
-        playList.value = value.data.data
-        singersStores.setSingers(playList.value);
-        console.log(playList.value.length);
-      });
+      if (singersStores.getCurrentNameOptIdx === Singer.ALL_SINGER) {
+        getAllSinger().then(value => {
+          playList.value = value.data.data
+          singersStores.setSingers(playList.value);
+          console.log('total singers:', playList.value.length);
+        });
+        // } else if (singersStores.getCurrentNameOpt === '女歌手') {
+      } else {
+        getSingerBySex(singersStores.getCurrentNameOptIdx).then(value => {
+          playList.value = value.data.data
+          singersStores.setSingers(playList.value);
+          console.log('total singers:', playList.value.length);
+        });
+      }
     }
 )
 
@@ -51,7 +61,8 @@ const doSingerDetail = (idx: number) => {
 
 
 <template>
-  <Navigation style="position: absolute;top: 96px;left: 0" :name="nameOpt" :style-list="singer_style_list"
+  <Navigation style="position: absolute;top: 96px;left: 0" :name="singer_style_list[singersStores.getCurrentNameOptIdx].name"
+              :style-list="singer_style_list"
               @click="doClick"/>
   <PlayBody style="position: absolute;top: 146px;left: 0" :play-list="playList"
             @click="doSingerDetail"/>

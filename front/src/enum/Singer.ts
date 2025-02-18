@@ -1,8 +1,8 @@
 export enum Singer {
-    FEMALE_SINGER,
-    MALE_SINGER,
-    GROUP,
-    ALL_SINGER,
+    FEMALE_SINGER = 1,
+    MALE_SINGER = 2,
+    GROUP = 3,
+    ALL_SINGER = 0,
 }
 
 
