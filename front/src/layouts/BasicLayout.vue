@@ -17,9 +17,11 @@ import Test from "@/layouts/Test.vue";
       </el-header>
 
       <el-main>
-        <RouterView/>
+        <keep-alive include="SingerView">
+          <RouterView/>
+        </keep-alive>
         <PlayBar/>
-<!--        <Test/>-->
+        <!--        <Test/>-->
       </el-main>
 
       <el-footer>

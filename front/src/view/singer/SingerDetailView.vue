@@ -18,7 +18,9 @@ onMounted(() => {
   getAllSongBySingerId(current_singer.value.id).then(value => {
     console.log(value.data.data);
     for (const song: Song of value.data.data) {
-      song['song'] = song.title?.slice(song.title?.indexOf('-') + 1);
+      const split = song.title?.split('-');
+      song['song'] = split[1];
+      song['singer'] = split[0];
       tableData.value.push(song);
     }
   })

@@ -1,21 +1,46 @@
 <template>
   <div>
-    <button @click="handleIncrement">Increment</button>
-    <button @click="handleDecrement">Decrement</button>
+    <button @click="add">add</button>
+    <ul>
+      <li v-for="(i,j) in testStore.getArr" @click="packup(j)" :class="{fw:j===testStore.getCurIdx}">
+        {{ i }}
+        <button @click.stop="remove(j)">del</button>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits<{
-  'increment': [id: number],
-  'decrement': [id: number]
-}>();
+import {ref} from "vue";
+import {useTestStore} from "@/store/TestStore";
 
-const handleIncrement = () => {
-  emit('increment', 10);
-};
+const cnt = ref(0);
+const testStore = useTestStore();
 
-const handleDecrement = () => {
-  emit('decrement', -10);
-};
+const packup = (j) => {
+  testStore.setCurIdx(j);
+}
+const add = () => {
+  testStore.getArr.push(cnt.value++);
+  testStore.setCurIdx(testStore.getCurIdx + 1);
+}
+
+const remove = (song_idx) => {
+  if (song_idx < testStore.getCurIdx) {
+    testStore.setCurIdx(testStore.getCurIdx - 1);
+  } else if (song_idx === testStore.getCurIdx) {
+    if (testStore.getCurIdx + 1 === testStore.getArr.length) {
+      testStore.setCurIdx(testStore.getCurIdx - 1);
+    }
+  }
+  console.log(testStore.getCurIdx);
+  testStore.getArr.splice(song_idx, 1);
+}
 </script>
+
+
+<style scoped>
+.fw {
+  font-weight: bold;
+}
+</style>
