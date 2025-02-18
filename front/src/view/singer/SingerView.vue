@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Navigation from "@/layouts/Navigation.vue";
-import {onMounted, provide, ref, watch} from "vue";
+import {onMounted, ref} from "vue";
 import {Singer, singer_style_list} from "@/enum/Singer";
 import {getAllSinger, getSingerBySex} from "@/api/singer/SingerApi";
 import PlayBody from "@/layouts/PlayBody.vue";
@@ -20,10 +20,12 @@ const doClick = (item) => {
   if (item.id === Singer.ALL_SINGER) {
     getAllSinger().then(value => {
       playList.value = value.data.data;
+      singersStores.setSingers(playList.value);
     })
   } else {
     getSingerBySex(item.id).then(value => {
       playList.value = value.data.data;
+      singersStores.setSingers(playList.value);
     })
   }
 }
@@ -39,7 +41,9 @@ onMounted(
     }
 )
 
-const doSingerDetail = (idx) => {
+const doSingerDetail = (idx: number) => {
+  console.log('singer_idx', idx);
+
   router.push(Behavior.SINGER_DETAIL + '/' + idx);
 }
 

@@ -2,14 +2,13 @@
 import {baseURL} from "@/api/request";
 
 const props = defineProps<{
-  playList: Array<any>
+  playList: Array<Singer>
 }>();
 
 
 const emits = defineEmits<{
-  click: [item: Singer]
+  click: [idx: number]
 }>();
-
 
 
 </script>
@@ -18,14 +17,15 @@ const emits = defineEmits<{
   <div class="play-list">
     <!--    <div class="play-title" v-if="title">{{ title }}</div>-->
     <ul class="play-body">
-      <li class="card-frame" v-for="(item,idx) in playList" :key="item.id" @click="emits('click',idx)">
+      <li class="card-frame" v-for="(item,idx) in props.playList" :key="item.id" @click="emits('click',idx)">
         <div class="card">
           <el-image class="card-img" fit="contain" loading="lazy" :src="baseURL + item.pic"/>
           <div class="mask">
             <!--            <yin-icon class="mask-icon" :icon="BOFANG"></yin-icon>-->
           </div>
         </div>
-        <p class="card-name">{{ item.name || item.title }}</p>
+        <p class="card-name">{{ item.name }}</p>
+        <!--        <p class="card-name">{{ item.name || item.title  }}</p>-->
       </li>
     </ul>
   </div>
