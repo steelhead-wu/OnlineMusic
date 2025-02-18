@@ -64,7 +64,7 @@ const toggle_music_status = () => {
   console.log("current song is")
   console.log(songStore.getCurrentSong);
   console.log('----------------')
-  if (songStore.getIsPlay.value) {
+  if (songStore.getIsPlay) {
     cover.value.style['animationPlayState'] = 'running';
     music.value.play();
   } else {
@@ -78,7 +78,7 @@ const toggle_music_status = () => {
 const playMusic = () => {
   music.value.load(); // 强制加载新资源
   music.value.addEventListener('canplay', () => {
-    if (!songStore.getIsPlay.value) {
+    if (!songStore.getIsPlay) {
       songStore.flipIsPlay();
     }
     cover.value.style['animationPlayState'] = 'running';
@@ -258,7 +258,7 @@ const doRemoveSong = (song_idx: number) => {
         <FontAwesomeIcon class="control-btn-each" icon="fa-step-backward" size="2x" @click="previous"/>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <!--        暂停-->
-        <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay.value" icon="fa-pause" size="2x"
+        <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay" icon="fa-pause" size="2x"
                          @click="toggle_music_status"/>
 
         <!--        播放-->
