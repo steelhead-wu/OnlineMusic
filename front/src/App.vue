@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import {computed, ref} from "vue";
+import {computed, defineOptions, ref} from "vue";
 import {baseURL} from "@/api/request";
 import {useSongStore} from "@/store/SongStore";
 import {getSingerBySex} from "@/api/singer/SingerApi";
