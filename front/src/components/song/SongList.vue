@@ -18,8 +18,18 @@ const doRowClick = (row: any, column: any, event: Event) => {
   console.log(row);
   console.log(column);
   console.log(event);
-  songStore.getSongList.push(row);
+  songStore.getSongList.push({
+    album: row.album,
+    id: row.id,
+    lyric: row.lyric,
+    picture: row.picture,
+    singerId: row.singerId,
+    title: row.title,
+    url: row.url
+  });
   songStore.setCurrentSongIdx(songStore.getSongList.length - 1);
+  console.log('songStore.getSongList:', songStore.getSongList);
+  console.log('songStore.getCurrentSongIdx:', songStore.getCurrentSongIdx);
 }
 
 
@@ -84,6 +94,7 @@ const doDownloadMusic = (song: Song) => {
   position: fixed;
   left: 100px;
   align-content: center;
+  cursor: pointer;
 }
 
 #song-list .song-list {

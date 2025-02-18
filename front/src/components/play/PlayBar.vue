@@ -30,6 +30,7 @@ const music_pic_src = computed(() => {
     songStore.$reset();
     return '';
   }
+  console.log('songStore.getCurrentSong', songStore.getCurrentSong);
   return baseURL + songStore.getCurrentSong.picture;
 });
 
@@ -214,8 +215,8 @@ const doRemoveSong = (song_idx: number) => {
     }
   }
   songStore.getSongList.splice(song_idx, 1);
-  console.log('song_idx:', song_idx)
-  console.log('song:', songStore.getCurrentSong);
+  console.log('removed song_idx:', song_idx)
+  console.log('removed song:', songStore.getCurrentSong);
   console.log(songStore.getSongList);
 }
 </script>

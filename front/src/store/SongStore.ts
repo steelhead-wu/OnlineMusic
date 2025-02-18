@@ -3,7 +3,7 @@ import {computed, ref} from "vue";
 
 export const useSongStore = defineStore('songStore', () => {
         const isPlay = ref(false);
-        let currentSongIdx = ref(0);
+        const currentSongIdx = ref(0);
         const songList = ref<Array<Song>>([
             {
                 id: '1',
@@ -48,7 +48,10 @@ export const useSongStore = defineStore('songStore', () => {
         const getIsPlay = computed(() => isPlay.value);
         const getCurrentSongIdx = computed(() => currentSongIdx.value);
         const getCurrentSong = computed(() => {
+            console.log('currentSongIdx:', currentSongIdx.value);
+            // if (getCurrentSongIdx.value > -1) {
             if (currentSongIdx.value > -1) {
+                console.log('come currentSongIdx.value > -1')
                 setCurrentSong(songList.value[currentSongIdx.value]);
                 return songList.value[currentSongIdx.value];
             }
@@ -126,6 +129,6 @@ export const useSongStore = defineStore('songStore', () => {
         };
     },
     {
-        persist: false,
+        persist: true,
     },
 );
