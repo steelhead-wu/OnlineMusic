@@ -28,13 +28,11 @@ public class SongListController {
 
     @GetMapping
     public R getAllSongList() {
-//        List<Map<String, Object>> maps = songListService.getAllSongList();
         return R.success(songListService.list());
     }
 
     @GetMapping(params = "style")
     public R getSongListByStyle(String style) {
-//        List<Map<String, Object>> maps = songListService.getAllSongList();
         return R.success(songListService.listByMap(Map.of("style", style)));
     }
 

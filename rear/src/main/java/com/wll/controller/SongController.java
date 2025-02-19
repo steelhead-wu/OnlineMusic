@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -98,6 +99,12 @@ public class SongController {
     @GetMapping(params = "singerId")
     public R getAllSongBySingerId(Integer singerId) {
         return R.success(songService.list(new LambdaQueryWrapper<Song>().eq(Song::getSingerId, singerId)));
+    }
+
+
+    @GetMapping(params = "songListId")
+    public R getSongBySongListID(Integer songListId) {
+        return R.success(songService.getSongBySongListID(songListId));
     }
 
 }

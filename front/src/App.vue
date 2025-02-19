@@ -6,6 +6,7 @@ import {useSongStore} from "@/store/SongStore";
 import {getSingerBySex} from "@/api/singer/SingerApi";
 import {getAllSongList, getSongListByStyle} from "@/api/songList/SongListApi";
 import {SongListEnum} from "@/enum/SongListEnum";
+import {getSongBySongListID} from "@/api/song/SongApi";
 
 
 // const songStore = useSongStore()
@@ -32,6 +33,10 @@ import {SongListEnum} from "@/enum/SongListEnum";
 // })
 
 // getSongListByStyle('华语').then(value => {
+//   console.log(value.data);
+// })
+
+// getSongBySongListID(7).then(value => {
 //   console.log(value.data);
 // })
 </script>

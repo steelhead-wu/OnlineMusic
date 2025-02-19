@@ -5,18 +5,17 @@ import {baseURL} from "@/api/request";
 
 import {onMounted, ref} from "vue";
 import SongList from "@/components/song/SongList.vue";
-import {getAllSongBySingerId} from "@/api/song/SongApi";
+import {getAllSongBySingerId, getSongBySongListID} from "@/api/song/SongApi";
 
 const route = useRoute();
 const singersStore = useSingersStore();
-const current_singer = ref<Singer>(singersStore.getSingers[route.params.idx]);
+const current_song_list = ref<SongList>(singersStore.getSongList[route.params.idx]);
 
 
 const tableData = ref<Array<unknown>>([]);
 
 onMounted(() => {
-  getAllSongBySingerId(current_singer.value.id).then(value => {
-    console.log(value.data.data);
+  getSongBySongListID(current_song_list.value.id).then(value => {
     for (const song: Song of value.data.data) {
       const split = song.title?.split('-');
       song['song'] = split[1];
@@ -30,112 +29,52 @@ onMounted(() => {
 
 <template>
   <el-container>
-    <el-aside class="album-slide">
-      <el-image class="singer-img" :src="baseURL+current_singer.pic"></el-image>
-      <div class="album-info">
-        <h2>基本信息</h2>
-        <ul>
-          <li>出生: {{ current_singer.birth }}</li>
-          <li>年龄: {{
-              new Date().getFullYear() - current_singer.birth.slice(0, current_singer.birth.indexOf('-'))
-            }}
-          </li>
-          <li>性别: {{ current_singer.sex ? '男' : '女' }}</li>
-          <li>家乡: {{ current_singer.location }}</li>
-        </ul>
+    <el-aside>
+      <div class="song-list-img">
+        <el-image class="cover" :src="baseURL + current_song_list.pic"></el-image>
       </div>
+      <h1>{{ current_song_list.title }}</h1>
     </el-aside>
-    <el-main class="album-main">
-      <h1 class="singer-name">{{ current_singer.name }}</h1>
-      <el-text class="singer-introduction">
-        {{ current_singer.introduction }}
-      </el-text>
-      <SongList class="songList" :table-data="tableData"/>
+    <el-main>
+      <div class="introduction">
+        <h1>简介</h1>
+        <p>{{ current_song_list.introduction }}</p>
+      </div>
+      <div>
+        <!--        <SongList :table-data="tableData"/>-->
+      </div>
     </el-main>
   </el-container>
 </template>
 
 <style scoped lang="scss">
-.album-slide {
-  //display: flex;
+.song-list-img {
+  display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
 
-
-  .singer-img {
-    position: fixed;
-    top: 100px;
-    left: 100px;
+  .cover {
     height: 250px;
     width: 250px;
     border-radius: 10%;
   }
-
-  .album-info {
-    width: 60%;
-    padding-top: 2rem;
-    position: fixed;
-    top: 325px;
-    left: 110px;
-
-    ul {
-      position: fixed;
-      left: 70px;
-
-      li {
-        display: inline-block;
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-      }
-    }
-  }
 }
 
-.album-main {
-  position: fixed;
-  //top: 0;
-  .singer-name {
-    position: fixed;
-    top: 175px;
-    left: 375px;
+
+.introduction {
+  width: 100%;
+
+  h1 {
     font-weight: bold;
+    font-size: 30px;
   }
 
-  .singer-introduction {
-    width: 50%;
-    position: fixed;
-    top: 200px;
-    left: 375px;
-    color: black;
+  p {
     margin: 10px 0 20px 0;
-  }
-
-  .songList {
-    position: relative;
-    //left: 200px;
-    //top: 0;
-    //right:  200px;
-
-  }
-}
-
-@media screen and (min-width: 668px) {
-  .album-slide {
-    position: fixed;
-    width: 400px;
-  }
-  .album-main {
-    min-width: 600px;
-    padding-right: 10vw;
-    margin-left: 400px;
-  }
-}
-
-@media screen and (max-width: 668px) {
-  .album-slide {
-    display: none;
+    text-align: left;
+    line-height: 1.5;
+    max-width: 1009px;
   }
 }
 </style>

@@ -15,5 +15,5 @@ import java.util.Map;
  * @since 2025-02-18
  */
 public interface ISongListService extends IService<SongList> {
-    public List<Map<String, Object>> getAllSongList();
+
 }

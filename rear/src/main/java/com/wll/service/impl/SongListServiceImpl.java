@@ -23,9 +23,5 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Resource
     private SongListMapper songListMapper;
 
-    @Override
-    public List<Map<String, Object>> getAllSongList() {
-        return songListMapper.getAllSongList();
-    }
 
 }
