@@ -1,11 +1,9 @@
 package com.wll.service.impl;
 
-import com.github.yulichang.base.MPJBaseServiceImpl;
-import com.wll.pojo.SongList;
-import com.wll.mapper.SongListMapper;
-import com.wll.service.ISongListService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wll.utils.R;
+import com.wll.mapper.SongListMapper;
+import com.wll.pojo.SongList;
+import com.wll.service.ISongListService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +27,5 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     public List<Map<String, Object>> getAllSongList() {
         return songListMapper.getAllSongList();
     }
-//public class SongListServiceImpl extends MPJBaseServiceImpl<SongListMapper, SongList> implements ISongListService {
 
 }

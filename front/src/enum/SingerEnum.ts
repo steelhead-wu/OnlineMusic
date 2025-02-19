@@ -1,4 +1,4 @@
-export enum Singer {
+export enum SingerEnum {
     FEMALE_SINGER = 1,
     MALE_SINGER = 2,
     GROUP = 3,
@@ -8,19 +8,19 @@ export enum Singer {
 
 export const singer_style_list = [
     {
-        id: Singer.ALL_SINGER,
+        id: SingerEnum.ALL_SINGER,
         name: '全部歌手'
     },
     {
-        id: Singer.FEMALE_SINGER,
+        id: SingerEnum.FEMALE_SINGER,
         name: '女歌手'
     },
     {
-        id: Singer.MALE_SINGER,
+        id: SingerEnum.MALE_SINGER,
         name: '男歌手'
     },
     {
-        id: Singer.GROUP,
+        id: SingerEnum.GROUP,
         name: '组和'
     },
 ]

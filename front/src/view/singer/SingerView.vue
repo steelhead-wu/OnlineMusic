@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Navigation from "@/layouts/Navigation.vue";
 import {onMounted, ref} from "vue";
-import {Singer, singer_style_list} from "@/enum/Singer";
+import {SingerEnum, singer_style_list} from "@/enum/SingerEnum";
 import {getAllSinger, getSingerBySex} from "@/api/singer/SingerApi";
 import PlayBody from "@/layouts/PlayBody.vue";
 import {Behavior} from "@/enum/Behavior";
@@ -18,7 +18,7 @@ const singersStores = useSingersStore();
 const doClick = (item) => {
   console.log(item);
   singersStores.setCurrentNameOptIdx(item.id);
-  if (item.id === Singer.ALL_SINGER) {
+  if (item.id === SingerEnum.ALL_SINGER) {
     getAllSinger().then(value => {
       playList.value = value.data.data;
       singersStores.setSingers(playList.value);
@@ -37,7 +37,7 @@ const handlePopState = (event) => {
 
 onMounted(
     () => {
-      if (singersStores.getCurrentNameOptIdx === Singer.ALL_SINGER) {
+      if (singersStores.getCurrentNameOptIdx === SingerEnum.ALL_SINGER) {
         getAllSinger().then(value => {
           playList.value = value.data.data
           singersStores.setSingers(playList.value);

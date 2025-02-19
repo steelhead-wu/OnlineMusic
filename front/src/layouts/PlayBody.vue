@@ -24,8 +24,7 @@ const emits = defineEmits<{
             <!--            <yin-icon class="mask-icon" :icon="BOFANG"></yin-icon>-->
           </div>
         </div>
-        <p class="card-name">{{ item.name }}</p>
-        <!--        <p class="card-name">{{ item.name || item.title  }}</p>-->
+        <p class="card-name">{{ item.name || item.title }}</p>
       </li>
     </ul>
   </div>
@@ -46,7 +45,8 @@ const emits = defineEmits<{
   }
 
   .play-body {
-    //@include layout(flex-start, stretch, row, wrap);
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 

@@ -4,6 +4,8 @@ import {computed, defineOptions, ref} from "vue";
 import {baseURL} from "@/api/request";
 import {useSongStore} from "@/store/SongStore";
 import {getSingerBySex} from "@/api/singer/SingerApi";
+import {getAllSongList, getSongListByStyle} from "@/api/songList/SongListApi";
+import {SongListEnum} from "@/enum/SongListEnum";
 
 
 // const songStore = useSongStore()
@@ -22,6 +24,15 @@ import {getSingerBySex} from "@/api/singer/SingerApi";
 
 // getSingerBySex(2).then(value => {
 //   console.log(value);
+// })
+
+
+// getAllSongList().then(value => {
+//   console.log(value.data);
+// })
+
+// getSongListByStyle('华语').then(value => {
+//   console.log(value.data);
 // })
 </script>
 

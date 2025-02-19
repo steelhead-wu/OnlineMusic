@@ -1,9 +1,7 @@
 package com.wll.mapper;
 
-import com.github.yulichang.base.MPJBaseMapper;
-import com.wll.pojo.SongList;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.MapKey;
+import com.wll.pojo.SongList;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -19,7 +17,7 @@ import java.util.Map;
  * @since 2025-02-18
  */
 @Mapper
-public interface SongListMapper extends MPJBaseMapper<SongList> {
+public interface SongListMapper extends BaseMapper<SongList> {
 
     @Select("SELECT t.id,t.title,t.pic,t.introduction,t.style,s.title as song,s.id as songId," +
             "s.url AS url,s.album AS album,s.lyric AS lyric,s.picture AS picture FROM song_list t " +

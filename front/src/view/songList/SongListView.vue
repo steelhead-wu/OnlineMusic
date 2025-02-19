@@ -1,32 +1,33 @@
 <script setup lang="ts">
 import Navigation from "@/layouts/Navigation.vue";
 import {onMounted, ref} from "vue";
-import {Singer, singer_style_list} from "@/enum/Singer";
-import {getAllSinger, getSingerBySex} from "@/api/singer/SingerApi";
+import {SongListEnum, song_list_style} from "@/enum/SongListEnum";
 import PlayBody from "@/layouts/PlayBody.vue";
 import {Behavior} from "@/enum/Behavior";
 import {useRouter} from "vue-router";
 import {useSingersStore} from "@/store/SingersStore";
+import {getAllSongList, getSongListByStyle} from "@/api/songList/SongListApi";
 
 
+// interface
 
-const playList = ref<Array<Singer>>();
+const playList = ref<Array<SongList>>();
 const router = useRouter();
 
 const singersStores = useSingersStore();
 
-const doClick = (item) => {
-  console.log(item);
-  singersStores.setCurrentNameOptIdx(item.id);
-  if (item.id === Singer.ALL_SINGER) {
-    getAllSinger().then(value => {
+const doStyleClick = (item) => {
+  console.log('item', item);
+  singersStores.setCurrentSongListNameOptIdx(item.id);
+  if (item.id === SongListEnum.ALL_SONG_LIST) {
+    getAllSongList().then(value => {
       playList.value = value.data.data;
-      singersStores.setSingers(playList.value);
+      singersStores.setSongList(playList.value);
     })
   } else {
-    getSingerBySex(item.id).then(value => {
+    getSongListByStyle(item.name).then(value => {
       playList.value = value.data.data;
-      singersStores.setSingers(playList.value);
+      singersStores.setSongList(playList.value);
     })
   }
 }
@@ -37,17 +38,17 @@ const handlePopState = (event) => {
 
 onMounted(
     () => {
-      if (singersStores.getCurrentNameOptIdx === Singer.ALL_SINGER) {
-        getAllSinger().then(value => {
+      if (singersStores.getCurrentSongListNameOptIdx === SongListEnum.ALL_SONG_LIST) {
+        getAllSongList().then(value => {
           playList.value = value.data.data
-          singersStores.setSingers(playList.value);
+          singersStores.setSongList(playList.value);
           console.log('total singers:', playList.value.length);
         });
         // } else if (singersStores.getCurrentNameOpt === '女歌手') {
       } else {
-        getSingerBySex(singersStores.getCurrentNameOptIdx).then(value => {
+        getSongListByStyle(song_list_style[singersStores.getCurrentNameOptIdx].name).then(value => {
           playList.value = value.data.data
-          singersStores.setSingers(playList.value);
+          singersStores.setSongList(playList.value);
           console.log('total singers:', playList.value.length);
         });
       }
@@ -68,9 +69,9 @@ const doSingerDetail = (idx: number) => {
 
 <template>
   <Navigation style="position: absolute;top: 96px;left: 0"
-              :name="singer_style_list[singersStores.getCurrentNameOptIdx].name"
-              :style-list="singer_style_list"
-              @click="doClick"/>
+              :name="song_list_style[singersStores.getCurrentSongListNameOptIdx].name"
+              :style-list="song_list_style"
+              @click="doStyleClick"/>
   <PlayBody style="position: absolute;top: 146px;left: 0" :play-list="playList"
             @click="doSingerDetail"/>
 </template>
