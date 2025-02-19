@@ -5,6 +5,7 @@ import LoginView from '../view/LoginView.vue'
 import PersonalView from '../view/user/PersonalView.vue'
 import SingerView from '../view/singer/SingerView.vue'
 import SingerDetailView from '../view/singer/SingerDetailView.vue'
+import SongListDetailView from '../view/songList/SongListDetailView.vue'
 import SongListView from '../view/songList/SongListView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
@@ -42,6 +43,10 @@ const routes = [
             {// 歌单
                 path: Behavior.SONG_LIST,
                 component: SongListView,
+            },
+            {// 歌单细节
+                path: Behavior.SONG_LIST_DETAIL + '/:idx(\\d+)',
+                component: SongListDetailView,
             },
 
         ]

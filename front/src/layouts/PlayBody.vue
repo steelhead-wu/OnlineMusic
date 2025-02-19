@@ -46,6 +46,7 @@ const emits = defineEmits<{
 
   .play-body {
     display: flex;
+    // 让项目换行
     flex-wrap: wrap;
   }
 }

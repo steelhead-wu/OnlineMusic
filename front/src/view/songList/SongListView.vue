@@ -31,10 +31,6 @@ const doStyleClick = (item) => {
     })
   }
 }
-const handlePopState = (event) => {
-  console.log(event);
-  console.log('后退按钮被点击');
-}
 
 onMounted(
     () => {
@@ -46,7 +42,8 @@ onMounted(
         });
         // } else if (singersStores.getCurrentNameOpt === '女歌手') {
       } else {
-        getSongListByStyle(song_list_style[singersStores.getCurrentNameOptIdx].name).then(value => {
+
+        getSongListByStyle(song_list_style[singersStores.getCurrentSongListNameOptIdx].name).then(value => {
           playList.value = value.data.data
           singersStores.setSongList(playList.value);
           console.log('total singers:', playList.value.length);
@@ -54,14 +51,13 @@ onMounted(
       }
 
 
-      window.addEventListener('popstate', handlePopState);
     }
 )
 
 const doSingerDetail = (idx: number) => {
   console.log('singer_idx', idx);
 
-  router.push(Behavior.SINGER_DETAIL + '/' + idx);
+  router.push(Behavior.SONG_LIST_DETAIL + '/' + idx);
 }
 
 </script>

@@ -9,4 +9,5 @@ export enum Behavior {
     SINGER = '/singer',
     SINGER_DETAIL = '/singer-detail',
     SONG_LIST = '/song-list',
+    SONG_LIST_DETAIL = '/song-list-detail',
 }
