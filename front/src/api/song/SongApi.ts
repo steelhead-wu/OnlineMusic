@@ -24,3 +24,11 @@ export const getAllSongBySingerId = async (singerId: number) => {
         }
     });
 }
+
+export const getSongBySongListID = async (songListId: number) => {
+    return await myAxios.get(prefix, {
+        params: {
+            songListId
+        }
+    });
+}

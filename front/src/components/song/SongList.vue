@@ -27,7 +27,7 @@ const doRowClick = (row: any, column: any, event: Event) => {
     title: row.title,
     url: row.url
   });
-  songStore.setCurrentSongIdx(songStore.getSongList.length - 1);
+  // songStore.setCurrentSongIdx(songStore.getSongList.length - 1);
   console.log('songStore.getSongList:', songStore.getSongList);
   console.log('songStore.getCurrentSongIdx:', songStore.getCurrentSongIdx);
 }
@@ -99,7 +99,6 @@ const doDownloadMusic = (song: Song) => {
 
 #song-list .song-list {
   width: 1500px;
-
 }
 
 
