@@ -29,52 +29,73 @@ onMounted(() => {
 
 <template>
   <el-container>
-    <el-aside>
+    <el-aside class="aside">
       <div class="song-list-img">
         <el-image class="cover" :src="baseURL + current_song_list.pic"></el-image>
       </div>
       <h1>{{ current_song_list.title }}</h1>
     </el-aside>
-    <el-main>
+    <el-main class="main">
       <div class="introduction">
         <h1>简介</h1>
         <p>{{ current_song_list.introduction }}</p>
       </div>
-      <div>
-        <!--        <SongList :table-data="tableData"/>-->
+      <div class="songList">
+        <SongList :table-data="tableData"/>
       </div>
     </el-main>
   </el-container>
 </template>
 
 <style scoped lang="scss">
-.song-list-img {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
+.aside {
+  //display: flex;
+  //flex-direction: column;
 
-  .cover {
-    height: 250px;
-    width: 250px;
-    border-radius: 10%;
+  position: relative;
+  top: 0;
+  left: 0;
+
+  .song-list-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+
+    .cover {
+      height: 250px;
+      width: 250px;
+      border-radius: 10%;
+    }
   }
 }
 
+.main {
 
-.introduction {
-  width: 100%;
+  //flex-direction: row;
+  position: relative;
+  //top: 0;
 
-  h1 {
-    font-weight: bold;
-    font-size: 30px;
+  .songList {
+    max-width: 800px;
   }
 
-  p {
-    margin: 10px 0 20px 0;
-    text-align: left;
-    line-height: 1.5;
-    max-width: 1009px;
+  .introduction {
+    max-width: 800px;
+    padding: 0;
+    margin: 0;
+
+    h1 {
+      font-weight: bold;
+      font-size: 30px;
+    }
+
+    p {
+      margin: 0;
+      text-align: left;
+      line-height: 1.5;
+      min-width: 500px;
+    }
   }
 }
 </style>

@@ -3,7 +3,6 @@
 import BasicFooter from "@/layouts/BasicFooter.vue";
 import BasicHeader from "@/layouts/BasicHeader.vue";
 import PlayBar from "@/components/play/PlayBar.vue";
-import Test from "@/layouts/Test.vue";
 
 
 </script>
@@ -11,7 +10,6 @@ import Test from "@/layouts/Test.vue";
 <template>
   <div id="basicLayout">
     <el-container>
-
       <el-header>
         <BasicHeader/>
       </el-header>

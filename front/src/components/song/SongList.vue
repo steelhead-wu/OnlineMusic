@@ -91,8 +91,8 @@ const doDownloadMusic = (song: Song) => {
 <style scoped>
 #song-list {
   /*margin: 50px;*/
-  position: fixed;
-  left: 100px;
+  /*position: fixed;*/
+  /*left: 100px;*/
   align-content: center;
   cursor: pointer;
 }
