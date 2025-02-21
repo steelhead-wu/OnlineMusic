@@ -1,0 +1,9 @@
+/* src/assets/styles/global.css */
+:root {
+    --height: 100%;
+    --width: 100%;
+    --header-height: 76px;
+    --footer-height: 100px;
+    --margin-top-offset: var(--header-height);
+    --margin-bottom-offset: var(--footer-height);
+}

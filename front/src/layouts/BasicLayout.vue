@@ -30,6 +30,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
 </template>
 
 <style scoped lang="scss">
+
 #basicLayout {
   height: 100%;
   width: 100%;
@@ -41,7 +42,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
   .header {
     position: fixed;
     width: 100%;
-    height: 76px;
+    height: var(--header-height);
     left: 0;
     top: 0;
     padding: 0;
@@ -52,7 +53,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
   .main {
     width: 100%;
     padding: 0;
-    margin: 76px 0px 100px;
+    margin: var(--margin-top-offset) 0px var(--margin-bottom-offset);
   }
 
   .footer {
@@ -62,7 +63,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 100px;
+    height: var(--footer-height);
   }
 }
 </style>

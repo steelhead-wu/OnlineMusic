@@ -1,4 +1,5 @@
 import './assets/main.css'
+import './assets/css/global.css'
 // import './assets/css/acss.css'
 // main.ts
 import {createApp} from 'vue'
