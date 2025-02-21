@@ -214,8 +214,9 @@ const doDropDown = (dropdown) => {
   top: 0;
   right: 0;
   left: 0;
-  /*display: flex;*/
+  display: flex;
   flex-direction: row;
+  flex-wrap: nowrap;
   height: 76px;
   background: #000001;
 }

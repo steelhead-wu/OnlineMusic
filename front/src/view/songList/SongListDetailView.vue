@@ -71,9 +71,11 @@ onMounted(() => {
 }
 
 .main {
+  padding: 0;
+  margin: 0;
 
   //flex-direction: row;
-  position: relative;
+  //position: absolute;
   //top: 0;
 
   .songList {
