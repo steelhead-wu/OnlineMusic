@@ -9,7 +9,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
 
 <template>
   <div id="basicLayout">
-    <el-container>
+    <el-container class="container">
       <el-header class="header">
         <BasicHeader/>
       </el-header>
@@ -31,6 +31,13 @@ import PlayBar from "@/components/play/PlayBar.vue";
 
 <style scoped lang="scss">
 #basicLayout {
+  height: 100%;
+  width: 100%;
+
+  .container {
+    height: 100%;
+  }
+
   .header {
     position: fixed;
     width: 100%;
@@ -44,9 +51,8 @@ import PlayBar from "@/components/play/PlayBar.vue";
 
   .main {
     width: 100%;
-    height: 100%;
-    //max-height: calc(100% - 76px - 100px);
     padding: 0;
+    margin: 76px 0px 100px;
   }
 
   .footer {

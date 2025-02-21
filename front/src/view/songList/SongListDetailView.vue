@@ -28,7 +28,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-container>
+  <el-container class="container">
     <el-aside class="aside">
       <div class="song-list-img">
         <el-image class="cover" :src="baseURL + current_song_list.pic"></el-image>
@@ -48,9 +48,16 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+
+.container {
+  display: flex;
+  flex-direction: row; /* 默认是 row，可以省略 */
+}
+
 .aside {
   //display: flex;
   //flex-direction: column;
+  width: 300px;
 
   position: relative;
   top: 0;
@@ -71,7 +78,8 @@ onMounted(() => {
 }
 
 .main {
-  padding: 0;
+  flex: 1;
+  padding: 20px;
   margin: 0;
 
   //flex-direction: row;
