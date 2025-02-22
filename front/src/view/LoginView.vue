@@ -150,7 +150,7 @@ const rules = reactive<FormRules<NewUser>>({
 
 const singIn = () => {
   form.value.validate(pass => {
-    console.log(userStore.getLoginUser.value);
+    console.log(userStore.getLoginUser);
     if (pass) {
       console.log("进入signIn");
       login(newUser).then(value => {
@@ -161,7 +161,7 @@ const singIn = () => {
         console.log(value.data.data);
         userStore.setLoginUser(value.data.data);
         userStore.isOnline = true;
-        console.log(userStore.getLoginUser.value)
+        console.log(userStore.getLoginUser)
         // globalStatusStore.isLoginOrSignup = false;
         // console.log("globalStatusStore:" + JSON.stringify(globalStatusStore));
         // console.log("userStore:" + JSON.stringify(userStore));

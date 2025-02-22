@@ -4,7 +4,7 @@ import {computed, defineOptions, ref} from "vue";
 import {baseURL} from "@/api/request";
 import {useSongStore} from "@/store/SongStore";
 import {getSingerBySex} from "@/api/singer/SingerApi";
-import {getAllSongList, getSongListByStyle} from "@/api/songList/SongListApi";
+import {getAllSongList, getSongListByStyle, updateOrSaveRating} from "@/api/songList/SongListApi";
 import {SongListEnum} from "@/enum/SongListEnum";
 import {getSongBySongListID} from "@/api/song/SongApi";
 
@@ -38,6 +38,10 @@ import {getSongBySongListID} from "@/api/song/SongApi";
 
 // getSongBySongListID(7).then(value => {
 //   console.log(value.data);
+// })
+
+// updateOrSaveRating(1, 2, 3).then(value => {
+//   console.log("value.data", value.data);
 // })
 </script>
 

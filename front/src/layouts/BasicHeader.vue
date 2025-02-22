@@ -48,7 +48,7 @@ const doDropDown = (dropdown) => {
   console.log("进入doDropDown");
   // console.log(JSON.stringify(userStore));
   // console.log(JSON.stringify(globalStatusStore));
-  console.log(userStore.getLoginUser.value);
+  console.log(userStore.getLoginUser);
   if (dropdown.name === UserDropDown.SIGN_OUT) {
     // userStore.isOnline = false;
     userStore.$reset();
@@ -140,7 +140,7 @@ const doDropDown = (dropdown) => {
       <el-col v-else class="avatar">
         <el-dropdown size="large" trigger="hover">
           <el-avatar alt="default avatar" :size="AvatarSize.LARGE"
-                     :src="userStore.getLoginUser.value.avatar"/>
+                     :src="userStore.getLoginUser.avatar"/>
           <!--                     src="http://localhost/asset/img/avatorImages/1547476912596tou.jpg"/>-->
           <template #dropdown>
             <el-dropdown-menu>

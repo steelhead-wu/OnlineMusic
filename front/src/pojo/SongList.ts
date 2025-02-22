@@ -4,4 +4,5 @@ interface SongList {
     pic?: string,
     introduction?: string,
     style?: string,
+    rating?: number,
 }

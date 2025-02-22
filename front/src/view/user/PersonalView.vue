@@ -27,7 +27,7 @@ const tableData = [
       <Update/>
       <span class="personal-nickname">
         <h1 style="font-size: 6rem;white-space: nowrap;">
-          {{ userStore.getLoginUser.value.nickname === '' ? 'orzzro' : userStore.getLoginUser.value.nickname }}
+          {{ userStore.getLoginUser.nickname === '' ? 'orzzro' : userStore.getLoginUser.nickname }}
         </h1>
       </span>
     </div>

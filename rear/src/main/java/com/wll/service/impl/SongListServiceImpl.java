@@ -36,6 +36,11 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     }
 
     @Override
+    public int getEvenRatingOfSongList(int songListId) {
+        return songListMapper.getEvenRatingOfSongList(songListId);
+    }
+
+    @Override
     public Map<String, Object> getRatingBy(long userId, int songListId) {
         return songListMapper.getRatingBy(userId, songListId);
     }

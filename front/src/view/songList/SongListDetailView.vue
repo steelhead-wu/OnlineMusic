@@ -6,7 +6,7 @@ import {baseURL} from "@/api/request";
 import {onMounted, ref} from "vue";
 import SongList from "@/components/song/SongList.vue";
 import {getSongBySongListID} from "@/api/song/SongApi";
-import {getRatingBy, updateOrSaveRating} from "@/api/songList/SongListApi";
+import {getEvenRatingOfSongList, getRatingBy, updateOrSaveRating, updateSongList} from "@/api/songList/SongListApi";
 import {useUserStore} from "@/store/UserStore";
 
 const route = useRoute();
@@ -34,14 +34,36 @@ onMounted(() => {
     rating.value = value.data.data.rating;
   })
 
-
 })
 
 
 const changeRating = () => {
-  updateOrSaveRating(userStore.getLoginUser.id, current_song_list.value.id, rating.value).then(value => {
-    console.log(value.data);
-  })
+  updateOrSaveRating(userStore.getLoginUser.id, current_song_list.value.id, rating.value).then(
+      value => {
+        if (value.data.data) {
+          getEvenRatingOfSongList(current_song_list.value.id).then(value1 => {
+            if (value1.data.data != current_song_list.value.rating) {
+              updateSongList({
+                id: current_song_list.value.id,
+                rating: value1.data.data
+              }).then(value2 => {
+                if (value2.data.data) {
+                  current_song_list.value.rating = value1.data.data;
+                  console.log("更新评分成功");
+                } else {
+                  console.log("更新评分失败");
+                }
+
+              })
+            }
+
+          });
+
+        } else {
+          console.log("更新评分失败")
+        }
+      }
+  );
 }
 
 
@@ -65,7 +87,8 @@ const changeRating = () => {
       <div class="rate-block">
         <div class="rating-of-song">
           <h2 class="demonstration">歌单评分</h2>
-          <el-rate ref="rater" v-model="current_song_list.rating" :colors="colors" show-score disabled/>
+          <el-rate ref="rater" v-model="singersStore.getSongList[route.params.idx].rating" :colors="colors" show-score
+                   disabled/>
         </div>
 
         <div class="my-rating">

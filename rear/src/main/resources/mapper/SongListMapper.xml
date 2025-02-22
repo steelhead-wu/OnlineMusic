@@ -16,7 +16,8 @@
         from user_songlist_rating
         where song_list_id = 1;
     </select>
-<!--    <select id="getScoreBy" resultType="java.util.Map">-->
+
+    <!--    <select id="getScoreBy" resultType="java.util.Map">-->
 <!--        select id from user_songlist_rating where song_list_id = #{songListId} and user_id = #{userId}-->
 <!--    </select>-->
 </mapper>

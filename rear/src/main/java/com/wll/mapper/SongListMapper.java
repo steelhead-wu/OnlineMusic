@@ -44,5 +44,6 @@ public interface SongListMapper extends BaseMapper<SongList> {
     @Select("select id,rating from user_songlist_rating where song_list_id = #{songListId} and user_id = #{userId}")
     Map<String, Object> getRatingBy(long userId, int songListId);
 
-
+    @Select("select avg(rating) from user_songlist_rating where song_list_id = #{songListId}")
+    int getEvenRatingOfSongList(int songListId);
 }

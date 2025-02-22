@@ -20,9 +20,9 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
 ) => {
   console.log(uploadFile);
   console.log(response);
-  userStore.getLoginUser.value.avatar = baseURL + middle_path + '/' + response.data + '_' + uploadFile.name;
-  console.log(userStore.getLoginUser.value);
-  updateUserById(userStore.getLoginUser.value).then(value => {
+  userStore.getLoginUser.avatar = baseURL + middle_path + '/' + response.data + '_' + uploadFile.name;
+  console.log(userStore.getLoginUser);
+  updateUserById(userStore.getLoginUser).then(value => {
     console.log(value);
   })
 }
@@ -52,8 +52,8 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
   >
     <!--        <img v-if="imageUrl" :src="imageUrl" class="avatar"/>-->
-    <el-avatar v-if="userStore.getLoginUser.value.avatar" class="avatar" alt="default avatar" :size="AvatarSize.LARGE"
-               :src="userStore.getLoginUser.value.avatar"/>
+    <el-avatar v-if="userStore.getLoginUser.avatar" class="avatar" alt="default avatar" :size="AvatarSize.LARGE"
+               :src="userStore.getLoginUser.avatar"/>
     <el-icon v-else class="avatar-uploader-icon">
       <Plus/>
     </el-icon>

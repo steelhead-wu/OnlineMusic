@@ -28,12 +28,20 @@ export const useSingersStore = defineStore('singersStore', () => {
         }
 
 
+        const setRating = (currentSongListIdx: number, rating: number) => {
+            if (currentSongListIdx == null || currentSongListIdx < 0 || currentSongListIdx >= songList.value.length) {
+                return;
+            }
+            console.log("setRating");
+            songList.value[currentSongListIdx].rating = rating;
+        }
 
         return {
             singers, getSingers, setSingers,
             currentNameOptIdx, getCurrentNameOptIdx, setCurrentNameOptIdx,
             songList, getSongList, setSongList,
             currentSongListNameOptIdx, getCurrentSongListNameOptIdx, setCurrentSongListNameOptIdx,
+            setRating,
         };
     },
     {

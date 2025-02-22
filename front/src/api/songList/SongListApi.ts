@@ -14,3 +14,38 @@ export const getSongListByStyle = async (style: string) => {
         }
     })
 }
+
+
+export const updateOrSaveRating = async (userId: string, songListId: string, rating: number) => {
+    return await myAxios.put(prefix, {}, {
+        params: {
+            userId,
+            songListId,
+            rating,
+        }
+    })
+}
+
+
+export const getRatingBy = async (userId: string, songListId: string) => {
+    return await myAxios.get(prefix, {
+        params: {
+            userId,
+            songListId,
+        }
+    })
+}
+
+export const getEvenRatingOfSongList = async (songListId: string) => {
+    return await myAxios.get(prefix + '/calculateEvenRating', {
+        params: {
+            songListId,
+        }
+    })
+}
+
+
+export const updateSongList = async (songList: SongList) => {
+    return await myAxios.put(prefix, songList);
+}
+
