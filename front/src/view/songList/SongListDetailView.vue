@@ -30,8 +30,8 @@ onMounted(() => {
 <template>
   <el-container class="container">
     <el-aside class="aside">
-      <div class="song-list-img">
-        <el-image class="cover" :src="baseURL + current_song_list.pic"></el-image>
+      <div class="song-list-img-box">
+        <el-image class="cover-img" :src="baseURL + current_song_list.pic"></el-image>
       </div>
       <h1>{{ current_song_list.title }}</h1>
     </el-aside>
@@ -49,27 +49,18 @@ onMounted(() => {
 
 <style scoped lang="scss">
 
-.container {
-  display: flex;
-  flex-direction: row; /* 默认是 row，可以省略 */
-}
 
 .aside {
-  //display: flex;
-  //flex-direction: column;
-  width: 300px;
+  margin-top: 50px;
+  margin-left: 140px;
 
-  position: relative;
-  top: 0;
-  left: 0;
+  h1 {
+    margin-top: 10px;
+    font-weight: bold;
+  }
 
-  .song-list-img {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-
-    .cover {
+  .song-list-img-box {
+    .cover-img {
       height: 250px;
       width: 250px;
       border-radius: 10%;
@@ -78,16 +69,12 @@ onMounted(() => {
 }
 
 .main {
-  flex: 1;
-  padding: 20px;
-  margin: 0;
+  margin-top: 20px;
+  margin-left: 50px;
 
-  //flex-direction: row;
-  //position: absolute;
-  //top: 0;
 
   .songList {
-    max-width: 800px;
+    max-width: 1000px;
   }
 
   .introduction {

@@ -67,10 +67,10 @@ const doDownloadMusic = (song: Song) => {
     <!--    <h2>我的喜欢</h2>-->
     <!--    <br>-->
     <el-table highlight-current-row class="song-list" :data="props.tableData" stripe @row-click="doRowClick">
-      <el-table-column prop="song" label="歌曲" width="350"/>
-      <el-table-column prop="singer" label="歌手" width="350"/>
-      <el-table-column prop="album" label="专辑" width="350"/>
-      <el-table-column prop="op" label="操作" width="350">
+      <el-table-column prop="song" label="歌曲" width="250" align="center"/>
+      <el-table-column prop="singer" label="歌手" width="250" align="center"/>
+      <el-table-column prop="album" label="专辑" width="250" align="center"/>
+      <el-table-column prop="op" label="操作" width="150" align="center">
         <template #default="table">
           <el-dropdown>
             <FontAwesomeIcon icon="fa-edit" size="2x"/>
@@ -88,17 +88,17 @@ const doDownloadMusic = (song: Song) => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 #song-list {
   /*margin: 50px;*/
   /*position: fixed;*/
   /*left: 100px;*/
   align-content: center;
   cursor: pointer;
-}
 
-#song-list .song-list {
-  width: 1500px;
+  .song-list {
+    width: 1500px;
+  }
 }
 
 
