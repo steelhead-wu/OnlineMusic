@@ -47,95 +47,84 @@ onMounted(() => {
     </el-aside>
     <el-main class="album-main">
       <h1 class="singer-name">{{ current_singer.name }}</h1>
-      <el-text class="singer-introduction">
+      <p class="singer-introduction">
         {{ current_singer.introduction }}
-      </el-text>
-      <SongList class="songList" :table-data="tableData"/>
+      </p>
+            <SongList class="songList" :table-data="tableData"/>
     </el-main>
   </el-container>
 </template>
 
 <style scoped lang="scss">
 .album-slide {
-  //display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-
+  padding: 0;
+  margin-left: 100px;
+  margin-top: 50px;
 
   .singer-img {
-    position: fixed;
-    top: 100px;
-    left: 100px;
-    height: 250px;
-    width: 250px;
     border-radius: 10%;
+    width: 250px;
+    height: 250px;
   }
 
   .album-info {
-    width: 60%;
-    padding-top: 2rem;
-    position: fixed;
-    top: 325px;
-    left: 110px;
+    h2 {
+      margin-top: 10px;
+      margin-left: 20px;
+    }
 
     ul {
-      position: fixed;
-      left: 70px;
+      list-style: none;
 
       li {
-        display: inline-block;
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
+        margin-top: 5px;
+        margin-left: -20px;
       }
     }
   }
 }
 
 .album-main {
-  position: fixed;
-  //top: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin-top: 50px;
+  margin-left: 50px;
+
   .singer-name {
-    position: fixed;
-    top: 175px;
-    left: 375px;
     font-weight: bold;
+    font-size: 50px;
   }
 
   .singer-introduction {
-    width: 50%;
-    position: fixed;
-    top: 200px;
-    left: 375px;
-    color: black;
-    margin: 10px 0 20px 0;
+    //width: 1100px;
+    width: 900px;
+    font-weight: bold;
+
   }
 
   .songList {
-    position: relative;
-    //left: 200px;
-    //top: 0;
-    //right:  200px;
-
+    margin-top: 20px;
   }
 }
 
 @media screen and (min-width: 668px) {
   .album-slide {
-    position: fixed;
-    width: 400px;
+    //position: fixed;
+    //width: 400px;
   }
   .album-main {
-    min-width: 600px;
-    padding-right: 10vw;
-    margin-left: 400px;
+    //min-width: 600px;
+    //padding-right: 10vw;
+    //margin-left: 400px;
   }
 }
 
 @media screen and (max-width: 668px) {
   .album-slide {
-    display: none;
+    //  display: none;
   }
 }
 </style>

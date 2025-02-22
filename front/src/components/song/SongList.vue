@@ -66,7 +66,7 @@ const doDownloadMusic = (song: Song) => {
   <div id="song-list">
     <!--    <h2>我的喜欢</h2>-->
     <!--    <br>-->
-    <el-table highlight-current-row class="song-list" :data="props.tableData" stripe @row-click="doRowClick">
+    <el-table highlight-current-row class="song-list" :data="props.tableData" stripe @row-click="doRowClick" scrollbar-always-on>
       <el-table-column prop="song" label="歌曲" width="250" align="center"/>
       <el-table-column prop="singer" label="歌手" width="250" align="center"/>
       <el-table-column prop="album" label="专辑" width="250" align="center"/>
@@ -97,7 +97,7 @@ const doDownloadMusic = (song: Song) => {
   cursor: pointer;
 
   .song-list {
-    width: 1500px;
+    //width: 1500px;
   }
 }
 
