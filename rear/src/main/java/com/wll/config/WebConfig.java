@@ -3,7 +3,6 @@ package com.wll.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -23,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
 //                .allowedOriginPatterns("http://localhost:5173")
                 .allowedOrigins("http://localhost:5173")
-//                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
                 .maxAge(3600);
     }
 }

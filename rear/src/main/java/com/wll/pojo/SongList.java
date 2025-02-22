@@ -41,5 +41,6 @@ public class SongList implements Serializable {
     @TableField("style")
     private String style;
 
-
+    @TableField("rating")
+    private Integer rating;
 }

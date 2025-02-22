@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -24,4 +25,18 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     private SongListMapper songListMapper;
 
 
+    @Override
+    public boolean updateOrSaveRating(long userId, int songListId, int rating) {
+        Map<String, Object> scoreBy = songListMapper.getRatingBy(userId, songListId);
+        if (Objects.isNull(scoreBy)) {
+            return songListMapper.saveRating(userId, songListId, rating);
+        } else {
+            return songListMapper.updateRatingById((int) scoreBy.get("id"), rating);
+        }
+    }
+
+    @Override
+    public Map<String, Object> getRatingBy(long userId, int songListId) {
+        return songListMapper.getRatingBy(userId, songListId);
+    }
 }

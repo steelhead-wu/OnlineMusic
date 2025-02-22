@@ -16,4 +16,7 @@ import java.util.Map;
  */
 public interface ISongListService extends IService<SongList> {
 
+    boolean updateOrSaveRating(long userId, int songListId, int rating);
+
+    Map<String, Object> getRatingBy(long userId, int songListId);
 }

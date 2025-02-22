@@ -5,13 +5,18 @@ import {baseURL} from "@/api/request";
 
 import {onMounted, ref} from "vue";
 import SongList from "@/components/song/SongList.vue";
-import {getAllSongBySingerId, getSongBySongListID} from "@/api/song/SongApi";
+import {getSongBySongListID} from "@/api/song/SongApi";
+import {getRatingBy, updateOrSaveRating} from "@/api/songList/SongListApi";
+import {useUserStore} from "@/store/UserStore";
 
 const route = useRoute();
+const userStore = useUserStore();
 const singersStore = useSingersStore();
 const current_song_list = ref<SongList>(singersStore.getSongList[route.params.idx]);
 
 
+const rating = ref(0);
+const colors = ref(['#99A9BF', '#F7BA2A', '#FF9900']); // same as { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
 const tableData = ref<Array<unknown>>([]);
 
 onMounted(() => {
@@ -22,8 +27,23 @@ onMounted(() => {
       song['singer'] = split[0];
       tableData.value.push(song);
     }
+  });
+
+  getRatingBy(userStore.getLoginUser.id, current_song_list.value.id,).then(value => {
+    console.log(value.data);
+    rating.value = value.data.data.rating;
   })
+
+
 })
+
+
+const changeRating = () => {
+  updateOrSaveRating(userStore.getLoginUser.id, current_song_list.value.id, rating.value).then(value => {
+    console.log(value.data);
+  })
+}
+
 
 </script>
 
@@ -40,6 +60,22 @@ onMounted(() => {
         <h1>简介</h1>
         <p>{{ current_song_list.introduction }}</p>
       </div>
+
+
+      <div class="rate-block">
+        <div class="rating-of-song">
+          <h2 class="demonstration">歌单评分</h2>
+          <el-rate ref="rater" v-model="current_song_list.rating" :colors="colors" show-score disabled/>
+        </div>
+
+        <div class="my-rating">
+          <h2 class="demonstration">我的评分</h2>
+          <el-rate v-model="rating" :colors="colors" show-score @change="changeRating"/>
+        </div>
+
+      </div>
+
+
       <div class="songList">
         <SongList :table-data="tableData"/>
       </div>
@@ -74,7 +110,7 @@ onMounted(() => {
 
 
   .songList {
-    max-width: 1000px;
+    margin-top: 20px;
   }
 
   .introduction {
@@ -92,6 +128,38 @@ onMounted(() => {
       text-align: left;
       line-height: 1.5;
       min-width: 500px;
+    }
+  }
+
+  .rate-block {
+    display: flex;
+    padding: 0;
+    margin-top: 10px;
+
+
+    .el-rate {
+      //margin-left: 10px;
+    }
+
+    .rating-of-song {
+      margin-top: 10px;
+
+      .demonstration {
+        text-align: center;
+        font-weight: bold;
+      }
+
+    }
+
+
+    .my-rating {
+      margin-top: 10px;
+      margin-left: 120px;
+
+      .demonstration {
+        text-align: center;
+        font-weight: bold;
+      }
     }
   }
 }
