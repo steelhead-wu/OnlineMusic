@@ -10,6 +10,17 @@ import App from './App.vue'
 import {createPinia} from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
+//Import Froala Editor
+import 'froala-editor/js/plugins.pkgd.min.js';
+//Import third party plugins
+import 'froala-editor/js/third_party/embedly.min';
+import 'froala-editor/js/third_party/font_awesome.min';
+import 'froala-editor/js/third_party/spell_checker.min';
+import 'froala-editor/js/third_party/image_tui.min';
+// Import Froala Editor css files.
+import 'froala-editor/css/froala_editor.pkgd.min.css';
+import 'froala-editor/css/froala_style.min.css';
+import VueFroala from 'vue-froala-wysiwyg';
 
 /* import the fontawesome core */
 import {library} from '@fortawesome/fontawesome-svg-core'
@@ -28,11 +39,7 @@ library.add(fas);
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate)
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
-app.use(router).use(ElementPlus).use(pinia)
+app.use(router).use(ElementPlus).use(pinia).use(VueFroala)
 
 
 app.mount('#app');
-
-
-
-

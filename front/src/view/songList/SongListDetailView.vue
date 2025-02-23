@@ -8,11 +8,19 @@ import SongList from "@/components/song/SongList.vue";
 import {getSongBySongListID} from "@/api/song/SongApi";
 import {getEvenRatingOfSongList, getRatingBy, updateOrSaveRating, updateSongList} from "@/api/songList/SongListApi";
 import {useUserStore} from "@/store/UserStore";
+import Tiptap from "@/components/Tiptap.vue";
+import FroalaEditor from 'froala-editor';
+import {getAllCommentsBy, saveComment} from "@/api/comment/CommentApi";
+import {getFormatTime} from "@/api/utils/MyUtils";
+import Comments from "@/components/comments/Comments.vue";
+import Comment from "@/pojo/Comment";
+
 
 const route = useRoute();
 const userStore = useUserStore();
 const singersStore = useSingersStore();
 const current_song_list = ref<SongList>(singersStore.getSongList[route.params.idx]);
+const comments = ref<Array<Comment>>([]);
 
 
 const rating = ref(0);
@@ -33,6 +41,11 @@ onMounted(() => {
     console.log(value.data);
     rating.value = value.data.data.rating;
   })
+
+
+  getAllCommentsBy(current_song_list.value.id).then(value => {
+    comments.value = value.data.data;
+  });
 
 })
 
@@ -64,6 +77,33 @@ const changeRating = () => {
         }
       }
   );
+}
+
+const myComment = ref();
+const froala_config = ref({
+  placeholderText: '理性发言，改善世界~',
+  events: {
+    initialized: function () {
+      console.log('initialized')
+    }
+  },
+});
+
+
+const submitComment = () => {
+  if (myComment.value == null || myComment.value === '') {
+    return;
+  }
+  saveComment({
+    userId: userStore.getLoginUser.id,
+    content: myComment.value,
+    createdTime: getFormatTime(),
+    up: 0,
+    songListId: current_song_list.value.id,
+  }).then(value => {
+    console.log('value.data', value.data);
+  })
+
 }
 
 
@@ -102,35 +142,62 @@ const changeRating = () => {
       <div class="songList">
         <SongList :table-data="tableData"/>
       </div>
+
+      <div class="comment-box">
+        <el-avatar class="header-img" :size="40" :src="userStore.getLoginUser.avatar"></el-avatar>
+        <!--        <div class="comments-input">-->
+        <!--          <textarea v-model="newComment" placeholder="写下你的评论..."-->
+        <!--                    style="min-height: 50px;min-width: 70px;max-height: 50px; max-width: 70px;resize: none"></textarea>-->
+        <!--          <Tiptap/>-->
+        <div class="editor">
+          <froala :tag="'textarea'" :config="froala_config" v-model:value="myComment"></froala>
+        </div>
+
+        <button class="comment-btn" @click="submitComment">发布</button>
+      </div>
+      <Comments :comments="comments"/>
     </el-main>
   </el-container>
 </template>
 
 <style scoped lang="scss">
-
-
-.aside {
-  margin-top: 50px;
-  margin-left: 140px;
-
-  h1 {
-    margin-top: 10px;
-    font-weight: bold;
-  }
-
-  .song-list-img-box {
-    .cover-img {
-      height: 250px;
-      width: 250px;
-      border-radius: 10%;
-    }
-  }
-}
-
 .main {
   margin-top: 20px;
   margin-left: 50px;
 
+  .comment-box {
+    display: flex;
+    margin-top: 15px;
+
+    .header-img {
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .editor {
+      margin-left: 10px;
+      border: 0;
+      padding: 0;
+      width: 70%;
+    }
+
+    .comment-btn {
+      border: 0;
+      padding: 0;
+      margin-top: 120px;
+      margin-left: 10px;
+      width: 50px;
+      height: 50px;
+      background: #e8e8e8;
+      color: #07c060;
+      border-radius: 20%;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #b0b0b0;
+      }
+    }
+  }
 
   .songList {
     margin-top: 20px;
@@ -186,4 +253,24 @@ const changeRating = () => {
     }
   }
 }
+
+.aside {
+  margin-top: 50px;
+  margin-left: 140px;
+
+  h1 {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  .song-list-img-box {
+    .cover-img {
+      height: 250px;
+      width: 250px;
+      border-radius: 10%;
+    }
+  }
+}
+
+
 </style>

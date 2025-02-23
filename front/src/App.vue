@@ -43,10 +43,14 @@ import {getSongBySongListID} from "@/api/song/SongApi";
 // updateOrSaveRating(1, 2, 3).then(value => {
 //   console.log("value.data", value.data);
 // })
+
+
 </script>
 
 <template>
+  <!--  <div id="app">-->
 
+  <!--  </div>-->
   <router-view></router-view>
 
   <!--  <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"-->
