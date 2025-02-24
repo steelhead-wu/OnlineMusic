@@ -1,6 +1,6 @@
 // src/pojo/Comment.ts
 export default interface Comment {
-    id: string,
+    id?: string,
     userId: string,
     createdTime: string, // yyyy-MM-dd HH:mm:ss
     content: string,

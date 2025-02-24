@@ -89,17 +89,33 @@ const froala_config = ref({
 
 
 const submitComment = () => {
+
   if (myComment.value == null || myComment.value === '') {
     return;
   }
+
+  const formatTime = getFormatTime();
   saveComment({
     userId: userStore.getLoginUser.id,
     content: myComment.value,
-    createdTime: getFormatTime(),
+    createdTime: formatTime,
     up: 0,
     songListId: current_song_list.value.id,
   }).then(value => {
-    console.log('value.data', value.data);
+    if (value.data.code === 200) {
+      comments.value.push({
+            id: value.data.data,
+            user: userStore.getLoginUser,
+            content: myComment.value,
+            createdTime: formatTime, // yyyy-MM-dd HH:mm:ss
+            up: 0,
+            songListId: current_song_list.value.id,
+          }
+      )
+      myComment.value = '';
+    } else {
+      console.log("评论添加失败");
+    }
   })
 
 }
@@ -201,7 +217,7 @@ const thumbUp = (idx: number) => {
     .comment-btn {
       border: 0;
       padding: 0;
-      margin-top: 120px;
+      margin-top: 110px;
       margin-left: 10px;
       width: 50px;
       height: 50px;

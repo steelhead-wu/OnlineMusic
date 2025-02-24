@@ -36,7 +36,10 @@ public class CommentController {
 
     @PostMapping
     public R saveComment(@RequestBody Comment comment) {
-        return R.success(commentService.save(comment));
+        if (commentService.save(comment)) {
+            return R.success(comment.getId());
+        }
+        return R.error();
     }
 
     @GetMapping(params = "songListId")
