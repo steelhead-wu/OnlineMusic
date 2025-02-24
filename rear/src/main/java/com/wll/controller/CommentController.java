@@ -2,12 +2,14 @@ package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.Comment;
+import com.wll.pojo.DO.CommentDO;
 import com.wll.service.ICommentService;
 import com.wll.utils.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -39,8 +41,13 @@ public class CommentController {
 
     @GetMapping(params = "songListId")
     public R getAllCommentsBy(int songListId) {
-        List<Comment> list = commentService.list(new LambdaUpdateWrapper<Comment>()
-                .eq(Comment::getSongListId, songListId));
-        return R.success(list);
+        return R.success(commentService.getAllCommentsBy(songListId));
+    }
+
+
+    @PutMapping
+    public R updateComment(@RequestBody Comment comment) {
+//        return R.success();
+        return R.success(commentService.updateById(comment));
     }
 }

@@ -8,19 +8,17 @@ import SongList from "@/components/song/SongList.vue";
 import {getSongBySongListID} from "@/api/song/SongApi";
 import {getEvenRatingOfSongList, getRatingBy, updateOrSaveRating, updateSongList} from "@/api/songList/SongListApi";
 import {useUserStore} from "@/store/UserStore";
-import Tiptap from "@/components/Tiptap.vue";
-import FroalaEditor from 'froala-editor';
-import {getAllCommentsBy, saveComment} from "@/api/comment/CommentApi";
+import {getAllCommentsBy, saveComment, updateComment} from "@/api/comment/CommentApi";
 import {getFormatTime} from "@/api/utils/MyUtils";
 import Comments from "@/components/comments/Comments.vue";
-import Comment from "@/pojo/Comment";
+import CommentDO from "@/pojo/DO/CommentDO";
 
 
 const route = useRoute();
 const userStore = useUserStore();
 const singersStore = useSingersStore();
 const current_song_list = ref<SongList>(singersStore.getSongList[route.params.idx]);
-const comments = ref<Array<Comment>>([]);
+const comments = ref<Array<CommentDO>>([]);
 
 
 const rating = ref(0);
@@ -107,6 +105,25 @@ const submitComment = () => {
 }
 
 
+const thumbUp = (idx: number) => {
+  ++comments.value[idx].up;
+  updateComment({
+    id: comments.value[idx].id,
+    userId: comments.value[idx].user.id,
+    createdTime: comments.value[idx].createdTime,
+    content: comments.value[idx].content,
+    up: comments.value[idx].up,
+    songListId: comments.value[idx].songListId
+  }).then(value => {
+    if (value.data.data) {
+      console.log('更新comment成功');
+    } else {
+      console.log('更新comment失败');
+    }
+  })
+}
+
+
 </script>
 
 <template>
@@ -155,7 +172,7 @@ const submitComment = () => {
 
         <button class="comment-btn" @click="submitComment">发布</button>
       </div>
-      <Comments :comments="comments"/>
+      <Comments :comments="comments" @click="thumbUp"/>
     </el-main>
   </el-container>
 </template>
