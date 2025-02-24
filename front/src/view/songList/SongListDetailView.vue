@@ -3,7 +3,7 @@ import {useRoute} from "vue-router";
 import {useSingersStore} from "@/store/SingersStore";
 import {baseURL} from "@/api/request";
 
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import SongList from "@/components/song/SongList.vue";
 import {getSongBySongListID} from "@/api/song/SongApi";
 import {getEvenRatingOfSongList, getRatingBy, updateOrSaveRating, updateSongList} from "@/api/songList/SongListApi";
@@ -12,6 +12,7 @@ import {getAllCommentsBy, saveComment, updateComment} from "@/api/comment/Commen
 import {getFormatTime} from "@/api/utils/MyUtils";
 import Comments from "@/components/comments/Comments.vue";
 import CommentDO from "@/pojo/DO/CommentDO";
+import {CommentSortMode, SORT_MODE_LENGTH, SORTING_NAME} from "@/enum/CommentSortMode";
 
 
 const route = useRoute();
@@ -46,7 +47,6 @@ onMounted(() => {
   });
 
 })
-
 
 const changeRating = () => {
   updateOrSaveRating(userStore.getLoginUser.id, current_song_list.value.id, rating.value).then(
@@ -138,7 +138,25 @@ const thumbUp = (idx: number) => {
     }
   })
 }
+const sort_mode = ref(0);
+watch([comments, sort_mode], ([new_comments, new_sort_mode]) => {
+  new_comments.sort((a, b) => {
+    switch (new_sort_mode) {
+      case CommentSortMode.UP_UP:
+        return a.up - b.up;
+      case CommentSortMode.UP_DOWN:
+        return b.up - a.up;
+      default:
+        return 0;
+    }
+  });
+}, {deep: true})
 
+
+const switchSortMode = () => {
+
+  sort_mode.value = (sort_mode.value + 1) % SORT_MODE_LENGTH;
+}
 
 </script>
 
@@ -178,16 +196,19 @@ const thumbUp = (idx: number) => {
 
       <div class="comment-box">
         <el-avatar class="header-img" :size="40" :src="userStore.getLoginUser.avatar"></el-avatar>
-        <!--        <div class="comments-input">-->
-        <!--          <textarea v-model="newComment" placeholder="写下你的评论..."-->
-        <!--                    style="min-height: 50px;min-width: 70px;max-height: 50px; max-width: 70px;resize: none"></textarea>-->
-        <!--          <Tiptap/>-->
         <div class="editor">
           <froala :tag="'textarea'" :config="froala_config" v-model:value="myComment"></froala>
         </div>
 
         <button class="comment-btn" @click="submitComment">发布</button>
       </div>
+
+      <div class="sort-btn">
+        <el-button style="color: #818086;background-color: white;border: none;border-radius: 10%"
+                   @click="switchSortMode">{{ SORTING_NAME[sort_mode] }}
+        </el-button>
+      </div>
+
       <Comments :comments="comments" @click="thumbUp"/>
     </el-main>
   </el-container>
@@ -197,6 +218,13 @@ const thumbUp = (idx: number) => {
 .main {
   margin-top: 20px;
   margin-left: 50px;
+
+  .sort-btn {
+    width: 76%;
+    margin-top: 20px;
+    text-align: right;
+
+  }
 
   .comment-box {
     display: flex;
