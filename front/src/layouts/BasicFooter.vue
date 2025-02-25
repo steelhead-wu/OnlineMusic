@@ -45,15 +45,6 @@ a {
   font-size: medium;
   color: rgba(153, 153, 153, 0.6);
   height: 100px;
-  /*background-color: #2c3e50;*/
-  /*color: white;*/
-  /*padding: 20px 0;*/
-  /*text-align: center;*/
-  /*position: fixed;*/
-  /*bottom: 0;*/
-  /*right: 0;*/
-  /*left: 0;*/
-
 }
 
 </style>

@@ -8,6 +8,7 @@ import {AvatarSize} from "@/enum/AvatarSize";
 import {useUserStore} from "@/store/UserStore";
 import {baseURL} from "@/api/request";
 import {updateUserById} from "@/api/user/UserApi";
+import {PictureRepoType} from "@/enum/PictureRepoType";
 
 
 const imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
@@ -31,8 +32,8 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (rawFile.type !== 'image/jpeg') {
     ElMessage.error('Avatar picture must be JPG format!')
     return false
-  } else if (rawFile.size / 1024 / 1024 > 2) {
-    ElMessage.error('Avatar picture size can not exceed 2MB!')
+  } else if (rawFile.size / 1024 / 1024 > 5) {
+    ElMessage.error('Avatar picture size can not exceed 5MB!')
     return false
   }
   return true
@@ -42,14 +43,15 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 <template>
   <el-upload
       class="avatar-uploader"
-      name="user-avatar"
+      name="blob"
       :action="act"
+      :data="{
+        'Picture-Repo-Type': PictureRepoType.USER_AVATAR.toString()
+      }"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
       :before-upload="beforeAvatarUpload"
       limit="1"
-
-
   >
     <!--        <img v-if="imageUrl" :src="imageUrl" class="avatar"/>-->
     <el-avatar v-if="userStore.getLoginUser.avatar" class="avatar" alt="default avatar" :size="AvatarSize.LARGE"

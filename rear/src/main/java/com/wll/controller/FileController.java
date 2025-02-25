@@ -1,14 +1,13 @@
 package com.wll.controller;
 
+import com.wll.enums.ResourcesPath;
 import com.wll.utils.R;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,28 +18,37 @@ import java.nio.file.Paths;
 @RestController
 @RequestMapping("/files")
 public class FileController {
-    private static final String USER_DIRECTORY = System.getProperty("user.dir");
-    private static final String MIDDLE_PATH = "\\src\\main\\resources\\static\\asset\\img\\avatarImages\\";
-
 
     @PostMapping("/upload")
-    public synchronized R upload(@RequestParam(name = "user-avatar") MultipartFile multipartFile) {
-
-        String filePrefix = USER_DIRECTORY + MIDDLE_PATH;
-        Path filePath = Paths.get(filePrefix);
+    public synchronized R upload(@RequestParam("blob") MultipartFile multipartFile,
+                                 @RequestParam("Picture-Repo-Type") int pictureRepoType,
+                                 HttpServletRequest request) {
         long timeMillis = System.currentTimeMillis();
-        String filename = filePrefix + timeMillis + "_" + multipartFile.getOriginalFilename();
-        try (OutputStream outputStream = new FileOutputStream(filename)) {
-            if (!Files.exists(filePath)) {
-                Files.createDirectories(filePath);
+        String fileFullName = "";
+        try {
+            Path filepath = Paths.get(ResourcesPath.values()[pictureRepoType].toString());
+            if (!Files.exists(filepath)) {
+                Files.createDirectories(filepath);
             }
+            fileFullName = filepath + "\\" + timeMillis + "_" + multipartFile.getOriginalFilename();
+            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(fileFullName));
             outputStream.write(multipartFile.getBytes());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return R.success(timeMillis);
+
+//        return R.successWithLink(timeMillis, fileFullName.substring(fileFullName.indexOf("\\asset")));
+        String scheme = request.getScheme(); // 获取协议（http 或 https）
+        String serverName = request.getServerName(); // 获取服务器地址
+        int serverPort = request.getServerPort(); // 获取服务器端口
+        String serverAddress = scheme + "://" + serverName + ":" + serverPort;
+
+
+//        return R.successWithLink(timeMillis, serverAddress + "asset/commentPicture/" + timeMillis + "_" + multipartFile.getOriginalFilename());
+        return R.successWithLink(timeMillis, serverAddress + fileFullName.substring(fileFullName.indexOf("\\asset")));
     }
 
 

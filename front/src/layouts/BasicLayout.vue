@@ -15,9 +15,9 @@ import PlayBar from "@/components/play/PlayBar.vue";
       </el-header>
 
       <el-main class="main">
-        <!--        <keep-alive include="SingerView">-->
+        <!--                <keep-alive include="SingerView">-->
         <RouterView/>
-        <!--        </keep-alive>-->
+        <!--                </keep-alive>-->
         <PlayBar/>
         <!--        <Test/>-->
       </el-main>
@@ -40,6 +40,7 @@ import PlayBar from "@/components/play/PlayBar.vue";
   }
 
   .header {
+    z-index: 1;
     position: fixed;
     width: 100%;
     height: var(--header-height);

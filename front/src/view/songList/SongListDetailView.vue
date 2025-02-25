@@ -14,6 +14,7 @@ import Comments from "@/components/comments/Comments.vue";
 import CommentDO from "@/pojo/DO/CommentDO";
 import {CommentSortMode, SORT_MODE_LENGTH, SORTING_NAME} from "@/enum/CommentSortMode";
 import FroalaEditor from 'froala-editor';
+import {PictureRepoType} from "@/enum/PictureRepoType";
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -77,33 +78,82 @@ const changeRating = () => {
   );
 }
 
-// new FroalaEditor('.editor froala', {
-//   // Set the image upload parameter.
-//   imageUploadParam: 'image_param',
-//
-//   // Set the image upload URL.
-//   imageUploadURL: '/upload_image',
-//
-//   // Additional upload params.
-//   imageUploadParams: {id: 'my_editor'},
-//
-//   // Set request type.
-//   imageUploadMethod: 'POST',
-//
-//   // Set max image size to 5MB.
-//   imageMaxSize: 5 * 1024 * 1024,
-//
-//   // Allow to upload PNG and JPG.
-//   imageAllowedTypes: ['jpeg', 'jpg', 'png'],
-// })
+new FroalaEditor('.editor.froala-editor',
+    {
+      // Set the image upload parameter.
+      imageUploadParam: 'image_param',
+
+      // Set the image upload URL.
+      imageUploadURL: '/upload_image',
+
+      // Additional upload params.
+      imageUploadParams: {id: 'my_editor'},
+
+      // Set request type.
+      imageUploadMethod: 'POST',
+
+      // Set max image size to 5MB.
+      imageMaxSize: 5 * 1024 * 1024,
+
+      // Allow to upload PNG and JPG.
+      imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+
+      events: {
+        'image.beforeUpload': function (images) {
+          // Return false if you want to stop the image upload.
+        },
+        'image.uploaded': function (response) {
+          // Image was uploaded to the server.
+          console.log('response', response);
+        },
+      }
+    }
+)
+
 const myComment = ref();
 const froala_config = ref({
   placeholderText: '理性发言，改善世界~',
+  language: 'zh_cn',
+
+  // Set the image upload URL.
+  imageUploadURL: baseURL + '/api/files/upload',
+  // imageUploadURL: 'sddsd',
+
+  imageUploadParam: 'blob',
+
+  // Additional upload params.
+  imageUploadParams: {
+    'Picture-Repo-Type': PictureRepoType.USER_COMMENT
+  },
+
+  // Set request type.
+  imageUploadMethod: 'POST',
+
+  // Set max image size to 5MB.
+  imageMaxSize: 5 * 1024 * 1024,
+
+  // Allow to upload PNG and JPG.
+  imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+
   events: {
     initialized: function () {
       console.log('initialized')
-    }
+    },
+    'image.beforeUpload': function (images) {
+      // Return false if you want to stop the image upload.
+    },
+    'image.uploaded': function (response) {
+      console.log('response', response)
+      // Image was uploaded to the server.
+    },
+    'image.inserted': function ($img, response) {
+      // Image was inserted in the editor.
+    },
+    'image.replaced': function ($img, response) {
+      // Image was replaced in the editor.
+    },
   },
+
 });
 
 
@@ -176,8 +226,6 @@ const switchSortMode = () => {
 
   sort_mode.value = (sort_mode.value + 1) % SORT_MODE_LENGTH;
 }
-
-
 </script>
 
 
@@ -218,7 +266,7 @@ const switchSortMode = () => {
       <div class="comment-box">
         <el-avatar class="header-img" :size="40" :src="userStore.getLoginUser.avatar"></el-avatar>
         <div class="editor">
-          <froala :tag="'textarea'" :config="froala_config" v-model:value="myComment"></froala>
+          <froala class="froala-editor" :tag="'textarea'" :config="froala_config" v-model:value="myComment"></froala>
         </div>
 
         <button class="comment-btn" @click="submitComment">发布</button>

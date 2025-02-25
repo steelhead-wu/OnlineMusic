@@ -30,6 +30,9 @@ spring:
     resources:
       static-locations: file:src/main/resources/static # Locations of static resources.Defaults to classpath:[/META-INF/resources/, /resources/, /static/, /public/].
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
 
 
 
