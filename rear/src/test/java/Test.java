@@ -1,6 +1,7 @@
 import com.wll.enums.ResourcesPath;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -11,9 +12,9 @@ import java.util.Arrays;
 public class Test {
 
     public static void main(String[] args) throws IOException {
-        Path filepath = Paths.get(ResourcesPath.values()[0].toString());
-        System.out.println(filepath);
+//        Path filepath = Paths.get(ResourcesPath.values()[0].toString());
+//        System.out.println(filepath);
 //        System.out.println(filepath.);
-
+        System.out.println(Files.exists(Paths.get("D:/Project/JavaPro")));
     }
 }

@@ -22,11 +22,12 @@ public class FileController {
     @PostMapping("/upload")
     public synchronized R upload(@RequestParam("blob") MultipartFile multipartFile,
                                  @RequestParam("Picture-Repo-Type") int pictureRepoType,
+                                 @RequestParam("User-ID") String userID,
                                  HttpServletRequest request) {
         long timeMillis = System.currentTimeMillis();
         String fileFullName = "";
         try {
-            Path filepath = Paths.get(ResourcesPath.values()[pictureRepoType].toString());
+            Path filepath = Paths.get(ResourcesPath.values()[pictureRepoType].toString() + "\\" + userID);
             if (!Files.exists(filepath)) {
                 Files.createDirectories(filepath);
             }
@@ -40,14 +41,12 @@ public class FileController {
             e.printStackTrace();
         }
 
-//        return R.successWithLink(timeMillis, fileFullName.substring(fileFullName.indexOf("\\asset")));
         String scheme = request.getScheme(); // 获取协议（http 或 https）
         String serverName = request.getServerName(); // 获取服务器地址
         int serverPort = request.getServerPort(); // 获取服务器端口
         String serverAddress = scheme + "://" + serverName + ":" + serverPort;
 
 
-//        return R.successWithLink(timeMillis, serverAddress + "asset/commentPicture/" + timeMillis + "_" + multipartFile.getOriginalFilename());
         return R.successWithLink(timeMillis, serverAddress + fileFullName.substring(fileFullName.indexOf("\\asset")));
     }
 
