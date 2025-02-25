@@ -13,7 +13,7 @@ import {getFormatTime} from "@/api/utils/MyUtils";
 import Comments from "@/components/comments/Comments.vue";
 import CommentDO from "@/pojo/DO/CommentDO";
 import {CommentSortMode, SORT_MODE_LENGTH, SORTING_NAME} from "@/enum/CommentSortMode";
-
+import FroalaEditor from 'froala-editor';
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -77,6 +77,25 @@ const changeRating = () => {
   );
 }
 
+// new FroalaEditor('.editor froala', {
+//   // Set the image upload parameter.
+//   imageUploadParam: 'image_param',
+//
+//   // Set the image upload URL.
+//   imageUploadURL: '/upload_image',
+//
+//   // Additional upload params.
+//   imageUploadParams: {id: 'my_editor'},
+//
+//   // Set request type.
+//   imageUploadMethod: 'POST',
+//
+//   // Set max image size to 5MB.
+//   imageMaxSize: 5 * 1024 * 1024,
+//
+//   // Allow to upload PNG and JPG.
+//   imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+// })
 const myComment = ref();
 const froala_config = ref({
   placeholderText: '理性发言，改善世界~',
@@ -158,7 +177,9 @@ const switchSortMode = () => {
   sort_mode.value = (sort_mode.value + 1) % SORT_MODE_LENGTH;
 }
 
+
 </script>
+
 
 <template>
   <el-container class="container">

@@ -15,9 +15,9 @@ import PlayBar from "@/components/play/PlayBar.vue";
       </el-header>
 
       <el-main class="main">
-        <keep-alive include="SingerView">
-          <RouterView/>
-        </keep-alive>
+        <!--        <keep-alive include="SingerView">-->
+        <RouterView/>
+        <!--        </keep-alive>-->
         <PlayBar/>
         <!--        <Test/>-->
       </el-main>
