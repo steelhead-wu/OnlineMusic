@@ -19,6 +19,10 @@ public class R {
 
     private Object data;
 
+    // coordinated with Froala
+    private String link;
+
+
     public static R success() {
         R r = new R();
         r.setCode(200);
@@ -36,6 +40,12 @@ public class R {
         r.setSuccess(true);
         r.setType("success");
         r.setData(data);
+        return r;
+    }
+
+    public static R successWithLink(Object data, String link) {
+        R r = R.success(data);
+        r.setLink(link);
         return r;
     }
 
