@@ -19,10 +19,17 @@ const userStore = useUserStore();
 const defaultAvatar = ref<string>('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png');
 
 const search = () => {
-  if (keyWord.value) {
-    searchSong(keyWord.value).then(value => {
-    });
-  }
+  // if (keyWord.value) {
+  //   searchSong(keyWord.value).then(value => {
+  //   });
+  // }
+
+  router.push({
+    path: Behavior.SEARCH,
+    query: {
+      kw: keyWord.value,
+    }
+  })
 }
 
 const login = () => {
@@ -73,7 +80,8 @@ const doDropDown = (dropdown) => {
 
       <!--      图标-->
       <el-col>
-        <img src="../assets/img/logo.png" alt="logo" style="height: 76px;left: 40px;position: fixed;cursor: pointer;z-index: 1"
+        <img src="../assets/img/logo.png" alt="logo"
+             style="height: 76px;left: 40px;position: fixed;cursor: pointer;z-index: 1"
              @click="router.push(Behavior.HOMEPAGE)"/>
       </el-col>
 
@@ -99,10 +107,10 @@ const doDropDown = (dropdown) => {
         </el-input>
       </el-col>
       <!--      主页-->
-<!--      <el-col>-->
-<!--        <el-button :icon="House" circle style="position: fixed;left: 430px;top: 15px" size="large"-->
-<!--                   tag="a" @click="router.push(Behavior.HOMEPAGE)"></el-button>-->
-<!--      </el-col>-->
+      <!--      <el-col>-->
+      <!--        <el-button :icon="House" circle style="position: fixed;left: 430px;top: 15px" size="large"-->
+      <!--                   tag="a" @click="router.push(Behavior.HOMEPAGE)"></el-button>-->
+      <!--      </el-col>-->
 
       <el-col>
         <el-button @click="router.push(Behavior.SINGER)" tag="a"

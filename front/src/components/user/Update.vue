@@ -19,9 +19,9 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
 ) => {
-  console.log(uploadFile);
-  console.log(response);
-  userStore.getLoginUser.avatar = baseURL + middle_path + '/' + response.data + '_' + uploadFile.name;
+  console.log('uploadFile', uploadFile);
+  console.log('response',response);
+  userStore.getLoginUser.avatar = response.link;
   console.log(userStore.getLoginUser);
   updateUserById(userStore.getLoginUser).then(value => {
     console.log(value);
@@ -46,7 +46,8 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
       name="blob"
       :action="act"
       :data="{
-        'Picture-Repo-Type': PictureRepoType.USER_AVATAR.toString()
+        'Picture-Repo-Type': PictureRepoType.USER_AVATAR,
+        'User-ID': userStore.getLoginUser.id,
       }"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"
