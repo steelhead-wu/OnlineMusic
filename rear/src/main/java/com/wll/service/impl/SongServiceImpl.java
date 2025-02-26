@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,5 +26,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
 
     public List<Song> getSongBySongListID(Integer songListId) {
         return songMapper.getSongBySongListID(songListId);
+    }
+
+    public List<Map<String, Object>> searchSongByTitle(String kw) {
+        return songMapper.searchSongByTitle(kw);
     }
 }

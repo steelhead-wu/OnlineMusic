@@ -48,5 +48,9 @@ public class Singer implements Serializable {
     @TableField("introduction")
     private String introduction;
 
+    @TableField("song_number")
+    private String songNumber;
 
+    @TableField("album_number")
+    private String albumNumber;
 }

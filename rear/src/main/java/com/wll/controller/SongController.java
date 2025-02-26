@@ -58,10 +58,11 @@ public class SongController {
 
     @GetMapping("/s")
     public R searchSongByTitle(@RequestParam("kw") String kw) {
-        LambdaQueryWrapper<Song> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(Song::getTitle, kw);
-        List<Song> res = songService.list(lambdaQueryWrapper);
-        return Objects.isNull(res) ? R.error() : R.success(res);
+//        LambdaQueryWrapper<Song> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        lambdaQueryWrapper.like(Song::getTitle, kw);
+//        List<Song> res = songService.list(lambdaQueryWrapper);
+
+        return R.success(songService.searchSongByTitle(kw));
     }
 
 
