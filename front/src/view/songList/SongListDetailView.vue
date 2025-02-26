@@ -123,7 +123,8 @@ const froala_config = ref({
 
   // Additional upload params.
   imageUploadParams: {
-    'Picture-Repo-Type': PictureRepoType.USER_COMMENT
+    'Picture-Repo-Type': PictureRepoType.USER_COMMENT,
+    'User-ID': userStore.getLoginUser.id,
   },
 
   // Set request type.

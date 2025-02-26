@@ -11,6 +11,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * @time 2025/2/3 15:06 周一
@@ -26,19 +27,27 @@ public class FileController {
                                  HttpServletRequest request) {
         long timeMillis = System.currentTimeMillis();
         String fileFullName = "";
+        BufferedOutputStream outputStream = null;
         try {
             Path filepath = Paths.get(ResourcesPath.values()[pictureRepoType].toString() + "\\" + userID);
             if (!Files.exists(filepath)) {
                 Files.createDirectories(filepath);
             }
             fileFullName = filepath + "\\" + timeMillis + "_" + multipartFile.getOriginalFilename();
-            BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(fileFullName));
+            outputStream = new BufferedOutputStream(new FileOutputStream(fileFullName));
             outputStream.write(multipartFile.getBytes());
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (!Objects.isNull(outputStream)) {
+                try {
+                    outputStream.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
         }
 
         String scheme = request.getScheme(); // 获取协议（http 或 https）
