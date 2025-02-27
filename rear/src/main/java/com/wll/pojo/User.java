@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -44,5 +45,14 @@ public class User implements Serializable {
 
     @TableField("avatar")
     private String avatar;
+
+    @TableField("birth")
+    private LocalDate birth;
+
+    @TableField("whats_up")
+    private String whatsUp;
+
+    @TableField("sex")
+    private int sex;
 
 }

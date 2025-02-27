@@ -3,11 +3,15 @@ import {download} from "@/api/song/SongApi";
 import {useRoute} from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {useSongStore} from "@/store/SongStore";
+import {ref} from "vue";
 
 const props = defineProps<{
   tableData: Song & {
     singer: string
-  }
+  },
+  loading: true
+
+
 }>();
 
 
@@ -66,7 +70,8 @@ const doDownloadMusic = (song: Song) => {
   <div id="song-list">
     <!--    <h2>我的喜欢</h2>-->
     <!--    <br>-->
-    <el-table highlight-current-row class="song-list" :data="props.tableData" stripe @row-click="doRowClick"
+    <el-table v-loading="props.loading" element-loading-text="请稍等" highlight-current-row class="song-list"
+              :data="props.tableData" stripe @row-click="doRowClick"
               scrollbar-always-on>
       <el-table-column prop="song" label="歌曲" width="250" align="center"/>
       <el-table-column prop="singer" label="歌手" width="250" align="center"/>
@@ -95,6 +100,7 @@ const doDownloadMusic = (song: Song) => {
   cursor: pointer;
 
   .song-list {
+    z-index: 0;
     //width: 1500px;
   }
 }

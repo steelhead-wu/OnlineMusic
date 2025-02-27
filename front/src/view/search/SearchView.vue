@@ -13,6 +13,7 @@ const route = useRoute();
 const data = ref(null);
 
 const isShow = ref(false);
+const loading_toggle = ref(true);
 
 watch(() => route.query.kw, fetchData, {immediate: true})
 
@@ -28,6 +29,10 @@ async function fetchData(kw: string) {
     console.log(data.value);
     tableData.value = [];
     if (isShow.value) {
+      setTimeout(() => {
+        loading_toggle.value = false;
+      }, 250);
+
       for (const song of data.value) {
         const split = song.title?.split('-');
         song['song'] = split[1];
@@ -61,7 +66,8 @@ async function fetchData(kw: string) {
       <el-container>
         <el-header></el-header>
         <el-main>
-          <SongList class="song-list" :table-data="tableData"/>
+          <SongList v-if="isShow" class="song-list" :table-data="tableData" :loading="loading_toggle"/>
+          <h1 v-else style="text-align: center">NO DATA</h1>
         </el-main>
       </el-container>
     </el-main>

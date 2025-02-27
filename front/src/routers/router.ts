@@ -3,11 +3,12 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../view/HomeView.vue'
 import LoginView from '../view/LoginView.vue'
 import PersonalView from '../view/user/PersonalView.vue'
+import SettingsView from '../view/user/SettingsView.vue'
 import SingerView from '../view/singer/SingerView.vue'
 import SingerDetailView from '../view/singer/SingerDetailView.vue'
 import SongListDetailView from '../view/songList/SongListDetailView.vue'
 import SongListView from '../view/songList/SongListView.vue'
-import Search from '@/view/search/Search.vue'
+import SearchView from '@/view/search/SearchView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
@@ -31,7 +32,7 @@ const routes = [
             },
             {// 设置
                 path: Behavior.SETTINGS,
-                component: PersonalView,
+                component: SettingsView,
             },
             {// 歌手
                 path: Behavior.SINGER,
@@ -51,7 +52,7 @@ const routes = [
             },
             {// search
                 path: Behavior.SEARCH,
-                component: Search,
+                component: SearchView,
             },
         ]
     },
