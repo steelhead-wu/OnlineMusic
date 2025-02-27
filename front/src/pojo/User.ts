@@ -3,5 +3,8 @@ interface User {
     account?: string,
     password?: string,
     nickname?: string,
-    avatar?: string
+    avatar?: string,
+    birth?: string,
+    whatsUp?: string,
+    sex?: number,
 }
