@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import {computed, onMounted, ref, watch} from "vue";
 import {onBeforeRouteLeave, useRoute, useRouter} from "vue-router";
-import {searchSong} from "@/api/song/SongApi";
+import {getAllSongBySingerId, searchSong} from "@/api/song/SongApi";
 import {baseURL} from "@/api/request";
+import {Behavior} from "@/enum/Behavior";
+import {useSingersStore} from "@/store/SingersStore";
+import SongList from "@/components/song/SongList.vue";
 
 
 const route = useRoute();
@@ -13,12 +16,27 @@ const isShow = ref(false);
 
 watch(() => route.query.kw, fetchData, {immediate: true})
 
+const singersStore = useSingersStore();
+
+const tableData = ref(null);
 
 async function fetchData(kw: string) {
   searchSong(kw).then(value => {
     data.value = value.data.data;
-    isShow.value = data.value.length != 0 && data.value[0].name != null && data.value[0].pic != null;
+    isShow.value = data.value.length != 0;
     console.log('isShow.value', isShow.value);
+    console.log(data.value);
+    tableData.value = [];
+    if (isShow.value) {
+      for (const song of data.value) {
+        const split = song.title?.split('-');
+        song['song'] = split[1];
+        song['singer'] = split[0];
+        tableData.value.push(song);
+      }
+    } else {
+
+    }
   })
 }
 
@@ -33,16 +51,19 @@ async function fetchData(kw: string) {
           <el-avatar class="avatar" :src="baseURL + data[0].pic"/>
         </el-aside>
         <el-main>
-          <span class="singer_name">{{ data[0].name }}</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span>单曲 {{ data[0].song_number }}</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span>专辑 {{ data[0].album_number }}</span>
+          <span class="singer_name" @click="">{{ data[0].name }}</span>
+          <span class="song-number">单曲 {{ data[0].song_number }}</span>
+          <span class="album-number">专辑 {{ data[0].album_number }}</span>
         </el-main>
       </el-container>
     </el-header>
     <el-main class="main">
-
+      <el-container>
+        <el-header></el-header>
+        <el-main>
+          <SongList class="song-list" :table-data="tableData"/>
+        </el-main>
+      </el-container>
     </el-main>
   </el-container>
 </template>
@@ -50,7 +71,7 @@ async function fetchData(kw: string) {
 <style scoped lang="scss">
 .header {
   padding: 0;
-  width: 70%;
+  width: 900px;
 
   height: auto;
   margin: 30px auto 0;
@@ -61,17 +82,26 @@ async function fetchData(kw: string) {
     height: auto;
 
     .avatar {
-      width: 150px;
-      height: 150px;
+      width: 96px;
+      height: 96px;
     }
   }
 
   .el-main {
-    font-size: 50px;
+    font-size: 25px;
+
     .singer_name {
       margin-left: 20px;
-
     }
+
+    .song-number {
+      margin-left: 20px;
+    }
+
+    .album-number {
+      margin-left: 20px;
+    }
+
   }
 
 
@@ -80,8 +110,23 @@ async function fetchData(kw: string) {
 
 .main {
   padding: 0;
-  width: 70%;
+  width: auto;
   height: auto;
   margin: 30px auto 0;
+
+  .el-header {
+    height: auto;
+  }
+
+  .el-main {
+    padding: 0;
+    //margin: 0 auto;
+
+    //.song-list {
+    //  margin: 0 auto;
+    //}
+  }
+
+
 }
 </style>
