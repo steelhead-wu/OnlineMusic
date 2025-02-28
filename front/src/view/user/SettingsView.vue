@@ -142,58 +142,64 @@ const handleLogOff = () => {
     </div>
 
     <div>
-      <h2>个人资料</h2>
-      <div>
-        <el-form
-            ref="ruleFormRef"
-            style="max-width: 600px"
-            :model="userInfo"
-            :rules="rules"
-            label-width="auto"
-            class="demo-ruleForm"
-            :size="formSize"
-            status-icon
-        >
-          
-          <el-form-item label="昵称" prop="nickname">
-            <el-input v-model="userInfo.nickname"/>
-          </el-form-item>
-
-          <el-form-item label="性别">
-            <el-radio-group v-model="userInfo.sex">
-              <el-radio-button :value="0" label="保密"/>
-              <el-radio-button :value="1" label="男生"/>
-              <el-radio-button :value="2" label="女生"/>
-            </el-radio-group>
-          </el-form-item>
-
-
-          <el-form-item label="生日">
-            <el-form-item prop="birth">
-              <el-date-picker
-                  v-model="userInfo.birth"
-                  type="date"
-                  aria-label="Pick a date"
-                  placeholder="生日"
-                  style="width: 100%"
-              />
+      <el-form
+          ref="ruleFormRef"
+          style="max-width: 600px"
+          :model="userInfo"
+          :rules="rules"
+          label-width="auto"
+          class="demo-ruleForm"
+          :size="formSize"
+          status-icon
+      >
+        <div class="personal-area">
+          <h2>个人资料</h2>
+          <div class="nickname-box">
+            <el-form-item label="昵称" prop="nickname">
+              <el-input v-model="userInfo.nickname"/>
             </el-form-item>
-          </el-form-item>
+          </div>
+          <div class="sex-box">
+            <el-form-item label="性别">
+              <el-radio-group v-model="userInfo.sex">
+                <el-radio-button :value="0" label="保密"/>
+                <el-radio-button :value="1" label="男生"/>
+                <el-radio-button :value="2" label="女生"/>
+              </el-radio-group>
+            </el-form-item>
+          </div>
 
+          <div class="birth-box">
+            <el-form-item label="生日">
+              <el-form-item prop="birth">
+                <el-date-picker
+                    v-model="userInfo.birth"
+                    type="date"
+                    aria-label="Pick a date"
+                    placeholder="生日"
+                    style="width: 100%"
+                />
+              </el-form-item>
+            </el-form-item>
+          </div>
 
-          <el-form-item label="个性签名" prop="whatsUp">
-            <el-input v-model="userInfo.whatsUp" type="textarea" placeholder="说点什么吧~"/>
-          </el-form-item>
+          <div class="whatsUp-box">
+            <el-form-item label="个性签名" prop="whatsUp">
+              <el-input v-model="userInfo.whatsUp" type="textarea" placeholder="说点什么吧~"/>
+            </el-form-item>
+          </div>
+        </div>
 
-          <!--          <el-form-item>-->
-          <!--            <el-button type="primary" @click="submitForm(ruleFormRef)">-->
-          <!--              Create-->
-          <!--            </el-button>-->
-          <!--            <el-button @click="resetForm(ruleFormRef)">Reset</el-button>-->
-          <!--          </el-form-item>-->
+        <!--          <el-form-item>-->
+        <!--            <el-button type="primary" @click="submitForm(ruleFormRef)">-->
+        <!--              Create-->
+        <!--            </el-button>-->
+        <!--            <el-button @click="resetForm(ruleFormRef)">Reset</el-button>-->
+        <!--          </el-form-item>-->
 
-          <div>
-            <h2>更改密码</h2>
+        <div class="pwd-area">
+          <h2>更改密码</h2>
+          <div class="oldPwd-box">
             <el-form-item label="旧密码" prop="password">
               <el-input type="password"
                         placeholder="请输入旧密码"
@@ -202,7 +208,9 @@ const handleLogOff = () => {
                         clearable
               ></el-input>
             </el-form-item>
+          </div>
 
+          <div class="newPassword">
             <el-form-item label="新密码" prop="newPassword">
               <el-input
                   :disabled="disableChangePWD"
@@ -214,7 +222,9 @@ const handleLogOff = () => {
                   clearable
               />
             </el-form-item>
+          </div>
 
+          <div class="reNewPassword">
             <el-form-item label="再次" prop="reNewPassword">
               <el-input
                   :disabled="disableChangePWD"
@@ -227,9 +237,10 @@ const handleLogOff = () => {
               />
             </el-form-item>
           </div>
-        </el-form>
-      </div>
+        </div>
+      </el-form>
     </div>
+
 
     <div>
       <h2>注销</h2>
@@ -246,12 +257,53 @@ const handleLogOff = () => {
 //.main {
 //  padding: 0;
 .setting-box {
+  display: flex;
+  align-items: center;
+  align-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: column;
+
   margin: 0 auto;
 
   h1 {
     font-weight: bold;
     font-size: 35px;
+    text-align: left;
   }
+
+  .personal-area {
+
+    .nickname-box {
+
+    }
+
+    .sex-box {
+
+    }
+
+    .birth-box {
+
+    }
+
+    .whatsUp-box {
+
+    }
+  }
+
+  .pwd-area {
+    .oldPwd-box {
+
+    }
+
+    .newPassword {
+
+    }
+
+    .reNewPassword {
+
+    }
+  }
+
 }
 
 //}

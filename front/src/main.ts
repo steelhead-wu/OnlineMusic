@@ -4,6 +4,7 @@ import './assets/css/global.css'
 // main.ts
 import {createApp} from 'vue'
 import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'element-plus/dist/index.css'
 import router from './routers/router.ts'
 import App from './App.vue'
@@ -39,7 +40,9 @@ library.add(fas);
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate)
 const app = createApp(App).component('font-awesome-icon', FontAwesomeIcon);
-app.use(router).use(ElementPlus).use(pinia).use(VueFroala)
+app.use(router).use(ElementPlus, {
+    locale: zhCn,
+}).use(pinia).use(VueFroala)
 
 
 app.mount('#app');
