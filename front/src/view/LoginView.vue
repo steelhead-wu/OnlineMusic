@@ -3,11 +3,19 @@ import {computed, reactive, ref, watch, watchEffect} from 'vue'
 import type {ComponentSize, FormInstance, FormRules} from 'element-plus'
 import {login, register} from "@/api/user/UserApi";
 import {ElMessage} from "element-plus";
-import {House} from '@element-plus/icons-vue'
 import router from "@/routers/router";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
 import {Behavior} from "@/enum/Behavior";
 import {useUserStore} from "@/store/UserStore";
+import {
+  MAX_LEN_ACC,
+  MAX_LEN_NK,
+  MAX_LEN_PWD,
+  MIN_LEN_ACC,
+  MIN_LEN_NK,
+  MIN_LEN_PWD, validateAccount,
+  validateNickname, validatePassword, validateRepass,
+} from "@/enum/UserPropsRule";
 
 interface NewUser extends User {
   rePassword: string
@@ -35,12 +43,6 @@ const toggle = () => {
   globalStatusStore.isLogin = !globalStatusStore.isLogin;
   newUser.password = '';
 }
-// 密码长度
-const min_len_pwd = 1, max_len_pwd = 16;
-// 昵称长度
-const min_len_nk = 1, max_len_nk = 10;
-// 账号长度
-const min_len_acc = 3, max_len_acc = 11;
 
 
 watch(() => globalStatusStore.isLogin, () => {
@@ -62,64 +64,12 @@ const ad_word_h1 = reactive({
 })
 
 
-const validateRepass = (rule: object, value: string, callback: Function) => {
-  if (value === '') {
-    callback(new Error('再次输入密码'))
-  } else if (value !== newUser.password) {
-    callback(new Error("两次输入不匹配"))
-  } else {
-    callback()
-  }
-}
-
-
-const validateAccount = (rule: object, value: string, callback: Function) => {
-  if (value.length < min_len_acc || value.length > max_len_acc) {
-    callback(new Error('密码长度不规范'));
-    return;
-  }
-  for (const item of value) {
-    if (item === ' ') {
-      callback(new Error('不能含有空格'));
-      return;
-    } else if (item < '0' || item > '9') {
-      callback(new Error('只能为纯数字'));
-      return;
-    }
-  }
-  callback();
-}
-
-const validateNickname = (rule: object, value: string, callback: Function) => {
-  if (value.length < min_len_nk || value.length > max_len_nk) {
-    callback(new Error('昵称长度不规范'));
-    return;
-  }
-  if (value.includes(' ')) {
-    callback(new Error('不能含有空格'));
-    return;
-  }
-  callback();
-}
-const validatePassword = (rule: object, value: string, callback: Function) => {
-  if (value.length < min_len_pwd || value.length > max_len_pwd) {
-    callback(new Error('密码长度不规范'));
-    return;
-  }
-  if (value.includes(' ')) {
-    callback(new Error('不能含有空格'));
-    return;
-  }
-  callback();
-}
-
-
 // 表单校验
 const rules = reactive<FormRules<NewUser>>({
   account: [
     {required: true, message: '请输入账号', trigger: 'blur',},
     {
-      message: `长度应该在${min_len_acc}~${max_len_acc}位且为数字，不能含有空格`,
+      message: `长度应该在${MIN_LEN_ACC}~${MAX_LEN_ACC}位且为数字，不能含有空格`,
       trigger: ['blur', 'change'],
       validator: validateAccount
     },
@@ -127,20 +77,23 @@ const rules = reactive<FormRules<NewUser>>({
   password: [
     {required: true, message: '请输入密码', trigger: 'blur'},
     {
-      message: `长度应该在${min_len_pwd}~${max_len_pwd}位且不能含有空格`,
+      message: `长度应该在${MIN_LEN_PWD}~${MAX_LEN_PWD}位且不能含有空格`,
       trigger: ['blur', 'change'],
       validator: validatePassword,
     },
   ],
   rePassword: [
     {required: true, message: '请再次输入密码', trigger: ['blur'],},
-    {validator: validateRepass, trigger: ['blur', 'change']},
+    {
+      validator: (rule: object, value: string, callback: Function) => validateRepass(rule, value, callback, newUser.password),
+      trigger: ['blur', 'change']
+    },
 
   ],
   nickname: [
     {
       required: true,
-      message: `昵称不可以为空,且长度应该在${min_len_nk}~${max_len_nk}`,
+      message: `昵称不可以为空,且长度应该在${MIN_LEN_NK}~${MAX_LEN_NK}`,
       trigger: ['blur', 'change'],
       validator: validateNickname
     },
