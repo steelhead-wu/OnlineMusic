@@ -222,44 +222,176 @@ const doRemoveSong = (song_idx: number) => {
 </script>
 
 <template>
-  <div id="playBar">
-    <!--    progress bar-->
-    <div class="song-progress">
-      <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"
-                 @input="onProgressChange" :format-tooltip="formatTooltip"
-      />
-    </div>
+  <!--  <div id="playBar">-->
+  <!--    &lt;!&ndash;    progress bar&ndash;&gt;-->
+  <!--    <div class="song-progress">-->
+  <!--      <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"-->
+  <!--                 @input="onProgressChange" :format-tooltip="formatTooltip"-->
+  <!--      />-->
+  <!--    </div>-->
 
-    <div class="control-box">
-      <div class="cover" ref="cover">
-        <el-image id="cover_img" :src="music_pic_src" alt="" srcset="">
-          <template #error>
-            <div class="image-slot">
-              <el-icon>
-                <icon-picture/>
-              </el-icon>
-            </div>
-          </template>
-        </el-image>
-      </div>
+  <!--    <div class="control-box">-->
+  <!--      <div class="cover" ref="cover">-->
+  <!--        <el-image id="cover_img" :src="music_pic_src" alt="" srcset="">-->
+  <!--          <template #error>-->
+  <!--            <div class="image-slot">-->
+  <!--              <el-icon>-->
+  <!--                <icon-picture/>-->
+  <!--              </el-icon>-->
+  <!--            </div>-->
+  <!--          </template>-->
+  <!--        </el-image>-->
+  <!--      </div>-->
 
-      <div class="control-btn-area">
+  <!--      <div class="control-btn-area">-->
 
-        <!--        收藏-->
-        <FontAwesomeIcon icon="fa fa-heart" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
-                         style="color: red;"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <!--      循环播放  -->
-        <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>
+  <!--        &lt;!&ndash;        收藏&ndash;&gt;-->
+  <!--        <FontAwesomeIcon icon="fa fa-heart" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+  <!--                         style="color: red;"/>-->
+  <!--        &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--        &lt;!&ndash;      循环播放  &ndash;&gt;-->
+  <!--        <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>-->
 
-        <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>
+  <!--        <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>-->
 
 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <!--        &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--        &lt;!&ndash;        上一首&ndash;&gt;-->
+  <!--        <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"-->
+  <!--                         icon="fa-step-backward" size="2x" @click="previous"/>-->
+  <!--        &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--        &lt;!&ndash;        暂停&ndash;&gt;-->
+  <!--        <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay" icon="fa-pause" size="2x"-->
+  <!--                         @click="toggle_music_status"/>-->
+
+  <!--        &lt;!&ndash;        播放&ndash;&gt;-->
+  <!--        <FontAwesomeIcon v-else icon="fa-play" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+  <!--                         @click="toggle_music_status"/>-->
+  <!--        &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--        &lt;!&ndash;        下一首&ndash;&gt;-->
+  <!--        <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"-->
+  <!--                         icon="fa-step-forward" size="2x" @click="next"-->
+  <!--        />-->
+  <!--        &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--        &lt;!&ndash;        下载&ndash;&gt;-->
+  <!--        <FontAwesomeIcon icon="fa-cloud-download" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+  <!--                         @click="doDownloadMusic"/>-->
+
+  <!--        &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--        &lt;!&ndash;        歌曲列表&ndash;&gt;-->
+  <!--        <FontAwesomeIcon title="queue" @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>-->
+  <!--        <transition name="slide-fade">-->
+  <!--          <div v-if="showPlayList" id="showPlayList">-->
+  <!--            <h2 class="title">当前播放</h2>-->
+  <!--            <div class="control">共 {{ songStore.getSongList.length }} 首</div>-->
+  <!--            <ul id="playlist">-->
+  <!--              <li v-for="(asong,song_idx) in songStore.getSongList"-->
+  <!--                  :key="asong.id"-->
+  <!--                  @click="playThisMusic(asong,song_idx)"-->
+  <!--                  :class="{'current-play' : songStore.getCurrentSong.id === asong.id && song_idx === songStore.getCurrentSongIdx}"-->
+  <!--              >-->
+  <!--                {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}-->
+  <!--                <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>-->
+  <!--              </li>-->
+  <!--            </ul>-->
+  <!--          </div>-->
+  <!--        </transition>-->
+
+  <!--        <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"-->
+  <!--               @ended="ended"></audio>-->
+
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+  <!--  <div class="playBar-area">-->
+  <!--    <div class="song-progress">-->
+  <!--      <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"-->
+  <!--                 @input="onProgressChange" :format-tooltip="formatTooltip"-->
+  <!--      />-->
+  <!--    </div>-->
+
+  <!--    <div class="playBar">-->
+  <!--      &lt;!&ndash;      <div class="cover" ref="cover">&ndash;&gt;-->
+  <!--      <el-image id="cover_img" :src="music_pic_src" alt="" srcset="">-->
+  <!--        <template #error>-->
+  <!--          <div class="image-slot">-->
+  <!--            <el-icon>-->
+  <!--              <icon-picture/>-->
+  <!--            </el-icon>-->
+  <!--          </div>-->
+  <!--        </template>-->
+  <!--      </el-image>-->
+  <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+
+  <!--      &lt;!&ndash;      <div class="control-btn-area">&ndash;&gt;-->
+
+  <!--      &lt;!&ndash;        收藏&ndash;&gt;-->
+  <!--      <FontAwesomeIcon icon="fa fa-heart" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+  <!--                       style="color: red;"/>-->
+  <!--      &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--      &lt;!&ndash;      循环播放  &ndash;&gt;-->
+  <!--      <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>-->
+
+  <!--      <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>-->
+
+
+  <!--      &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--      &lt;!&ndash;        上一首&ndash;&gt;-->
+  <!--      <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"-->
+  <!--                       icon="fa-step-backward" size="2x" @click="previous"/>-->
+  <!--      &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--      &lt;!&ndash;        暂停&ndash;&gt;-->
+  <!--      <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay" icon="fa-pause" size="2x"-->
+  <!--                       @click="toggle_music_status"/>-->
+
+  <!--      &lt;!&ndash;        播放&ndash;&gt;-->
+  <!--      <FontAwesomeIcon v-else icon="fa-play" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+  <!--                       @click="toggle_music_status"/>-->
+  <!--      &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--      &lt;!&ndash;        下一首&ndash;&gt;-->
+  <!--      <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"-->
+  <!--                       icon="fa-step-forward" size="2x" @click="next"-->
+  <!--      />-->
+  <!--      &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--      &lt;!&ndash;        下载&ndash;&gt;-->
+  <!--      <FontAwesomeIcon icon="fa-cloud-download" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+  <!--                       @click="doDownloadMusic"/>-->
+
+  <!--      &lt;!&ndash;        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&ndash;&gt;-->
+  <!--      &lt;!&ndash;        歌曲列表&ndash;&gt;-->
+  <!--      <FontAwesomeIcon title="queue" @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>-->
+  <!--      <transition name="slide-fade">-->
+  <!--        <div v-if="showPlayList" id="showPlayList">-->
+  <!--          <h2 class="title">当前播放</h2>-->
+  <!--          <div class="control">共 {{ songStore.getSongList.length }} 首</div>-->
+  <!--          <ul id="playlist">-->
+  <!--            <li v-for="(asong,song_idx) in songStore.getSongList"-->
+  <!--                :key="asong.id"-->
+  <!--                @click="playThisMusic(asong,song_idx)"-->
+  <!--                :class="{'current-play' : songStore.getCurrentSong.id === asong.id && song_idx === songStore.getCurrentSongIdx}"-->
+  <!--            >-->
+  <!--              {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}-->
+  <!--              <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>-->
+  <!--            </li>-->
+  <!--          </ul>-->
+  <!--        </div>-->
+  <!--      </transition>-->
+
+  <!--      <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"-->
+  <!--             @ended="ended"></audio>-->
+
+  <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="audio-module">
+    <div class="player-module">
+      <div class="left-part">
         <!--        上一首-->
         <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"
                          icon="fa-step-backward" size="2x" @click="previous"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
         <!--        暂停-->
         <FontAwesomeIcon class="control-btn-each" v-if="songStore.getIsPlay" icon="fa-pause" size="2x"
                          @click="toggle_music_status"/>
@@ -267,24 +399,60 @@ const doRemoveSong = (song_idx: number) => {
         <!--        播放-->
         <FontAwesomeIcon v-else icon="fa-play" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
                          @click="toggle_music_status"/>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
         <!--        下一首-->
         <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"
-                         icon="fa-step-forward" size="2x" @click="next"
-        />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                         icon="fa-step-forward" size="2x" @click="next"/>
+      </div>
+
+      <div class="main-part">
+        <div class="cover-part" ref="cover">
+          <el-image class="cover-img" :src="music_pic_src" alt="" srcset="">
+            <template #error>
+              <div class="image-slot">
+                <el-icon>
+                  <icon-picture/>
+                </el-icon>
+              </div>
+            </template>
+          </el-image>
+        </div>
+        <div class="song-part">
+          <div class="song-name">{{ songStore.getCurrentSong.title }}</div>
+          <div class="song-progress">
+            <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"
+                       @input="onProgressChange"
+                       :format-tooltip="formatTooltip"/>
+          </div>
+          <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg" @ended="ended">
+          </audio>
+        </div>
+      </div>
+
+      <div class="right-part">
+        <!--      循环播放  -->
+        <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>
+
+        <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>
+
+
         <!--        下载-->
         <FontAwesomeIcon icon="fa-cloud-download" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
                          @click="doDownloadMusic"/>
+        <!--        volume-->
+        <FontAwesomeIcon icon="fa-volume-up" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                         @click="doDownloadMusic"/>
 
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--        <FontAwesomeIcon icon="fa-volume-off" :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+        <!--                         @click="doDownloadMusic"/>-->
+
         <!--        歌曲列表-->
         <FontAwesomeIcon title="queue" @click="showPlayList=!showPlayList" icon="fa-navicon" size="2x"/>
         <transition name="slide-fade">
-          <div v-if="showPlayList" id="showPlayList">
+          <div v-if="showPlayList" class="showPlayList">
             <h2 class="title">当前播放</h2>
             <div class="control">共 {{ songStore.getSongList.length }} 首</div>
-            <ul id="playlist">
+            <ul class="playlist">
               <li v-for="(asong,song_idx) in songStore.getSongList"
                   :key="asong.id"
                   @click="playThisMusic(asong,song_idx)"
@@ -293,229 +461,225 @@ const doRemoveSong = (song_idx: number) => {
                 {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
                 <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>
               </li>
-              <!--              <li v-for="(song,song_idx) in songStore.getSongList"-->
-              <!--                  :key="song.id"-->
-              <!--                  @click="playThisMusic(song,song_idx)"-->
-              <!--                  :class="{'current-play' : song.id === song.value.value.id}"-->
-              <!--              >-->
-              <!--                {{ song.title.split('-')[1] + '-  ' + song.title.split('-')[0] }}-->
-              <!--              </li>-->
             </ul>
           </div>
         </transition>
-
-        <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg"
-               @ended="ended"></audio>
-
       </div>
     </div>
+
+    <div class="showHide-playbar"></div>
   </div>
+
 </template>
 
 
-<style scoped>
-.fa-disabled {
-  opacity: 0.5;
-  pointer-events: none;
-}
+<style scoped lang="scss">
 
-.remove {
-  height: 15px;
-  width: 15px;
-  padding-right: 10px;
-  margin-left: auto; /* 将图标推到最右侧 */
-  cursor: pointer;
-  transition: opacity 0.3s; /* 添加悬停效果 */
-
-  pointer-events: auto; /* 确保图标可以点击 */
-  /*默认隐藏*/
-  display: none;
-}
-
-#playlist li:hover .remove {
-  display: block; /* 鼠标悬停时显示图标 */
-  opacity: 0.8; /* 轻微透明度效果 */
-}
-
-.remove:hover {
-  opacity: 1;
-}
-
-.current-play {
-  color: black;
-  font-weight: bold;
-}
-
-.title, .control {
-  padding-left: 20px;
-  box-sizing: border-box;
-}
-
-
-#playlist {
+.audio-module {
+  position: fixed;
+  min-width: 940px;
   width: 100%;
-  /*height: calc(100% - 10px);*/
-  height: 100%;
-  cursor: pointer;
-  z-index: 100;
-  overflow: scroll;
-  white-space: nowrap;
-}
-
-
-#playlist li {
-  display: flex;
-  justify-content: space-between; /* 左右内容分列两端 */
-  padding: 0;
-  align-items: center; /* 垂直居中 */
-  position: relative; /* 为绝对定位图标提供定位基准 */
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-}
-
-
-#playlist li:hover {
-  background-color: #EFEFEF;
-}
-
-.control {
-  margin: 3px 0;
-  color: grey;
-}
-
-#playBar {
-  /*width: 100%;*/
-  /*position: fixed;*/
-  /*bottom: 0;*/
-
-}
-
-
-.control-box .control-btn-area {
-  position: relative;
-  bottom: 70px;
-  left: 245px;
-  z-index: 1;
-}
-
-.control-btn-each:hover {
-  color: red;
-}
-
-@keyframes spin {
-  from
-    /*0% */
-  {
-    transform: rotate(0deg);
-  }
-  to
-    /*100%*/
-  {
-    transform: rotate(360deg);
-  }
-}
-
-.control-box .cover {
-  width: 100px;
   height: 100px;
-  border-radius: 50%;
-  /*background-color: #fff;*/
-  background-color: snow;
-  /*margin-top: -60px;*/
-  padding: 6px;
-  position: relative;
-  left: 20px;
   bottom: 0;
-  animation: spin 5s infinite linear;
-  animation-play-state: paused;
-  /*animation-play-state: running;*/
+  z-index: 1000;
+  background: snow;
+
+  .player-module {
+    position: relative;
+    width: 960px;
+    height: 100px;
+    margin: 0 auto;
+
+    .left-part {
+      position: absolute;
+      width: 160px;
+      height: 100px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .control-btn-each {
+
+      }
+
+      .fa-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+    }
+
+    .main-part {
+      position: absolute;
+      height: 100px;
+      width: 540px;
+      cursor: pointer;
+      margin-left: 160px;
+      //margin-top: 10px;
+      //background: url(//www.kugou.com/yy/static/images/play/default.jpg) no-repeat left top;
+      //background-position: 100% 100%;
+      .cover-part {
+        width: 90px;
+        height: 90px;
+        margin-left: 30px;
+        margin-top: 5px;
+        animation: spin 5s infinite linear;
+        animation-play-state: paused;
+        /*animation-play-state: running;*/
+        @keyframes spin {
+          from
+            /*0% */
+          {
+            transform: rotate(0deg);
+          }
+          to
+            /*100%*/
+          {
+            transform: rotate(360deg);
+          }
+        }
+
+        .cover-img {
+          border-radius: 50%;
+        }
+      }
+
+      .song-part {
+        margin-left: 120px;
+        height: 100px;
+        width: 420px;
+
+        .song-name {
+          position: absolute;
+          left: 150px;
+          bottom: 50px;
+        }
+
+        .song-progress {
+          position: absolute;
+          z-index: 1;
+          width: 70%;
+          transition: all 0.5s;
+          bottom: 0px;
+          left: 150px;
+        }
+
+      }
+    }
+
+    .right-part {
+      position: absolute;
+      height: 100px;
+      width: 260px;
+      cursor: pointer;
+      margin-left: 710px;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .control-btn-each {
+
+      }
+
+      .fa-disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .showPlayList {
+        font-size: 14px;
+        width: 369px;
+        position: fixed;
+        right: 0;
+        top: 80px;
+        bottom: 180px;
+        padding-bottom: 100px;
+        background-color: white;
+        box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+
+
+        .title {
+
+        }
+
+        .control {
+          margin: 3px 0;
+          color: grey;
+        }
+
+        .title, .control {
+          padding-left: 20px;
+          box-sizing: border-box;
+
+        }
+
+        .playlist {
+          width: 100%;
+          /*height: calc(100% - 10px);*/
+          height: 100%;
+          padding-left: 20px;
+          overflow: scroll;
+          white-space: nowrap;
+
+          li {
+            display: flex;
+            justify-content: space-between; /* 左右内容分列两端 */
+            align-items: center; /* 垂直居中 */
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            position: relative; /* 为子元素定位提供基准 */
+
+            .remove {
+              opacity: 0.3; /* 轻微透明度效果 */
+              height: 15px;
+              width: 15px;
+              margin-left: auto; /* 将图标推到最右侧 */
+              transition: opacity 0.3s; /* 添加悬停效果 */
+              display: none;
+              &:hover {
+                opacity: 1;
+              }
+
+            }
+
+            &:hover {
+              background-color: #EFEFEF;
+              .remove {
+                pointer-events: auto; /* 确保图标可以点击 */
+                display: block;
+              }
+            }
+          }
+
+          .current-play {
+            color: black;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .slide-fade-enter-active {
+        transition: all 0.3s ease-out;
+      }
+
+      .slide-fade-leave-active {
+        transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
+      }
+
+      .slide-fade-enter-from,
+      .slide-fade-leave-to {
+        transform: translateX(20px);
+        opacity: 0;
+      }
+    }
+  }
+
+  .showHide-playbar {
+
+  }
 
 }
-
-.cover #cover_img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  position: relative;
-  /*left: 20px;*/
-}
-
-
-#playBar .control-box {
-  width: 100%;
-  height: 100px;
-  position: fixed;
-  left: 0;
-  bottom: 50px;
-  z-index: 1;
-  background-color: snow;
-}
-
-#playBar .song-progress {
-  position: fixed;
-  z-index: 100;
-  bottom: 150px;
-  width: 100%;
-  transition: all 0.5s;
-  left: 0;
-}
-
-.slider-demo-block {
-  max-width: 600px;
-  display: flex;
-  align-items: center;
-
-}
-
-.slider-demo-block .el-slider {
-  margin-top: 0;
-  margin-left: 12px;
-}
-
-.slider-demo-block .demonstration {
-  font-size: 14px;
-  color: var(--el-text-color-secondary);
-  line-height: 44px;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-bottom: 0;
-}
-
-.slider-demo-block .demonstration + .el-slider {
-  flex: 0 0 70%;
-}
-
-
-#showPlayList {
-  font-size: 14px;
-  width: 350px;
-  position: fixed;
-  right: 0;
-  top: 80px;
-  bottom: 180px;
-  padding-bottom: 100px;
-  z-index: 99;
-  background-color: white;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-}
-
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.1s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(20px);
-  opacity: 0;
-}
-
-
 </style>

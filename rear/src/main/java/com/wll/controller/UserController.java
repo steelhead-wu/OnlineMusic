@@ -48,7 +48,7 @@ public class UserController {
     @PutMapping
     public R updateUserById(@RequestBody User user) {
         boolean res = userService.updateById(user);
-        return res ? R.success() : R.error();
+        return res ? R.success(res) : R.error();
     }
 
     /**

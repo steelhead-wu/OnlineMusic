@@ -17,6 +17,9 @@ import {updateUserById} from "@/api/user/UserApi";
 import {PictureRepoType} from "@/enum/PictureRepoType";
 import {baseURL} from "@/api/request";
 import {formatDate, getFormatTime} from "@/api/utils/MyUtils";
+import {useRouter} from "vue-router";
+import router from "@/routers/router";
+import {Behavior} from "@/enum/Behavior";
 
 
 const userStore = useUserStore();
@@ -156,14 +159,17 @@ const handleLogOff = () => {
         type: 'warning',
       }
   ).then(() => {
+    userStore.$reset();
+    router.push(Behavior.HOME);
     ElMessage({
       type: 'success',
-      message: 'Delete completed',
-    })
+      message: '删除成功',
+    });
+
   }).catch(() => {
     ElMessage({
       type: 'info',
-      message: 'Delete canceled',
+      message: '已取消',
     })
   })
 }
@@ -255,7 +261,9 @@ const validateChangePWD = () => {
                       <li>
                         <span :class="{cur:cur_idx===2}" @click="cur_idx=2">修改密码</span>
                       </li>
-
+                      <li>
+                        <span :class="{cur:cur_idx===3}" @click="cur_idx=3">注销</span>
+                      </li>
                     </ul>
 
                   </div>
@@ -351,7 +359,7 @@ const validateChangePWD = () => {
 
                       </div>
 
-                      <div class="change-PWD" v-else>
+                      <div class="change-PWD" v-else-if="cur_idx===2">
                         <el-form
                             ref="ruleFormRef"
                             style="max-width: 600px"
@@ -411,6 +419,10 @@ const validateChangePWD = () => {
                           </div>
                         </el-form>
 
+                      </div>
+
+                      <div class="logoff" v-else>
+                        <el-button type="primary" round @click="handleLogOff">注销</el-button>
                       </div>
                     </div>
                   </div>
@@ -590,6 +602,10 @@ const validateChangePWD = () => {
                         }
                       }
                     }
+
+                    .logoff {
+                      margin-top: 20px;
+                    }
                   }
                 }
               }
@@ -600,79 +616,4 @@ const validateChangePWD = () => {
     }
   }
 }
-
-
-//.main {
-//  padding: 0;
-.setting-box {
-  display: flex;
-  align-items: center;
-  align-content: space-between;
-  flex-direction: column;
-
-  background-color: #8c939d;
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-
-  h1 {
-    font-weight: bold;
-    font-size: 35px;
-    //align-self: flex-start;
-    //margin-left: 634px;
-    text-align: left;
-    width: 20%;
-  }
-
-  //.personal-area {
-  //  width: 100%;
-  //  margin-top: 10px;
-  //  //border-radius: 5%;
-  //  background-color: white;
-  //
-  //
-  //  & .nickname-box,
-  //  & .sex-box,
-  //  & .birth-box,
-  //  & .whatsUp-box {
-  //    margin-top: 10px; // 设置相同的外边距值
-  //  }
-  //
-  //  h2 {
-  //    margin-bottom: 10px;
-  //  }
-  //
-  //  .sex-box {
-  //
-  //  }
-  //
-  //  .birth-box {
-  //
-  //  }
-  //
-  //  .whatsUp-box {
-  //
-  //  }
-  //}
-
-  //.pwd-area {
-  //  margin-top: 10px;
-  //
-  //  .oldPwd-box {
-  //
-  //  }
-  //
-  //  .newPassword {
-  //
-  //  }
-  //
-  //  .reNewPassword {
-  //
-  //  }
-  //}
-
-}
-
-//}
-
 </style>

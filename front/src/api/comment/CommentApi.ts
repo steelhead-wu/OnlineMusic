@@ -1,6 +1,5 @@
 import myAxios from "@/api/request";
-// import CommentDO from "@/pojo/DO/CommentDO";
-// import Comment from "@/pojo/Comment"
+import type Comment from "@/pojo/Comment"
 
 const prefix = '/api/comment';
 export const getCommentBy = async (songListId: string, userId: string) => {
@@ -13,7 +12,7 @@ export const getCommentBy = async (songListId: string, userId: string) => {
 }
 
 
-export const saveComment = async (comment) => {
+export const saveComment = async (comment: Comment) => {
     return await myAxios.post(prefix, comment);
 }
 
@@ -26,6 +25,6 @@ export const getAllCommentsBy = async (songListId: string) => {
     })
 }
 
-export const updateComment = async (comment) => {
+export const updateComment = async (comment: Comment) => {
     return await myAxios.put(prefix, comment);
 }
