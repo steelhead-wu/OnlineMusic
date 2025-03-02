@@ -10,22 +10,31 @@ import {
   validateRepass,
   validateWhatsUp
 } from "@/enum/UserPropsRule";
-import {Plus} from '@element-plus/icons-vue'
+import {Plus, Check} from '@element-plus/icons-vue'
 import {ElMessage, ElMessageBox, UploadProps} from "element-plus";
 import {AvatarSize} from "@/enum/AvatarSize";
 import {updateUserById} from "@/api/user/UserApi";
 import {PictureRepoType} from "@/enum/PictureRepoType";
 import {baseURL} from "@/api/request";
+import {formatDate, getFormatTime} from "@/api/utils/MyUtils";
 
 
 const userStore = useUserStore();
 const formSize = ref<ComponentSize>('default')
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref<FormInstance>();
 const cur_idx = ref(0);
 
 const disableChangePWD = ref(true);
 
-interface NewUser extends User {
+interface NewUser {
+  id?: string,
+  account?: string,
+  password?: string,
+  nickname?: string,
+  avatar?: string,
+  birth: Date,
+  whatsUp?: string,
+  sex?: number,
   newPassword: string,
   reNewPassword: string,
 }
@@ -35,7 +44,7 @@ const userInfo = reactive<NewUser>({
   account: userStore.getLoginUser.account,
   nickname: userStore.getLoginUser.nickname,
   avatar: userStore.getLoginUser.avatar,
-  birth: userStore.getLoginUser.birth,
+  birth: new Date(userStore.getLoginUser.birth),
   whatsUp: userStore.getLoginUser.whatsUp,
   sex: userStore.getLoginUser.sex,
   password: '', // old pwd, for validating user input
@@ -72,7 +81,7 @@ const rules = reactive<FormRules<User>>({
   password: [
     {
       required: false, trigger: ['blur', 'change'],
-      message: '密码验证不通过',
+      message: '请输入旧密码',
       validator: (rule: object, value: string, callback: Function,) => {
         if (validateOldPwd(rule, value, callback, userStore.loginUser.password)) {
           disableChangePWD.value = false;
@@ -100,12 +109,32 @@ const rules = reactive<FormRules<User>>({
   ]
 })
 
+const saveUserInfoUpdate = () => {
+  const updatedUser = {
+    id: userInfo.id,
+    nickname: userInfo.nickname,
+    sex: userInfo.sex,
+    birth: formatDate(userInfo.birth),
+    whatsUp: userInfo.whatsUp,
+  };
+  console.log(updatedUser);
+  updateUserById(updatedUser).then(value => {
+    console.log(value);
+    if (value.data.data) {
+      console.log('更新用户资料成功');
+      userStore.setLoginUser(updatedUser);
+
+    } else {
+      console.log('更新用户资料失败');
+    }
+  })
+}
 
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      console.log('submit!')
+      saveUserInfoUpdate();
     } else {
       console.log('error submit!', fields)
     }
@@ -163,124 +192,34 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
   return true
 }
 
+const validateChangePWD = () => {
+  ruleFormRef.value?.validate((pass) => {
+    if (pass) {
+      const updatedUser = {
+        id: userInfo.id,
+        password: userInfo.newPassword,
+      }
+
+      updateUserById(updatedUser).then(value => {
+        if (value.data.data) {
+          console.log("更新密码成功");
+          userStore.setLoginUser(updatedUser);
+        } else {
+          console.log("更新密码失败");
+        }
+      })
+    } else {
+      ElMessage({
+        type: 'info',
+        message: `提示: 请重新填写`,
+      })
+    }
+  });
+}
+
 </script>
 
 <template>
-  <!--  <el-container>-->
-  <!--    <el-main class="main">-->
-  <!--  <div class="setting-box">-->
-  <!--    <h1>设置</h1>-->
-  <!--    <div class="kl">-->
-  <!--      &lt;!&ndash;      personal info and change PWD&ndash;&gt;-->
-  <!--      <div>-->
-  <!--        <el-form-->
-  <!--            ref="ruleFormRef"-->
-  <!--            style="max-width: 600px"-->
-  <!--            :model="userInfo"-->
-  <!--            :rules="rules"-->
-  <!--            label-width="auto"-->
-  <!--            class="demo-ruleForm"-->
-  <!--            :size="formSize"-->
-  <!--            status-icon-->
-  <!--        >-->
-  <!--          <div class="personal-area">-->
-  <!--            <h2>个人资料</h2>-->
-  <!--            <div class="nickname-box">-->
-  <!--              <el-form-item label="昵称" prop="nickname">-->
-  <!--                <el-input v-model="userInfo.nickname"/>-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-  <!--            <div class="sex-box">-->
-  <!--              <el-form-item label="性别">-->
-  <!--                <el-radio-group v-model="userInfo.sex">-->
-  <!--                  <el-radio-button :value="0" label="保密"/>-->
-  <!--                  <el-radio-button :value="1" label="男生"/>-->
-  <!--                  <el-radio-button :value="2" label="女生"/>-->
-  <!--                </el-radio-group>-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-
-  <!--            <div class="birth-box">-->
-  <!--              <el-form-item label="生日">-->
-  <!--                <el-form-item prop="birth">-->
-  <!--                  <el-date-picker-->
-  <!--                      v-model="userInfo.birth"-->
-  <!--                      type="date"-->
-  <!--                      aria-label="Pick a date"-->
-  <!--                      placeholder="生日"-->
-  <!--                      style="width: 100%"-->
-  <!--                  />-->
-  <!--                </el-form-item>-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-
-  <!--            <div class="whatsUp-box">-->
-  <!--              <el-form-item label="个性签名" prop="whatsUp">-->
-  <!--                <el-input v-model="userInfo.whatsUp" type="textarea" placeholder="说点什么吧~"/>-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-  <!--          </div>-->
-
-  <!--          &lt;!&ndash;          <el-form-item>&ndash;&gt;-->
-  <!--          &lt;!&ndash;            <el-button type="primary" @click="submitForm(ruleFormRef)">&ndash;&gt;-->
-  <!--          &lt;!&ndash;              Create&ndash;&gt;-->
-  <!--          &lt;!&ndash;            </el-button>&ndash;&gt;-->
-  <!--          &lt;!&ndash;            <el-button @click="resetForm(ruleFormRef)">Reset</el-button>&ndash;&gt;-->
-  <!--          &lt;!&ndash;          </el-form-item>&ndash;&gt;-->
-
-  <!--          <div class="pwd-area">-->
-  <!--            <h2>更改密码</h2>-->
-  <!--            <div class="oldPwd-box">-->
-  <!--              <el-form-item label="旧密码" prop="password">-->
-  <!--                <el-input type="password"-->
-  <!--                          placeholder="请输入旧密码"-->
-  <!--                          style="width: 240px"-->
-  <!--                          v-model="userInfo.password"-->
-  <!--                          clearable-->
-  <!--                ></el-input>-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-
-  <!--            <div class="newPassword">-->
-  <!--              <el-form-item label="新密码" prop="newPassword">-->
-  <!--                <el-input-->
-  <!--                    :disabled="disableChangePWD"-->
-  <!--                    v-model="userInfo.newPassword"-->
-  <!--                    style="width: 240px"-->
-  <!--                    type="password"-->
-  <!--                    placeholder="请输入你的新密码"-->
-  <!--                    show-password-->
-  <!--                    clearable-->
-  <!--                />-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-
-  <!--            <div class="reNewPassword">-->
-  <!--              <el-form-item label="再次" prop="reNewPassword">-->
-  <!--                <el-input-->
-  <!--                    :disabled="disableChangePWD"-->
-  <!--                    v-model="userInfo.reNewPassword"-->
-  <!--                    style="width: 240px"-->
-  <!--                    type="password"-->
-  <!--                    placeholder="再次输入你的新密码"-->
-  <!--                    show-password-->
-  <!--                    clearable-->
-  <!--                />-->
-  <!--              </el-form-item>-->
-  <!--            </div>-->
-  <!--          </div>-->
-  <!--        </el-form>-->
-  <!--      </div>-->
-
-  <!--      <div>-->
-  <!--        <h2>注销</h2>-->
-  <!--        <el-button type="danger" round @click="handleLogOff" style="margin-left: 10px">注销</el-button>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </div>-->
-  <!--    </el-main>-->
-  <!--  </el-container>-->
-
   <div class="bodyArea">
     <div class="area-outset">
       <div class="area">
@@ -327,7 +266,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
                           <span class="avatar-info">设置一个你喜爱的头像:</span>
                         </div>
 
-                        <p>最佳尺寸400x400，支持JPG、JPEG、GIF、PNG </p>
+                        <p>最佳尺寸400x400，支持JPG、JPEG、PNG </p>
 
                         <div class="user-avatar">
                           <el-upload
@@ -342,7 +281,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
                               :before-upload="beforeAvatarUpload"
                               limit="1"
                           >
-                            <!--                                  <img v-if="imageUrl" :src="imageUrl" class="avatar"/>-->
+
                             <el-avatar v-if="userStore.getLoginUser.avatar" style="width: 100px;height: 100px"
                                        alt="default avatar" :size="AvatarSize.LARGE"
                                        :src="userStore.getLoginUser.avatar"/>
@@ -368,7 +307,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
                           <div class="personal-area">
                             <div class="nickname-box">
                               <el-form-item label="昵称" prop="nickname" style="width: 250px">
-                                <el-input v-model="userInfo.nickname"/>
+                                <el-input v-model="userInfo.nickname" :placeholder="userStore.getLoginUser.nickname"/>
                               </el-form-item>
                             </div>
                             <div class="sex-box">
@@ -396,8 +335,15 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
                             </div>
 
                             <div class="whatsUp-box">
-                              <el-form-item label="个性签名" prop="whatsUp">
-                                <el-input v-model="userInfo.whatsUp" type="textarea" placeholder="说点什么吧~"/>
+                              <el-form-item label="个性签名" prop="whatsUp" style="resize: none">
+                                <el-input v-model="userInfo.whatsUp" type="textarea" resize="none" style="width: 400px"
+                                          placeholder="说点什么吧~"/>
+                              </el-form-item>
+                            </div>
+
+                            <div class="option-box">
+                              <el-form-item>
+                                <el-button type="primary" round @click="submitForm(ruleFormRef)">保存</el-button>
                               </el-form-item>
                             </div>
                           </div>
@@ -455,6 +401,13 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
                                 />
                               </el-form-item>
                             </div>
+
+                            <div class="option-box">
+                              <el-form-item>
+                                <el-button type="primary" round @click="validateChangePWD">保存更改</el-button>
+                              </el-form-item>
+                            </div>
+
                           </div>
                         </el-form>
 
@@ -489,6 +442,7 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
       overflow: hidden;
       box-shadow: 18px 18px 40px 0px rgba(164, 186, 197, 0.04);
       min-height: 368px;
+      //height: 500px;
 
 
       .personal-left {
@@ -586,8 +540,9 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
                         & .nickname-box,
                         & .sex-box,
                         & .birth-box,
-                        & .whatsUp-box {
-                          margin-top: 10px; // 设置相同的外边距值
+                        & .whatsUp-box,
+                        &.option-box {
+                          margin-top: 50px; // 设置相同的外边距值
                         }
 
                         h2 {
@@ -604,6 +559,11 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
                         .whatsUp-box {
 
+                        }
+
+                        .option-box {
+                          margin-top: 30px;
+                          margin-left: 70px;
                         }
                       }
                     }
@@ -622,6 +582,11 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
 
                         .reNewPassword {
 
+                        }
+
+                        .option-box {
+                          margin-top: 30px;
+                          margin-left: 70px;
                         }
                       }
                     }

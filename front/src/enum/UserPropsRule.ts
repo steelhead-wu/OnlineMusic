@@ -11,7 +11,9 @@ export const validateNickname = (rule: object, value: string, callback: Function
         callback(new Error('昵称长度不规范'));
         return;
     }
-    if (value.includes(' ')) {
+
+    value = value.trim();
+    if (value == '') {
         callback(new Error('不能含有空格'));
         return;
     }
