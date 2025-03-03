@@ -14,6 +14,8 @@ const cover = ref();
 const progress = ref(0);
 const isMute = ref(false);
 const isHideBar = ref(false);
+const volume = ref(100);
+const isVolumePanelVisible = ref(false); // 控制音量面板的显示状态
 
 const music_src = computed(() => {
   if (songStore.getCurrentSong === null) {
@@ -234,6 +236,25 @@ const doHideOrShowBar = () => {
 }
 
 
+const mutedThePlayer = () => {
+  isMute.value = music.value.muted = !isMute.value;
+}
+const changeVolume = (volume_val: number) => {
+  volume.value = volume_val;
+  music.value.volume = volume_val / 100;
+  isMute.value = music.value.muted = volume_val == 0;
+}
+
+// 显示音量面板
+const showVolumePanel = () => {
+  isVolumePanelVisible.value = true;
+};
+
+// 隐藏音量面板
+const hideVolumePanel = () => {
+  isVolumePanelVisible.value = false;
+};
+
 </script>
 
 <template>
@@ -272,7 +293,7 @@ const doHideOrShowBar = () => {
         </div>
         <div class="song-part">
           <div class="song-name">{{ songStore.getCurrentSong.title || '欢迎使用在线音乐' }}</div>
-          <div class="song-time">{{ formattedCurrentTime }}
+          <div class="song-time">{{ formattedCurrentTime || '00:00 / 00:00' }}
           </div>
           <div class="song-progress">
             <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"
@@ -286,27 +307,76 @@ const doHideOrShowBar = () => {
 
       <div class="right-part">
         <!--      循环播放  -->
-        <FontAwesomeIcon v-if="isLoop" class="control-btn-each" icon="fa-refresh" size="2x" @click="isLoop = !isLoop"/>
-
-        <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>
+        <div class="control-btn-wrap">
+          <FontAwesomeIcon v-if="isLoop" icon="fa-refresh" size="2x" class="control-btn-each"
+                           @click="isLoop = !isLoop"/>
+          <FontAwesomeIcon v-else class="control-btn-each" icon="fa-random" size="2x" @click="isLoop = !isLoop"/>
+        </div>
 
 
         <!--        下载-->
-        <FontAwesomeIcon icon="fa-cloud-download" class="control-btn-each"
-                         :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
-                         @click="doDownloadMusic"/>
+        <div class="control-btn-wrap">
+          <FontAwesomeIcon icon="fa-cloud-download" class="control-btn-each"
+                           :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                           @click="doDownloadMusic"/>
+        </div>
         <!--        volume-->
-        <FontAwesomeIcon v-if="!isMute" icon="fa-volume-up" class="control-btn-each"
-                         :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
-                         @click="isMute=!isMute"/>
+        <!--        <div class="control-btn-wrap" @mouseenter="showVolumePanel" @mouseleave="hideVolumePanel">-->
+        <!--          <FontAwesomeIcon v-if="!isMute" icon="fa-volume-up" class="control-btn-each"-->
+        <!--                           :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+        <!--                           @click="mutedThePlayer"/>-->
 
-        <FontAwesomeIcon v-else class="control-btn-each" icon="fa-volume-off"
-                         :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
-                         @click="isMute=!isMute"/>
+        <!--          <FontAwesomeIcon v-else icon="fa-volume-off" class="control-btn-each"-->
+        <!--                           :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
+        <!--                           @click="mutedThePlayer"/>-->
+        <!--        </div>-->
+
+        <!--        volume panel-->
+        <!--        <div class="volume-panel-area" v-show="isVolumePanelVisible" @mouseenter="showVolumePanel"-->
+        <!--             @mouseleave="hideVolumePanel">-->
+        <!--          <el-slider vertical v-model="volume" @change="changeVolume"/>-->
+        <!--        </div>-->
+
+
+        <div class="control-btn-wrap">
+          <!-- 音量按钮 -->
+          <div @mouseenter="showVolumePanel" @mouseleave="hideVolumePanel">
+            <FontAwesomeIcon
+                v-if="!isMute"
+                icon="fa-volume-up"
+                class="control-btn-each"
+                :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
+                size="2x"
+                @click="mutedThePlayer"
+            />
+
+            <FontAwesomeIcon
+                v-else
+                icon="fa-volume-off"
+                class="control-btn-each"
+                :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
+                size="2x"
+                @click="mutedThePlayer"
+            />
+          </div>
+
+          <div
+              class="volume-panel-area"
+              v-show="isVolumePanelVisible"
+              @mouseenter="showVolumePanel"
+              @mouseleave="hideVolumePanel"
+          >
+            <el-slider vertical v-model="volume" @change="changeVolume"/>
+          </div>
+        </div>
+
 
         <!--        歌曲列表-->
-        <FontAwesomeIcon title="queue" class="control-btn-each" @click="showPlayList=!showPlayList" icon="fa-navicon"
-                         size="2x"/>
+        <div class="control-btn-wrap">
+          <FontAwesomeIcon title="queue" @click="showPlayList=!showPlayList" icon="fa-navicon" class="control-btn-each"
+                           size="2x"/>
+        </div>
+
         <transition name="slide-fade">
           <div v-if="showPlayList" class="showPlayList">
             <h2 class="title">当前播放</h2>
@@ -444,7 +514,6 @@ const doHideOrShowBar = () => {
       position: absolute;
       height: 100px;
       width: 260px;
-      cursor: pointer;
       margin-left: 710px;
 
       display: flex;
@@ -452,12 +521,30 @@ const doHideOrShowBar = () => {
       align-items: center;
 
 
-      .control-btn-each {
+      .control-btn-wrap {
         flex: 1;
+        display: flex;
+        justify-content: center;
+        position: relative;
 
-        &:hover {
-          color: red;
+
+        .control-btn-each {
+          cursor: pointer;
+
+          &:hover {
+            color: red;
+          }
         }
+
+        .volume-panel-area {
+          height: 80px;
+          position: absolute;
+          bottom: 100%; /* 将面板放在按钮上方 */
+          left: 50%;
+          transform: translateX(-50%);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
       }
 
       .fa-disabled {
