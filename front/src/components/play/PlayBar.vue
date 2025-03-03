@@ -292,7 +292,11 @@ const hideVolumePanel = () => {
           </el-image>
         </div>
         <div class="song-part">
-          <div class="song-name">{{ songStore.getCurrentSong.title || '欢迎使用在线音乐' }}</div>
+          <div class="song-name">
+            <marquee scrollamount="4" >
+              {{ songStore.getCurrentSong.title || '欢迎使用在线音乐' }}
+            </marquee>
+          </div>
           <div class="song-time">{{ formattedCurrentTime || '00:00 / 00:00' }}
           </div>
           <div class="song-progress">
@@ -487,9 +491,11 @@ const hideVolumePanel = () => {
 
         .song-name {
           position: absolute;
+          width: 140px;
           left: 150px;
           bottom: 50px;
           cursor: pointer;
+
         }
 
         .song-time {

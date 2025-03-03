@@ -9,6 +9,7 @@ import SingerDetailView from '../view/singer/SingerDetailView.vue'
 import SongListDetailView from '../view/songList/SongListDetailView.vue'
 import SongListView from '../view/songList/SongListView.vue'
 import SearchView from '@/view/search/SearchView.vue'
+import LyricsView from '@/view/lyrics/LyricsView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
@@ -53,6 +54,10 @@ const routes = [
             {// search
                 path: Behavior.SEARCH,
                 component: SearchView,
+            },
+            {// lyrics
+                path: Behavior.LYRICS + '/:id(\\d+)',
+                component: LyricsView,
             },
         ]
     },

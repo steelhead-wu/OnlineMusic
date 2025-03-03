@@ -11,4 +11,5 @@ export enum Behavior {
     SONG_LIST = '/song-list',
     SONG_LIST_DETAIL = '/song-list-detail',
     SEARCH = '/s',
+    LYRICS = '/lyrics'
 }
