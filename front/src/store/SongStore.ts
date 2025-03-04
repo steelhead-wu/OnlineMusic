@@ -50,12 +50,20 @@ export const useSongStore = defineStore('songStore', () => {
         const getCurrentSong = computed(() => {
             console.log('currentSongIdx:', currentSongIdx.value);
             // if (getCurrentSongIdx.value > -1) {
-            if (currentSongIdx.value > -1) {
+            if (currentSongIdx.value > -1 && currentSongIdx.value < songList.value.length) {
                 console.log('come currentSongIdx.value > -1')
                 setCurrentSong(songList.value[currentSongIdx.value]);
                 return songList.value[currentSongIdx.value];
             }
-            return null;
+            return {
+                id: '-1',
+                singerId: '',
+                title: '',
+                album: '',
+                picture: '/asset/img/songPic/tubiao.jpg',
+                lyric: '暂无歌词',
+                url: ''
+            };
         });
         const getSongList = computed(() => songList.value);
         // const getCurrentSong = computed(() => songList.value[currentSongIdx.value]);

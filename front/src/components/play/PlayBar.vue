@@ -1,21 +1,35 @@
 <script lang="ts" setup>
 import {Picture as IconPicture} from '@element-plus/icons-vue'
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, ref, watch} from 'vue'
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {baseURL} from "@/api/request";
 import {download} from "@/api/song/SongApi";
 import {useSongStore} from "@/store/SongStore";
+import {useRouter} from "vue-router";
+import {Behavior} from "@/enum/Behavior";
 
 const songStore = useSongStore()
 
 const music = ref(null);
 const cover = ref();
 
+const router = useRouter();
+
 const progress = ref(0);
 const isMute = ref(false);
 const isHideBar = ref(false);
 const volume = ref(100);
 const isVolumePanelVisible = ref(false); // 控制音量面板的显示状态
+
+
+const isShowLyricsPage = ref(false);
+watch(isShowLyricsPage, () => {
+  if (isShowLyricsPage.value) {
+    router.push(Behavior.LYRICS);
+  } else {
+    router.back();
+  }
+})
 
 const music_src = computed(() => {
   if (songStore.getCurrentSong === null) {
@@ -158,7 +172,7 @@ const changeTime = () => {
 }
 
 
-const songTime = ref<number>();
+const songTime = ref<number>(0);
 
 const isUserChanging = ref<boolean>(false);
 
@@ -281,7 +295,7 @@ const hideVolumePanel = () => {
 
       <div class="main-part">
         <div class="cover-part" ref="cover">
-          <el-image class="cover-img" :src="music_pic_src" alt="" srcset="">
+          <el-image class="cover-img" :src="music_pic_src" alt="" srcset="" @click="isShowLyricsPage=!isShowLyricsPage">
             <template #error>
               <div class="image-slot">
                 <el-icon>
@@ -293,11 +307,11 @@ const hideVolumePanel = () => {
         </div>
         <div class="song-part">
           <div class="song-name">
-            <marquee scrollamount="4" >
+            <marquee scrollamount="4">
               {{ songStore.getCurrentSong.title || '欢迎使用在线音乐' }}
             </marquee>
           </div>
-          <div class="song-time">{{ formattedCurrentTime || '00:00 / 00:00' }}
+          <div class="song-time">{{ formattedCurrentTime }}
           </div>
           <div class="song-progress">
             <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"
@@ -324,24 +338,6 @@ const hideVolumePanel = () => {
                            :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
                            @click="doDownloadMusic"/>
         </div>
-        <!--        volume-->
-        <!--        <div class="control-btn-wrap" @mouseenter="showVolumePanel" @mouseleave="hideVolumePanel">-->
-        <!--          <FontAwesomeIcon v-if="!isMute" icon="fa-volume-up" class="control-btn-each"-->
-        <!--                           :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
-        <!--                           @click="mutedThePlayer"/>-->
-
-        <!--          <FontAwesomeIcon v-else icon="fa-volume-off" class="control-btn-each"-->
-        <!--                           :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"-->
-        <!--                           @click="mutedThePlayer"/>-->
-        <!--        </div>-->
-
-        <!--        volume panel-->
-        <!--        <div class="volume-panel-area" v-show="isVolumePanelVisible" @mouseenter="showVolumePanel"-->
-        <!--             @mouseleave="hideVolumePanel">-->
-        <!--          <el-slider vertical v-model="volume" @change="changeVolume"/>-->
-        <!--        </div>-->
-
-
         <div class="control-btn-wrap">
           <!-- 音量按钮 -->
           <div @mouseenter="showVolumePanel" @mouseleave="hideVolumePanel">

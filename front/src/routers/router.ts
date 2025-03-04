@@ -56,7 +56,8 @@ const routes = [
                 component: SearchView,
             },
             {// lyrics
-                path: Behavior.LYRICS + '/:id(\\d+)',
+                // path: Behavior.LYRICS + '/:id(\\d+)',
+                path: Behavior.LYRICS ,
                 component: LyricsView,
             },
         ]
