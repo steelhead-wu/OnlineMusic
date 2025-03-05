@@ -6,24 +6,51 @@ import {onMounted, reactive, ref, watch} from "vue";
 const songStore = useSongStore();
 
 const lrcTop = ref("80px"); // 歌词滑动
-const lyricArr = ref(songStore.getCurrentSong?.lyric.matchAll(/^\[(?<time>\d{2}:\d{2}\.\d{2,})](?<lyric>.+)/gm)); // 当前歌曲的歌词
+const lyricArr = ref([]); // 当前歌曲的歌词
+const currentLyricIndex = ref(-1);
 
+
+// const parseLyrics = () => {
+//   const lyricsList = [];
+//
+//   songStore.getCurrentSong?.lyric.matchAll(/^\[(?<min>\d{2}):(?<sec>\d{2}\.\d{2,})](?<lyric>.+)/gm).forEach(each => {
+//     lyricsList.push({time: each.groups.min * 60 + each.groups.sec, lyric: each.groups.lyric});
+//   })
+//   return lyricsList;
+// }
+
+/**
+ * find maximum value which is not larger than
+ * <code>songStore.getCurrentTime </code>
+ * @param lyrics
+ */
+const findCurrentLyricPos = (lyrics: Array<object>): number => {
+  let l = 0, r = lyrics.length - 1;
+  while (l < r) {
+    let m = l + r + 1 >> 1;
+    if (lyrics[m].time <= songStore.getCurrentTime) {
+      l = m;
+    } else {
+      r = m - 1;
+    }
+  }
+  return l;
+}
 
 watch(() => songStore.getCurrentSong, () => {
-  lyricArr.value = songStore.getCurrentSong?.lyric.matchAll(/^\[(?<time>\d{2}:\d{2}\.\d{2,})](?<lyric>.+)/gm);
+  lyricArr.value = songStore.parseLyrics();
 });
 
-onMounted(() => {
-  // for (let matchAllElement of songStore.getCurrentSong.lyric.matchAll(/^\[(?<time>\d{2}:\d{2}\.\d{2,})](?<lyric>.+)/gm)) {
-  // console.log(`time:${matchAllElement.groups.time}, lyric:${matchAllElement.groups.lyric}`);
-  // }
-  // console.log(lyricArr.value);
-  // console.log(lyricArr);
-  // for (let lyricArrElement of lyricArr) {
-  //   console.log(lyricArrElement);
-  // }
+watch(() => songStore.getCurrentTime, () => {
+  currentLyricIndex.value = findCurrentLyricPos(lyricArr.value);
+  console.log('currentLyricIndex', currentLyricIndex.value);
+  console.log('10th', lyricArr.value[10]);
+})
 
-  // console.log(songStore.getCurrentSong);
+onMounted(() => {
+  lyricArr.value = songStore.parseLyrics();
+  currentLyricIndex.value = findCurrentLyricPos(lyricArr.value);
+  console.log('www', lyricArr.value);
 })
 
 </script>
@@ -77,8 +104,8 @@ onMounted(() => {
           <!--            <span>暂无歌词</span>-->
           <!--          </div>-->
           <li v-for="(item,idx) in lyricArr"
-              :key="idx" :class="{'cur-lyric':true}">
-            {{ item.groups.lyric }}
+              :key="idx" :class="{'cur-lyric':currentLyricIndex===idx}">
+            {{ item.lyric }}
           </li>
 
         </transition-group>
@@ -141,6 +168,8 @@ onMounted(() => {
 
         overflow: hidden;
         text-overflow: ellipsis;
+
+        //list-style: none;
       }
     }
 

@@ -164,7 +164,7 @@ const showPlayList = ref(false);
 const isLoop = ref(true);
 
 const changeTime = () => {
-  console.log("come changeTime");
+  // console.log("come changeTime");
   music.value.currentTime = progress.value;
   songStore.setIsPlay(true);
   cover.value.style['animationPlayState'] = 'running';
@@ -184,17 +184,18 @@ const formattedCurrentTime = computed(() => {
 });
 
 onMounted(() => {
-  console.log('mounted');
+  // console.log('mounted');
   if (music.value) {
     music.value.addEventListener('loadedmetadata', () => {
       songTime.value = music.value.duration;
-      console.log(`music duration:${music.value.duration} sec`);
+      // console.log(`music duration:${music.value.duration} sec`);
     });
 
     music.value.addEventListener('timeupdate', () => {
       if (!isUserChanging.value) {
         progress.value = music.value.currentTime;
-        console.log('Current Time:', music.value.currentTime);
+        songStore.setCurrentTime(music.value.currentTime);
+        // console.log('Current Time:', songStore.getCurrentTime);
       }
     });
   }
@@ -202,7 +203,7 @@ onMounted(() => {
 
 // handle progress bar when progress changed
 const onProgressChange = (value: number) => {
-  console.log('onProgressChange');
+  // console.log('onProgressChange');
   //  when user manually changed the progress bar
   isUserChanging.value = true;
   progress.value = value;

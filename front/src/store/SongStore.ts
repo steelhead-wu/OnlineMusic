@@ -2,46 +2,29 @@ import {defineStore} from "pinia";
 import {computed, ref} from "vue";
 
 export const useSongStore = defineStore('songStore', () => {
+
+        const currentTime = ref(0);
+
+        const getCurrentTime = computed(() => currentTime.value);
+
+        const setCurrentTime = (curTime: number) => {
+            currentTime.value = curTime;
+
+        }
+
+
+        const currentLyricIndex = ref(-1); //当前高亮歌词的索引
+
+        const getCurrentLyricIndex = computed(() => getCurrentLyricIndex.value);
+
+        const setCurrentLyricIndex = (lyricsIndex: number) => {
+            currentLyricIndex.value = lyricsIndex;
+        }
+
         const isPlay = ref(false);
         const currentSongIdx = ref(0);
-        const songList = ref<Array<Song>>([
-            {
-                id: '1',
-                singerId: '',
-                title: '孝琳-안녕 (再见)',
-                album: '',
-                picture: '/asset/img/songPic/109951169493800260.jpg',
-                lyric: '',
-                url: '/asset/song/孝琳 - 안녕 (再见).mp3'
-            },
-            {
-                id: '2',
-                singerId: '',
-                title: '林俊杰-一千年以后',
-                album: '一千年以后',
-                picture: '/asset/img/songPic/109951163187405670.jpg',
-                lyric: '',
-                url: '/asset/song/林俊杰-一千年以后.mp3'
-            },
-            {
-                id: '3',
-                singerId: '',
-                title: '周杰伦-告白气球',
-                album: '床边故事',
-                picture: '/asset/img/songPic/gaobaiqiqui.jpg',
-                lyric: '',
-                url: '/asset/song/周杰伦-告白气球.mp3'
-            },
-            {
-                id: '4',
-                singerId: '',
-                title: '权志龙-HOME SWEET HOME',
-                album: 'HOME SWEET HOME',
-                picture: '/asset/img/songPic/48c3318938d448503898feef740373c7.jpg',
-                lyric: '',
-                url: '/asset/song/权志龙-HOMESWEETHOME.mp3'
-            },
-        ]);
+        const songList = ref<Array<Song>>([]);
+
         let currentSong = ref<Song>(songList.value[currentSongIdx.value]);
 
 
@@ -104,6 +87,42 @@ export const useSongStore = defineStore('songStore', () => {
             songList.value = songs;
         }
 
+
+        const parseLyrics = () => {
+            const lyricsList = [];
+
+            getCurrentSong.value.lyric.matchAll(/^\[(?<min>\d{2}):(?<sec>\d{2}\.\d{2,})](?<lyric>.+)/gm).forEach((each, idx) => {
+                lyricsList.push({time: parseInt(each.groups.min) * 60 + parseFloat(each.groups.sec), lyric: each.groups.lyric});
+                if (idx == 10) {
+                    console.log('each.groups.min', each.groups.min);
+                    console.log('each.groups.sec', each.groups.sec);
+                    console.log('time',lyricsList[10].time);
+                }
+
+
+            })
+            return lyricsList;
+        }
+
+        /**
+         * find maximum value which is not larger than
+         * <code>songStore.getCurrentTime </code>
+         * @param lyrics
+         */
+        const findCurrentLyricPos = (lyrics: Array<object>) => {
+            let l = 0, r = lyrics.length;
+            while (l < r) {
+                let m = l + r >> 1;
+                if (lyrics[m].time >= currentTime.value) {
+                    r = m;
+                } else {
+                    l = m + 1;
+                }
+            }
+            currentLyricIndex.value = l;
+        }
+
+
         function $reset() {
             isPlay.value = false;
             currentSongIdx.value = -1;
@@ -134,6 +153,13 @@ export const useSongStore = defineStore('songStore', () => {
             songList,
             getSongList,
             setSongList,
+            currentTime,
+            getCurrentTime,
+            setCurrentTime,
+            parseLyrics,
+            currentLyricIndex,
+            getCurrentLyricIndex,
+            setCurrentLyricIndex,
         };
     },
     {
