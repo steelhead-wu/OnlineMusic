@@ -2,6 +2,7 @@ package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.wll.pojo.Song;
 import com.wll.pojo.User;
 import com.wll.service.impl.UserServiceImpl;
 import com.wll.utils.R;

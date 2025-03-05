@@ -7,9 +7,11 @@ import {download} from "@/api/song/SongApi";
 import {useSongStore} from "@/store/SongStore";
 import {useRouter} from "vue-router";
 import {Behavior} from "@/enum/Behavior";
+import {addLike, delLikeBy, getLikeBy} from "@/api/likes/LikesApi";
+import {useUserStore} from "@/store/UserStore";
 
 const songStore = useSongStore()
-
+const userStore = useUserStore();
 const music = ref(null);
 const cover = ref();
 
@@ -109,40 +111,24 @@ const randomIdx = (): number => {
 }
 
 const next = () => {
-  console.log("cur song:")
-  console.log(songStore.getCurrentSong);
-  console.log('--------------')
-  console.log(songStore.getCurrentSongIdx);
   if (isLoop.value) {
     songStore.incSongIdx();
   } else {
     songStore.setCurrentSongIdx(randomIdx());
   }
-  console.log(songStore.getCurrentSongIdx);
-  console.log("next song:")
-  console.log(songStore.getCurrentSong);
-  console.log('--------------')
-  // music.value.play();
   playMusic();
+  queryIsLikedSong();
 }
 
 
 const previous = () => {
-  console.log("cur song:")
-  console.log(songStore.getCurrentSong);
-  console.log('--------------')
-  console.log(songStore.getCurrentSongIdx);
   if (isLoop.value) {
     songStore.decSongIdx();
   } else {
     songStore.setCurrentSongIdx(randomIdx());
   }
-  console.log(songStore.getCurrentSongIdx);
-  console.log("previous song:")
-  console.log(songStore.getCurrentSong);
-  console.log('--------------')
-  // music.value.play();
   playMusic();
+  queryIsLikedSong();
 }
 
 const playThisMusic = (song: Song, song_idx: number) => {
@@ -183,6 +169,16 @@ const formattedCurrentTime = computed(() => {
       Math.floor(songTime.value % 60).toString().padStart(2, '0')}`;
 });
 
+const queryIsLikedSong = () => {
+  getLikeBy(userStore.getLoginUser.id, songStore.getCurrentSong.id).then(value => {
+    if (value.data.data) {
+      isLiked.value = true;
+    } else {
+      isLiked.value = false;
+    }
+  })
+}
+
 onMounted(() => {
   // console.log('mounted');
   if (music.value) {
@@ -199,6 +195,11 @@ onMounted(() => {
       }
     });
   }
+  /*
+   query whether the user likes the song
+  */
+  queryIsLikedSong();
+
 });
 
 // handle progress bar when progress changed
@@ -269,6 +270,31 @@ const showVolumePanel = () => {
 const hideVolumePanel = () => {
   isVolumePanelVisible.value = false;
 };
+
+
+const isLiked = ref(false);
+
+// add song to my like
+const addToMyFavorite = () => {
+  const like: Likes = {
+    userId: userStore.getLoginUser.id,
+    songId: songStore.getCurrentSong.id,
+  }
+  if (isLiked.value) {
+    delLikeBy(like).then(value => {
+      if (value.data.data) {
+        isLiked.value = false;
+      }
+    })
+  } else {
+    addLike(like).then(value => {
+      if (value.data.data) {
+        isLiked.value = true;
+        console.log("新增喜欢成功");
+      }
+    })
+  }
+}
 
 </script>
 
@@ -343,6 +369,7 @@ const hideVolumePanel = () => {
           <!-- 音量按钮 -->
           <div @mouseenter="showVolumePanel" @mouseleave="hideVolumePanel">
             <FontAwesomeIcon
+                title="turn-off"
                 v-if="!isMute"
                 icon="fa-volume-up"
                 class="control-btn-each"
@@ -353,6 +380,7 @@ const hideVolumePanel = () => {
 
             <FontAwesomeIcon
                 v-else
+                title="turn-on"
                 icon="fa-volume-off"
                 class="control-btn-each"
                 :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
@@ -371,6 +399,13 @@ const hideVolumePanel = () => {
           </div>
         </div>
 
+
+        <!--        like-收藏-->
+        <div class="control-btn-wrap">
+          <FontAwesomeIcon title="like" @click="addToMyFavorite" icon="fa-heart" class="control-btn-each"
+                           :class="{red:isLiked}"
+                           size="2x"/>
+        </div>
 
         <!--        歌曲列表-->
         <div class="control-btn-wrap">
@@ -537,6 +572,11 @@ const hideVolumePanel = () => {
           &:hover {
             color: red;
           }
+
+        }
+
+        .red {
+          color: red;
         }
 
         .volume-panel-area {

@@ -1,10 +1,6 @@
-import com.wll.enums.ResourcesPath;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @time 2025/2/25 19:23 周二
@@ -12,9 +8,11 @@ import java.util.Arrays;
 public class Test {
 
     public static void main(String[] args) throws IOException {
-//        Path filepath = Paths.get(ResourcesPath.values()[0].toString());
-//        System.out.println(filepath);
-//        System.out.println(filepath.);
-        System.out.println(Files.exists(Paths.get("D:/Project/JavaPro")));
+        String str1 = "The quick brown fox jumps over the lazy dog. It barked.";
+        String str2 = "aabfooaabfooabfoobkkk";
+        Pattern pattern2 = Pattern.compile("a*b");
+
+        System.out.println(str2.replaceAll(pattern2.toString(), "-"));
+
     }
 }
