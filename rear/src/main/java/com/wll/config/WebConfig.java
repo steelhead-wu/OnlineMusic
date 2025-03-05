@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true)
 //                .allowedOriginPatterns("http://localhost:5173")
                 .allowedOrigins("http://localhost:5173")
-                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .maxAge(3600);
     }
 }
