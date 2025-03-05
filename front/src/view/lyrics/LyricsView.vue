@@ -82,7 +82,18 @@ onMounted(() => {
 
   <div class="lyrics-bg">
     <div class="aside-bg">
-      <div class=" album-area"></div>
+      <div class=" album-area">
+        <el-image class="album-img" :src="baseURL+songStore.getCurrentSong.picture"/>
+      </div>
+
+      <div class="singer">
+        <h1>歌手：{{ songStore.getCurrentSong.title.split('-')[0] }}</h1>
+      </div>
+
+      <div class="album">
+        <h1> 专辑：{{ songStore.getCurrentSong.album }}</h1>
+      </div>
+
     </div>
     <div class="main-bg">
       <div class="lyrics-area">
@@ -109,16 +120,35 @@ onMounted(() => {
   height: 100%;
   display: flex;
   background-image: linear-gradient(45deg, #03a9f4 20%, #ff82aa 80%);
-  //background: url("../../assets/img/background/3.webp") center center / cover no-repeat;;
-  //transition: all 0.5 sease-in-out;
   cursor: url("../../assets/cursor/default.cur") auto;
 
   .aside-bg {
-    flex: 1;
+    flex: 41;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 50px;
+    .album-area {
+      .album-img {
+        width: 160px;
+        height: 160px;
+        border-radius: 10%;
+      }
+    }
+
+    .singer {
+
+    }
+
+    .album {
+
+    }
   }
 
   .main-bg {
-    flex: 2;
+    flex: 59;
     position: relative;
 
     .lyrics-area {
