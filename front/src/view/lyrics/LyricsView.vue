@@ -56,239 +56,131 @@ onMounted(() => {
 </script>
 
 <template>
-  <!--  <div class="lyrics-bg">-->
-  <!--    <div class="aside-bg">-->
-  <!--      <div class="album-area">-->
-  <!--        <el-image :src="baseURL + songStore.getCurrentSong.picture" class="album-pic"/>-->
+
+
+  <!--  <div class="song-container">-->
+  <!--    <el-image class="song-pic" fit="contain" :src="baseURL + songStore.getCurrentSong.picture"/>-->
+  <!--    <ul class="song-info">-->
+  <!--      <li>歌手：{{ songStore.getCurrentSong.album }}</li>-->
+  <!--      <li>歌曲：{{ songStore.getCurrentSong.title }}</li>-->
+  <!--    </ul>-->
+  <!--  </div>-->
+  <!--  <div class="container">-->
+  <!--    <div class="lyric-container">-->
+  <!--      <div class="song-lyric">-->
+  <!--        <ul class="lyrics">-->
+  <!--          <li v-for="(item,idx) in lyricArr"-->
+  <!--              :key="idx" :class="{'cur-lyric':currentLyricIndex===idx}">-->
+  <!--            {{ item.lyric }}-->
+  <!--          </li>-->
+  <!--        </ul>-->
   <!--      </div>-->
-
-  <!--    </div>-->
-  <!--    <div class="main-bg">-->
-  <!--      <div class="song-info-area">-->
-  <!--        <div class="song-name">{{ songStore.getCurrentSong.title }}</div>-->
-  <!--        <div class="songDetail">-->
-  <!--          <span class="album">{{ songStore.getCurrentSong.album }}</span>-->
-  <!--          <span class="singer">{{ songStore.getCurrentSong.album }}</span>-->
-  <!--        </div>-->
-
-  <!--        <div class="lyrics-container">-->
-  <!--          <div class="lyrics">-->
-  <!--            <p>{{songStore.getCurrentSong.lyric}}</p>-->
-  <!--          </div>-->
-  <!--        </div>-->
-  <!--      </div>-->
-
+  <!--            <comment :playId="songId" :type="0"></comment>-->
   <!--    </div>-->
   <!--  </div>-->
 
-  <div class="song-container">
-    <el-image class="song-pic" fit="contain" :src="baseURL + songStore.getCurrentSong.picture"/>
-    <ul class="song-info">
-      <li>歌手：{{ songStore.getCurrentSong.album }}</li>
-      <li>歌曲：{{ songStore.getCurrentSong.title }}</li>
-    </ul>
-  </div>
-  <div class="container">
-    <div class="lyric-container">
-      <div class="song-lyric">
-        <transition-group name="lyric-fade" tag="ul">
-          <!--          {{ songStore.getCurrentSong.lyric }}-->
-          <!--有歌词-->
-          <!--          <ul :style="{ top: lrcTop }" class="has-lyric" v-if="lyricArr.length" key="has-lyric">-->
-          <!--            <li v-for="(item, index) in lyricArr" :key="index">-->
-          <!--              {{ item[1] }}-->
-          <!--            </li>-->
-          <!--          </ul>-->
-          <!--没歌词-->
-          <!--          <div v-else class="no-lyric" key="no-lyric">-->
-          <!--            <span>暂无歌词</span>-->
-          <!--          </div>-->
-          <li v-for="(item,idx) in lyricArr"
-              :key="idx" :class="{'cur-lyric':currentLyricIndex===idx}">
-            {{ item.lyric }}
-          </li>
 
-        </transition-group>
+  <div class="lyrics-bg">
+    <div class="aside-bg">
+      <div class=" album-area"></div>
+    </div>
+    <div class="main-bg">
+      <div class="lyrics-area">
+        <div class="song-name">
+          {{ songStore.getCurrentSong.title }}
+        </div>
+
+        <div class="lyrics-container">
+          <ul class="lyrics">
+            <li v-for="(item,idx) in lyricArr"
+                :key="idx" :class="{'cur-lyric':currentLyricIndex===idx}">
+              {{ item.lyric }}
+            </li>
+          </ul>
+        </div>
       </div>
-      <!--            <comment :playId="songId" :type="0"></comment>-->
     </div>
   </div>
 
 </template>
 
 <style scoped lang="scss">
-.song-container {
-  position: fixed;
-  top: 120px;
-  left: 50px;
+.lyrics-bg {
+  height: 100%;
   display: flex;
-  flex-direction: column;
+  background-image: linear-gradient(45deg, #03a9f4 20%, #ff82aa 80%);
+  //background: url("../../assets/img/background/3.webp") center center / cover no-repeat;;
+  //transition: all 0.5 sease-in-out;
+  cursor: url("../../assets/cursor/default.cur") auto;
 
-  .song-pic {
-    height: 300px;
-    width: 300px;
-    border: 4px solid white;
-    border-radius: 12px;
+  .aside-bg {
+    flex: 1;
   }
 
-  .song-info {
-    width: 300px;
-
-    li {
-      width: 100%;
-      line-height: 40px;
-      font-size: 18px;
-      padding-left: 10%;
-    }
-  }
-}
-
-.lyric-container {
-  font-family: Lato, Helvetica Neue For Number, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
-  Helvetica Neue, Helvetica, Arial, sans-serif;
-
-  .song-lyric {
+  .main-bg {
+    flex: 2;
     position: relative;
-    min-height: 300px;
-    padding: 30px 0;
-    overflow: auto;
-    border-radius: 12px;
-    background-color: #EFEFEF;
 
-    .has-lyric {
-      position: absolute;
-      transition: all 1s;
-
-      li {
-        width: 100%;
-        height: 40px;
-        text-align: center;
-        font-size: 14px;
-        line-height: 40px;
-
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        //list-style: none;
-      }
-    }
-
-    .no-lyric {
-      position: absolute;
-      margin: 100px 0;
-
-      span {
-        font-size: 18px;
-        text-align: center;
-      }
-    }
-
-    .cur-lyric {
-      //color: white;
+    .lyrics-area {
+      height: 100%;
       transition: allease-in-out 0.3s;
-      font-size: 18px;
-      letter-spacing: 1px;
-      font-weight: bold;
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.2));
-      background: linear-gradient(to right, #ffffff 25%, #37d8ff 40%, #ffdd5b 50%, #ff5151 80%);
-      -webkit-background-clip: text;
-      //background-clip: text;
-      color: transparent;
+      border-radius: 10px;
+      background: linear-gradient(to top, rgb(255 255 255 / 0%) 0, rgb(255 255 255 / 2%) 50%, rgb(255 255 255 / 0%) 100%);
+
+      .song-name {
+        position: absolute;
+        width: 100%;
+        margin-top: 20px;
+        color: rgba(255, 255, 255, 1);
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.2));
+        transition: allease-in-out .5s;
+
+      }
+
+      .lyrics-container {
+        position: absolute;
+        top: 65px;
+        left: 10px;
+        right: 50px;
+        bottom: 10px;
+        font-size: 14px;
+        overflow: hidden;
+        text-align: center;
+        color: #bdbdbe;
+        color: rgba(225, 225, 225, .8);
+        line-height: 26px;
+
+        .lyrics {
+          position: absolute;
+          width: 100%;
+          top: 0;
+          bottom: 0;
+          overflow: hidden;
+          overflow-y: auto;
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+
+          .cur-lyric {
+            transition: allease-in-out 0.3s;
+            font-size: 18px;
+            letter-spacing: 1px;
+            font-weight: bold;
+            filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.2));
+            background: linear-gradient(to right, #ffffff 25%, #37d8ff 40%, #ffdd5b 50%, #ff5151 80%);
+            -webkit-background-clip: text;
+            color: transparent;
+          }
+        }
+
+
+        ul {
+          list-style: none;
+        }
+      }
     }
   }
 }
-
-.lyric-fade-enter,
-.lyric-fade-leave-to {
-  transform: translateX(30px);
-  opacity: 0;
-}
-
-.lyric-fade-enter-active,
-.lyric-fade-leave-active {
-  transition: all 0.3s ease;
-}
-
-@media screen and (min-width: 667px) {
-  .container {
-    padding-top: 30px;
-  }
-  .lyric-container {
-    margin: 0 150px 0px 400px;
-  }
-}
-
-@media screen and (max-width: 667px) {
-  .container {
-    padding: 20px;
-  }
-  .song-container {
-    display: none;
-  }
-}
-
-
-//.lyrics-bg {
-//  width: 70%;
-//  height: 100%;
-//  margin: 0 auto;
-//  display: flex;
-//  flex-wrap: nowrap;
-//
-//  .aside-bg {
-//    flex: 1;
-//    height: 100%;
-//
-//    .album-area {
-//      height: 60%;
-//
-//      .album-pic {
-//        //width: 50%;
-//        //height: 50%;
-//      }
-//    }
-//
-//
-//  }
-//
-//  .main-bg {
-//    flex: 2;
-//    height: 100%;
-//
-//    .song-info-area {
-//      height: 40%;
-//
-//      .song-name {
-//
-//      }
-//
-//      .songDetail {
-//        .album {
-//          margin-right: 10px;
-//          float: left;
-//        }
-//
-//        .singer {
-//          //display: block;
-//          //width: 225px;
-//          //height: 24px;
-//          //line-height: 24px;
-//          //white-space: nowrap;
-//          //overflow: hidden;
-//          //text-overflow: ellipsis;
-//          //font-size: 15px;
-//          //color: #fff;
-//        }
-//      }
-//
-//      .lyrics-container {
-//        .lyrics {
-//
-//        }
-//      }
-//
-//    }
-//  }
-//}
-
 </style>
