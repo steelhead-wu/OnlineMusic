@@ -6,42 +6,25 @@ import {useSongStore} from "@/store/SongStore";
 import {getSingerBySex} from "@/api/singer/SingerApi";
 import {getAllSongList, getSongListByStyle, updateOrSaveRating} from "@/api/songList/SongListApi";
 import {SongListEnum} from "@/enum/SongListEnum";
-import {getSongBySongListID} from "@/api/song/SongApi";
+import {getLikedSongByUserId, getSongBySongListID} from "@/api/song/SongApi";
+import {delLikeBy, getLikeBy} from "@/api/likes/LikesApi";
 
+// getLikeBy('1', '2').then(value => {
+//   console.log(value.data.data);
+// })
 
-// const songStore = useSongStore()
-// const music = ref();
-// current song play
-// const song = computed(() => songStore.getCurrentSong.value);
-// const music_src = computed(() => baseURL + song.value.url);
-
-
-// const ended = () => {
-//   console.log("come ended");
-//   progress.value = 0;
-//   music.value.addEventListener('ended', next);
+// const like: Likes = {
+//   userId: '1',
+//   songId: '2'
 // }
 
-
-// getSingerBySex(2).then(value => {
-//   console.log(value);
+// delLikeBy(like).then(value => {
+//   console.log(value.data.data);
 // })
 
 
-// getAllSongList().then(value => {
-//   console.log(value.data);
-// })
-
-// getSongListByStyle('华语').then(value => {
-//   console.log(value.data);
-// })
-
-// getSongBySongListID(7).then(value => {
-//   console.log(value.data);
-// })
-
-// updateOrSaveRating(1, 2, 3).then(value => {
-//   console.log("value.data", value.data);
+// getLikedSongByUserId('1882054264398209025').then(value => {
+//   console.log(value.data.data);
 // })
 
 

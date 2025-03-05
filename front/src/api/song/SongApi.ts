@@ -32,3 +32,11 @@ export const getSongBySongListID = async (songListId: number) => {
         }
     });
 }
+
+export const getLikedSongByUserId = async (userId: string) => {
+    return await myAxios.get(prefix, {
+        params: {
+            userId
+        }
+    });
+}

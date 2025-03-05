@@ -3,22 +3,29 @@ import {useUserStore} from "@/store/UserStore";
 import {AvatarSize} from "@/enum/AvatarSize";
 import SongList from "@/components/song/SongList.vue";
 import Update from "@/components/user/Update.vue";
+import {onMounted, ref} from "vue";
+import {getLikedSongByUserId} from "@/api/song/SongApi";
 
 const userStore = useUserStore();
 
 
-const tableData = [
-  {
-    song: '2016-05-03',
-    singer: 'Tom',
-    album: 'No. 189, Grove St, Los Angeles',
-  },
-  {
-    song: '2016-05-03',
-    singer: 'Tom',
-    album: 'No. 189, Grove St, Los Angeles',
-  },
-]
+const tableData = ref([])
+
+
+onMounted(() => {
+  getLikedSongByUserId(userStore.getLoginUser.id).then(value => {
+
+    if (value.data.data) {
+      // tableData.value
+      for (const song: Song of value.data.data) {
+        const split = song.title?.split('-');
+        song['song'] = split[1];
+        song['singer'] = split[0];
+        tableData.value.push(song);
+      }
+    }
+  })
+});
 </script>
 
 <template>
