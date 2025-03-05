@@ -9,18 +9,21 @@ export const addLike = async (likes: Likes) => {
     return await myAxios.post(prefix, likes);
 }
 
-
-export const getLikeBy = async (userId: string, songId: string) => {
-    return await myAxios.get(prefix, {
-        params: {
-            userId,
-            songId,
-        }
+export const conditionalDelete = async (likes: Likes) => {
+    return await myAxios.delete(prefix, {
+        data: likes,
     });
 }
 
-export const delLikeBy = async (likes: Likes) => {
-    return await myAxios.delete(prefix, {
-        data: likes,
+
+export const conditionalUpdate = async (updatedLikes: Likes, conditionalLikes: Likes) => {
+    return await myAxios.put(prefix, updatedLikes, {
+        params: conditionalLikes
+    });
+}
+
+export const conditionalQuery = async (likes: Likes) => {
+    return await myAxios.get(prefix, {
+        params: likes
     });
 }

@@ -7,7 +7,7 @@ import {download} from "@/api/song/SongApi";
 import {useSongStore} from "@/store/SongStore";
 import {useRouter} from "vue-router";
 import {Behavior} from "@/enum/Behavior";
-import {addLike, delLikeBy, getLikeBy} from "@/api/likes/LikesApi";
+import {addLike, conditionalDelete, conditionalQuery} from "@/api/likes/LikesApi";
 import {useUserStore} from "@/store/UserStore";
 
 const songStore = useSongStore()
@@ -170,8 +170,12 @@ const formattedCurrentTime = computed(() => {
 });
 
 const queryIsLikedSong = () => {
-  getLikeBy(userStore.getLoginUser.id, songStore.getCurrentSong.id).then(value => {
-    if (value.data.data) {
+  const like: Likes = {
+    userId: userStore.getLoginUser.id,
+    songId: songStore.getCurrentSong.id,
+  };
+  conditionalQuery(like).then(value => {
+    if (value.data.data.length === 1) {
       isLiked.value = true;
     } else {
       isLiked.value = false;
@@ -281,7 +285,7 @@ const addToMyFavorite = () => {
     songId: songStore.getCurrentSong.id,
   }
   if (isLiked.value) {
-    delLikeBy(like).then(value => {
+    conditionalDelete(like).then(value => {
       if (value.data.data) {
         isLiked.value = false;
       }

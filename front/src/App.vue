@@ -7,26 +7,28 @@ import {getSingerBySex} from "@/api/singer/SingerApi";
 import {getAllSongList, getSongListByStyle, updateOrSaveRating} from "@/api/songList/SongListApi";
 import {SongListEnum} from "@/enum/SongListEnum";
 import {getLikedSongByUserId, getSongBySongListID} from "@/api/song/SongApi";
-import {delLikeBy, getLikeBy} from "@/api/likes/LikesApi";
+import {conditionalDelete, conditionalQuery, conditionalUpdate} from "@/api/likes/LikesApi";
 
-// getLikeBy('1', '2').then(value => {
-//   console.log(value.data.data);
+const like1: Likes = {
+  userId: '1',
+  songId: '2',
+}
+
+const like2: Likes = {
+  // userId: '1',
+  // songId: '2',
+  id: '-2'
+}
+// conditionalQuery(like).then(value => {
+//   console.log(value.data);
+// })
+// conditionalDelete(like).then(value => {
+//   console.log(value.data);
 // })
 
-// const like: Likes = {
-//   userId: '1',
-//   songId: '2'
-// }
+conditionalUpdate(like1, like2).then(value => {
 
-// delLikeBy(like).then(value => {
-//   console.log(value.data.data);
-// })
-
-
-// getLikedSongByUserId('1882054264398209025').then(value => {
-//   console.log(value.data.data);
-// })
-
+})
 
 </script>
 
