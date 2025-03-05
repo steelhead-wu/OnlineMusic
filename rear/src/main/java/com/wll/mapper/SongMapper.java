@@ -28,4 +28,6 @@ public interface SongMapper extends BaseMapper<Song> {
             "s.name,s.pic,s.sex,s.birth,s.introduction,s.location,s.song_number,s.album_number FROM song " +
             "left join singer s on song.singer_id = s.id WHERE (title LIKE  concat('%', #{kw},'%'))")
     List<Map<String, Object>> searchSongByTitle(String kw);
+
+    List<Song> getLikedSongByUserId(long userId);
 }

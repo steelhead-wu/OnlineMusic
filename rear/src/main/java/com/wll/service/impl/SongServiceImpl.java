@@ -31,4 +31,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     public List<Map<String, Object>> searchSongByTitle(String kw) {
         return songMapper.searchSongByTitle(kw);
     }
+
+    @Override
+    public List<Song> getLikedSongByUserId(long userId) {
+        return songMapper.getLikedSongByUserId(userId);
+    }
 }

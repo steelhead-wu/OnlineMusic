@@ -58,10 +58,6 @@ public class SongController {
 
     @GetMapping("/s")
     public R searchSongByTitle(@RequestParam("kw") String kw) {
-//        LambdaQueryWrapper<Song> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-//        lambdaQueryWrapper.like(Song::getTitle, kw);
-//        List<Song> res = songService.list(lambdaQueryWrapper);
-
         return R.success(songService.searchSongByTitle(kw));
     }
 
@@ -81,17 +77,11 @@ public class SongController {
         // 检查文件是否存在
         if (resource.exists()) {
             // 设置响应头
-//            return R.success(ResponseEntity.ok()
-//                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-//                    .body(resource));
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_OCTET_STREAM) // 二进制流类型
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                     .body(resource);
         }
-//            ("",ResponseEntity.notFound().build());
-//        return R.error("未找到");
         return ResponseEntity.notFound().build();
 
     }
@@ -108,4 +98,9 @@ public class SongController {
         return R.success(songService.getSongBySongListID(songListId));
     }
 
+
+    @GetMapping(params = "userId")
+    public R getLikedSongByUserId(long userId) {
+        return R.success(songService.getLikedSongByUserId(userId));
+    }
 }
