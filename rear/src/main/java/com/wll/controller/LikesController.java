@@ -3,14 +3,14 @@ package com.wll.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.Likes;
-import com.wll.pojo.User;
 import com.wll.service.ILikesService;
+import com.wll.utils.MyUtils;
 import com.wll.utils.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Map;
-import java.util.Objects;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * <p>
@@ -57,14 +57,14 @@ public class LikesController {
         ));
     }
 
-    @GetMapping()
-    public R conditionalQuery(@RequestParam(required = false) Long id,
-                              @RequestParam(required = false) Long userId,
-                              @RequestParam(required = false) Long songId) {
-        return R.success(likesService.list(new LambdaQueryWrapper<Likes>()
-                .eq(!Objects.isNull(id), Likes::getId, id)
-                .eq(!Objects.isNull(userId), Likes::getUserId, userId)
-                .eq(!Objects.isNull(songId), Likes::getSongId, songId)
+    @PatchMapping
+    public R conditionalQuery(@RequestBody Map<String, Likes> map) throws IllegalAccessException {
+        Likes fieldLike = map.get("fieldLike");
+        Likes conditionalLike = map.get("conditionalLike");
+        return R.success(likesService.list(new MyUtils<Likes>().progressQueryField(Likes.class, fieldLike)
+                .eq(!Objects.isNull(conditionalLike.getId()), Likes::getId, conditionalLike.getId())
+                .eq(!Objects.isNull(conditionalLike.getUserId()), Likes::getUserId, conditionalLike.getUserId())
+                .eq(!Objects.isNull(conditionalLike.getSongId()), Likes::getSongId, conditionalLike.getSongId())
         ));
     }
 }

@@ -170,17 +170,25 @@ const formattedCurrentTime = computed(() => {
 });
 
 const queryIsLikedSong = () => {
-  const like: Likes = {
+  const field: Likes = {
+    // id: '1',
+    // songId: '1',
+    // userId: '1',
+  }
+
+  const condition: Likes = {
     userId: userStore.getLoginUser.id,
     songId: songStore.getCurrentSong.id,
   };
-  conditionalQuery(like).then(value => {
-    if (value.data.data.length === 1) {
-      isLiked.value = true;
-    } else {
-      isLiked.value = false;
-    }
-  })
+
+  conditionalQuery(field, condition).then(value => {
+        if (value.data.data.length === 1) {
+          isLiked.value = true;
+        } else {
+          isLiked.value = false;
+        }
+      }
+  )
 }
 
 onMounted(() => {

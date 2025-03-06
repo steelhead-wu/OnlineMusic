@@ -10,25 +10,28 @@ import {getLikedSongByUserId, getSongBySongListID} from "@/api/song/SongApi";
 import {conditionalDelete, conditionalQuery, conditionalUpdate} from "@/api/likes/LikesApi";
 
 const like1: Likes = {
-  userId: '1',
-  songId: '2',
+  // userId: '1',
+  // songId: '2',
+  // id: null,
 }
-
+//
 const like2: Likes = {
   // userId: '1',
   // songId: '2',
-  id: '-2'
+  // userId: null,
+  // songId: null,
+  // id: '-2'
 }
-// conditionalQuery(like).then(value => {
+// conditionalQuery(like1, like2).then(value => {
 //   console.log(value.data);
 // })
 // conditionalDelete(like).then(value => {
 //   console.log(value.data);
 // })
 
-conditionalUpdate(like1, like2).then(value => {
+// conditionalUpdate(like1, like2).then(value => {
 
-})
+// })
 
 </script>
 

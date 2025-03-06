@@ -1,6 +1,6 @@
 interface Likes {
-    id?: string,
-    userId?: string,
-    songId?: string,
+    id?: string | null,
+    userId?: string | null,
+    songId?: string | null,
 }
 

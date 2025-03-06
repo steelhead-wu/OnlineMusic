@@ -22,8 +22,10 @@ export const conditionalUpdate = async (updatedLikes: Likes, conditionalLikes: L
     });
 }
 
-export const conditionalQuery = async (likes: Likes) => {
-    return await myAxios.get(prefix, {
-        params: likes
-    });
+export const conditionalQuery = async (fieldLike: Likes, conditionalLike: Likes) => {
+    return await myAxios.patch(prefix, {
+            fieldLike,
+            conditionalLike
+        }
+    );
 }
