@@ -11,9 +11,9 @@ const music_src = ref(baseURL + songStore.getCurrentSong.url);
 
 
 function play() {
-  console.log("comi")
-  console.log(music.value);
-  music.value.play();
+  // console.log("comi")
+  // console.log(music.value);
+  // music.value.play();
   // const audio = document.getElementById("myAudio");
   // console.log(audio);
   // audio.play();

@@ -46,7 +46,7 @@ const music_pic_src = computed(() => {
     songStore.$reset();
     return '';
   }
-  console.log('songStore.getCurrentSong', songStore.getCurrentSong);
+  // console.log('songStore.getCurrentSong', songStore.getCurrentSong);
   return baseURL + songStore.getCurrentSong.picture;
 });
 
@@ -55,7 +55,7 @@ const doDownloadMusic = () => {
   if (songStore.getCurrentSong == null || songStore.getCurrentSong.title === '') return;
   try {
     download(songStore.getCurrentSong).then(value => {
-      console.log("开始下载...");
+      // console.log("开始下载...");
       const eleLink = document.createElement("a");
       eleLink.download = songStore.getCurrentSong.url.slice(songStore.getCurrentSong.url.lastIndexOf('/') + 1);
       eleLink.style.display = "none";
@@ -78,9 +78,9 @@ const doDownloadMusic = () => {
 }
 const toggle_music_status = () => {
   songStore.flipIsPlay();
-  console.log("current song is")
-  console.log(songStore.getCurrentSong);
-  console.log('----------------')
+  // console.log("current song is")
+  // console.log(songStore.getCurrentSong);
+  // console.log('----------------')
   if (songStore.getIsPlay) {
     cover.value.style['animationPlayState'] = 'running';
     music.value.play();
@@ -139,7 +139,7 @@ const playThisMusic = (song: Song, song_idx: number) => {
 
 
 const ended = () => {
-  console.log("come ended");
+  // console.log("come ended");
   progress.value = 0;
   music.value.addEventListener('ended', next);
 }
@@ -230,10 +230,10 @@ const onProgressChange = (value: number) => {
 
 const formatTooltip = (progress: number) => {
   progress = Math.round(progress);
-  console.log('progress:' + progress);
+  // console.log('progress:' + progress);
   let min = Math.floor(progress / 60), sec = progress % 60;
-  console.log('min:' + min);
-  console.log('sec:' + sec);
+  // console.log('min:' + min);
+  // console.log('sec:' + sec);
 
 
   if (min) {
@@ -253,9 +253,9 @@ const doRemoveSong = (song_idx: number) => {
     }
   }
   songStore.getSongList.splice(song_idx, 1);
-  console.log('removed song_idx:', song_idx)
-  console.log('removed song:', songStore.getCurrentSong);
-  console.log(songStore.getSongList);
+  // console.log('removed song_idx:', song_idx)
+  // console.log('removed song:', songStore.getCurrentSong);
+  // console.log(songStore.getSongList);
 }
 
 const doHideOrShowBar = () => {

@@ -33,16 +33,16 @@ const search = () => {
 }
 
 const login = () => {
-  console.log("进入login");
+  // console.log("进入login");
   // globalStatusStore.isLoginOrSignup = true;
   // globalStatusStore.isLogin = true;
   // console.log(JSON.stringify(globalStatusStore));
   router.push(Behavior.SIGN_IN);
-  console.log("退出login");
+  // console.log("退出login");
 }
 
 const registry = () => {
-  console.log("进入registry")
+  // console.log("进入registry")
   globalStatusStore.isLoginOrSignup = true;
   globalStatusStore.isLogin = false;
   // router.push('/sign-up');
@@ -52,10 +52,10 @@ const registry = () => {
 
 
 const doDropDown = (dropdown) => {
-  console.log("进入doDropDown");
+  // console.log("进入doDropDown");
   // console.log(JSON.stringify(userStore));
   // console.log(JSON.stringify(globalStatusStore));
-  console.log(userStore.getLoginUser);
+  // console.log(userStore.getLoginUser);
   if (dropdown.name === UserDropDown.SIGN_OUT) {
     // userStore.isOnline = false;
     userStore.$reset();

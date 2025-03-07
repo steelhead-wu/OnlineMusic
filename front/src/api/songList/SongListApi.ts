@@ -49,3 +49,10 @@ export const updateSongList = async (songList: SongList) => {
     return await myAxios.put(prefix, songList);
 }
 
+export const getRandomSongList = async (capacity: number) => {
+    return await myAxios.get(prefix + '/random', {
+        params: {capacity}
+    });
+}
+
+

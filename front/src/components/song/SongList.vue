@@ -19,9 +19,9 @@ const songStore = useSongStore();
 
 
 const doRowClick = (row: any, column: any, event: Event) => {
-  console.log(row);
-  console.log(column);
-  console.log(event);
+  // console.log(row);
+  // console.log(column);
+  // console.log(event);
   songStore.getSongList.push({
     album: row.album,
     id: row.id,
@@ -32,17 +32,17 @@ const doRowClick = (row: any, column: any, event: Event) => {
     url: row.url
   });
   // songStore.setCurrentSongIdx(songStore.getSongList.length - 1);
-  console.log('songStore.getSongList:', songStore.getSongList);
-  console.log('songStore.getCurrentSongIdx:', songStore.getCurrentSongIdx);
+  // console.log('songStore.getSongList:', songStore.getSongList);
+  // console.log('songStore.getCurrentSongIdx:', songStore.getCurrentSongIdx);
 }
 
 
 const doDownloadMusic = (song: Song) => {
-  console.log('song', song);
+  // console.log('song', song);
   if (song.title === '') return;
   try {
     download(song).then(value => {
-      console.log("开始下载...");
+      // console.log("开始下载...");
       const eleLink = document.createElement("a");
       eleLink.download = song.url?.slice(song.url?.lastIndexOf('/') + 1);
       eleLink.style.display = "none";
@@ -55,7 +55,7 @@ const doDownloadMusic = (song: Song) => {
 
     })
   } catch (error) {
-    console.error('下载失败:', error);
+    // console.error('下载失败:', error);
     if (error.response && error.response.status === 404) {
       alert('文件不存在！');
     } else {

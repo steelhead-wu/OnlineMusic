@@ -1,23 +1,13 @@
 <script setup lang="ts">
 import {useSongStore} from "@/store/SongStore";
 import {baseURL} from "@/api/request";
-import {onMounted, reactive, ref, watch} from "vue";
+import {onMounted, ref, watch} from "vue";
 
 const songStore = useSongStore();
 
-const lrcTop = ref("80px"); // 歌词滑动
-const lyricArr = ref([]); // 当前歌曲的歌词
+const lyricArr = ref(['[00:00.00]暂无歌词']); // 当前歌曲的歌词
 const currentLyricIndex = ref(-1);
 
-
-// const parseLyrics = () => {
-//   const lyricsList = [];
-//
-//   songStore.getCurrentSong?.lyric.matchAll(/^\[(?<min>\d{2}):(?<sec>\d{2}\.\d{2,})](?<lyric>.+)/gm).forEach(each => {
-//     lyricsList.push({time: each.groups.min * 60 + each.groups.sec, lyric: each.groups.lyric});
-//   })
-//   return lyricsList;
-// }
 
 /**
  * find maximum value which is not larger than
@@ -39,47 +29,21 @@ const findCurrentLyricPos = (lyrics: Array<object>): number => {
 
 watch(() => songStore.getCurrentSong, () => {
   lyricArr.value = songStore.parseLyrics();
+  console.log('lyricArr', lyricArr.value);
 });
 
 watch(() => songStore.getCurrentTime, () => {
   currentLyricIndex.value = findCurrentLyricPos(lyricArr.value);
-  console.log('currentLyricIndex', currentLyricIndex.value);
-  console.log('10th', lyricArr.value[10]);
 })
 
 onMounted(() => {
   lyricArr.value = songStore.parseLyrics();
   currentLyricIndex.value = findCurrentLyricPos(lyricArr.value);
-  console.log('www', lyricArr.value);
 })
 
 </script>
 
 <template>
-
-
-  <!--  <div class="song-container">-->
-  <!--    <el-image class="song-pic" fit="contain" :src="baseURL + songStore.getCurrentSong.picture"/>-->
-  <!--    <ul class="song-info">-->
-  <!--      <li>歌手：{{ songStore.getCurrentSong.album }}</li>-->
-  <!--      <li>歌曲：{{ songStore.getCurrentSong.title }}</li>-->
-  <!--    </ul>-->
-  <!--  </div>-->
-  <!--  <div class="container">-->
-  <!--    <div class="lyric-container">-->
-  <!--      <div class="song-lyric">-->
-  <!--        <ul class="lyrics">-->
-  <!--          <li v-for="(item,idx) in lyricArr"-->
-  <!--              :key="idx" :class="{'cur-lyric':currentLyricIndex===idx}">-->
-  <!--            {{ item.lyric }}-->
-  <!--          </li>-->
-  <!--        </ul>-->
-  <!--      </div>-->
-  <!--            <comment :playId="songId" :type="0"></comment>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
-
   <div class="lyrics-bg">
     <div class="aside-bg">
       <div class=" album-area">
@@ -105,7 +69,7 @@ onMounted(() => {
           <ul class="lyrics">
             <li v-for="(item,idx) in lyricArr"
                 :key="idx" :class="{'cur-lyric':currentLyricIndex===idx}">
-              {{ item.lyric }}
+              {{ item.lyric || '暂无' }}
             </li>
           </ul>
         </div>
@@ -130,6 +94,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     line-height: 50px;
+
     .album-area {
       .album-img {
         width: 160px;

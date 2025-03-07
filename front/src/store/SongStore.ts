@@ -31,10 +31,10 @@ export const useSongStore = defineStore('songStore', () => {
         const getIsPlay = computed(() => isPlay.value);
         const getCurrentSongIdx = computed(() => currentSongIdx.value);
         const getCurrentSong = computed(() => {
-            console.log('currentSongIdx:', currentSongIdx.value);
+            // console.log('currentSongIdx:', currentSongIdx.value);
             // if (getCurrentSongIdx.value > -1) {
             if (currentSongIdx.value > -1 && currentSongIdx.value < songList.value.length) {
-                console.log('come currentSongIdx.value > -1')
+                // console.log('come currentSongIdx.value > -1')
                 setCurrentSong(songList.value[currentSongIdx.value]);
                 return songList.value[currentSongIdx.value];
             }
@@ -44,7 +44,7 @@ export const useSongStore = defineStore('songStore', () => {
                 title: '',
                 album: '',
                 picture: '/asset/img/songPic/tubiao.jpg',
-                lyric: '暂无歌词',
+                lyric: '[00:00.00]暂无歌词',
                 url: ''
             };
         });
@@ -90,16 +90,12 @@ export const useSongStore = defineStore('songStore', () => {
 
         const parseLyrics = () => {
             const lyricsList = [];
-
+            console.log('getCurrentSong.value.lyric', getCurrentSong.value.lyric);
             getCurrentSong.value.lyric.matchAll(/^\[(?<min>\d{2}):(?<sec>\d{2}\.\d{2,})](?<lyric>.+)/gm).forEach((each, idx) => {
-                lyricsList.push({time: parseInt(each.groups.min) * 60 + parseFloat(each.groups.sec), lyric: each.groups.lyric});
-                if (idx == 10) {
-                    console.log('each.groups.min', each.groups.min);
-                    console.log('each.groups.sec', each.groups.sec);
-                    console.log('time',lyricsList[10].time);
-                }
-
-
+                lyricsList.push({
+                    time: parseInt(each.groups.min) * 60 + parseFloat(each.groups.sec),
+                    lyric: each.groups.lyric
+                });
             })
             return lyricsList;
         }
@@ -132,7 +128,7 @@ export const useSongStore = defineStore('songStore', () => {
             currentSong.value.title = '';
             currentSong.value.album = '';
             currentSong.value.picture = '';
-            currentSong.value.lyric = '';
+            currentSong.value.lyric = '[00:00.00]暂无歌词';
             currentSong.value.url = '';
         }
 

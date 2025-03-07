@@ -19,12 +19,12 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
 ) => {
-  console.log('uploadFile', uploadFile);
-  console.log('response',response);
+  // console.log('uploadFile', uploadFile);
+  // console.log('response',response);
   userStore.getLoginUser.avatar = response.link;
-  console.log(userStore.getLoginUser);
+  // console.log(userStore.getLoginUser);
   updateUserById(userStore.getLoginUser).then(value => {
-    console.log(value);
+    // console.log(value);
   })
 }
 

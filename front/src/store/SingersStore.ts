@@ -32,7 +32,7 @@ export const useSingersStore = defineStore('singersStore', () => {
             if (currentSongListIdx == null || currentSongListIdx < 0 || currentSongListIdx >= songList.value.length) {
                 return;
             }
-            console.log("setRating");
+            // console.log("setRating");
             songList.value[currentSongListIdx].rating = rating;
         }
 
