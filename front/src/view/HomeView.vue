@@ -7,6 +7,7 @@ import {getRandomSinger} from "@/api/singer/SingerApi";
 import {Behavior} from "@/enum/Behavior.js";
 import {useRouter} from "vue-router";
 import {useSingersStore} from "@/store/SingersStore";
+import {Timer} from "@/api/utils/interface/Timer";
 
 const router = useRouter();
 
@@ -16,7 +17,7 @@ const singerList = ref([]);
 const singersStore = useSingersStore();
 
 // unit: second
-const TOTAL_TIME = 5;
+const TOTAL_TIME = 2;
 const remainingTime = ref(TOTAL_TIME * 1000);
 let timer = null;
 
@@ -53,6 +54,7 @@ const getRemainingTime = (): number => {
 
 
 const updateTimer = (doStuff: Function) => {
+  console.log('remaining time', Math.floor(remainingTime.value / 1000));
   remainingTime.value -= 1000;
   if (remainingTime.value <= 0) {
     doStuff();
@@ -83,10 +85,6 @@ const initializeTimer = () => {
     resetRemainingTime();
   }
   startTimer();
-}
-
-const handleVisibilityEvent = () => {
-
 }
 
 
