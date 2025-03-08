@@ -1,26 +1,100 @@
 <script setup lang="ts">
 import PlayBody from "@/layouts/PlayBody.vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {onMounted, ref} from "vue";
+import {onMounted, onUnmounted, ref} from "vue";
 import {getRandomSongList} from "@/api/songList/SongListApi";
 import {getRandomSinger} from "@/api/singer/SingerApi";
 import {Behavior} from "@/enum/Behavior.js";
 import {useRouter} from "vue-router";
+import {useSingersStore} from "@/store/SingersStore";
 
 const router = useRouter();
 
 const songList = ref([]);
 const singerList = ref([]);
 
+const singersStore = useSingersStore();
+
+// unit: second
+const TOTAL_TIME = 5;
+const remainingTime = ref(TOTAL_TIME * 1000);
+let timer = null;
+
+const STORE_KEY = 'remainingTime';
+
+
+onUnmounted(() => {
+  localStorage.setItem(STORE_KEY, JSON.stringify(
+      {
+        remainingTime: remainingTime.value,
+        savedTime: new Date().valueOf(),
+      }));
+  clearInterval(timer);
+});
+
 onMounted(() => {
   refreshSongList();
   refreshSinger();
+  initializeTimer()
 })
+
+
+// remaining time format : second
+const getRemainingTime = (): number => {
+  // {millisecond,millisecond}
+  let {
+    remainingTime,
+    savedTime
+  }: { remainingTime: number, savedTime: number }
+      = JSON.parse(localStorage.getItem(STORE_KEY));
+
+  return remainingTime + savedTime - Date.now();
+}
+
+
+const updateTimer = (doStuff: Function) => {
+  remainingTime.value -= 1000;
+  if (remainingTime.value <= 0) {
+    doStuff();
+    resetRemainingTime();
+  }
+}
+
+
+const startTimer = () => {
+  // console.log("start");
+  timer = setInterval(updateTimer, 1000, refreshSongList);
+  // console.log('timer', timer);
+}
+
+const resetRemainingTime = () => {
+  remainingTime.value = TOTAL_TIME * 1000;
+}
+
+const initializeTimer = () => {
+  const item = localStorage.getItem(STORE_KEY);
+  // console.log("remainingTime", item);
+  if (item) {
+    remainingTime.value = getRemainingTime();
+    if (remainingTime.value <= 0) {
+      resetRemainingTime();
+    }
+  } else {
+    resetRemainingTime();
+  }
+  startTimer();
+}
+
+const handleVisibilityEvent = () => {
+
+}
+
 
 const refreshSongList = () => {
   getRandomSongList(10).then(value => {
     if (value.data.data) {
       songList.value = value.data.data;
+      singersStore.setSongList(songList.value);
     }
   })
 }
@@ -29,39 +103,47 @@ const refreshSinger = () => {
   getRandomSinger(10).then(value => {
     if (value.data.data) {
       singerList.value = value.data.data;
+      singersStore.setSingers(singerList.value);
     }
   })
 }
 
 const doSingerDetail = (idx: number) => {
-  console.log('singer_idx', idx);
-
   router.push(Behavior.SINGER_DETAIL + '/' + idx);
 }
 
+const doSongListDetail = (idx: number) => {
+  router.push(Behavior.SONG_LIST_DETAIL + '/' + idx);
+}
+
+
+const userDoReFresh = () => {
+  refreshSongList();
+  resetRemainingTime();
+}
 </script>
 
 <template>
   <div id="homeView">
     <div class="songList">
       <div class="area-header">
-        <h2>随机歌单</h2>
+        <h2>动态随机歌单</h2>
 
         <ul class="refresh">
           <li>
-            <FontAwesomeIcon style="cursor: pointer" icon="fa-refresh" size="2x" @click="refreshSongList"/>
+            <FontAwesomeIcon style="cursor: pointer" icon="fa-refresh" size="2x" @click="userDoReFresh"/>
           </li>
         </ul>
       </div>
 
       <div class="random-song-list">
-        <PlayBody :play-list="songList" @click="doSingerDetail"/>
+        <PlayBody :play-list="songList" @click="doSongListDetail"/>
       </div>
 
     </div>
     <div class="singer">
       <div class="area-header">
-        <h2>随机歌手</h2>
+        <h2>动态随机歌手</h2>
 
         <ul class="refresh">
           <li>

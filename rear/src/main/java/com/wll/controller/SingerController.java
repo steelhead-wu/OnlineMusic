@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <p>
@@ -35,6 +33,24 @@ public class SingerController {
     @GetMapping(params = "sex")
     public R getSingerBySex(Integer sex) {
         List<Singer> res = singerService.listByMap(Map.of("sex", sex));
+        return R.success(res);
+    }
+
+    @GetMapping(value = "/random", params = "capacity")
+    public R getRandomSinger(Integer capacity) {
+        List<Singer> list = singerService.list();
+        Random random = new Random(System.currentTimeMillis());
+        Set<Integer> set = new HashSet<>(capacity);
+        List<Singer> res = new ArrayList<>(capacity);
+        int idx;
+        while (set.size() < capacity) {
+            do {
+                idx = random.nextInt(list.size());
+            } while (set.contains(idx));
+            set.add(idx);
+            res.add(list.get(idx));
+        }
+
         return R.success(res);
     }
 }

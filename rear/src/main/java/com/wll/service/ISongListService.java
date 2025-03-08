@@ -21,4 +21,6 @@ public interface ISongListService extends IService<SongList> {
     Map<String, Object> getRatingBy(long userId, int songListId);
 
     int getEvenRatingOfSongList(int songListId);
+
+    List<SongList> getRandomSongList(Integer capacity);
 }

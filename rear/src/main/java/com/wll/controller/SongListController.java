@@ -63,4 +63,10 @@ public class SongListController {
     }
 
 
+    @GetMapping("/random")
+    public R getRandomSongList(@RequestParam Integer capacity) {
+        return R.success(songListService.getRandomSongList(capacity));
+    }
+
+
 }
