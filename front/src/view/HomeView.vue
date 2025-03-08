@@ -28,14 +28,19 @@ let singers_timer: Timer;
 
 
 onUnmounted(() => {
+
+
+  console.log("卸载")
+  songList_timer.deconstructor(singersStore.getSongList);
+  singers_timer.deconstructor(singersStore.getSingers);
+
   // localStorage.setItem(SONG_LIST_KEY, JSON.stringify(
   //     {
   //       remainingTime: remainingTime.value,
   //       savedTime: new Date().valueOf(),
   //     }));
   // clearInterval(timer);
-  songList_timer.deconstructor();
-  singers_timer.deconstructor();
+
   // localStorage.setItem(SONG_LIST_KEY, JSON.stringify(
   //     {
   //       remainingTime: songList_timer.remainingTime,
@@ -53,13 +58,30 @@ onUnmounted(() => {
 });
 
 onMounted(() => {
-  refreshSongList();
-  refreshSinger();
+  // refreshSongList();
+  // refreshSinger();
   // initializeTimer()
+  console.log("挂在")
   songList_timer = new Timer(SONG_LIST_KEY, TOTAL_TIME, refreshSongList);
   singers_timer = new Timer(SINGERS_KEY, TOTAL_TIME, refreshSinger);
+  console.log(songList_timer.savedData);
+  if (songList_timer.savedData != null) {
+    songList.value = songList_timer.savedData;
+  }
+
+  if (singers_timer.savedData != null) {
+    singerList.value = singers_timer.savedData;
+  }
+  // 用户刷新的时候的操作
+  window.addEventListener('beforeunload', handleBeforeUnload);
 })
 
+const handleBeforeUnload = (event) => {
+  songList_timer.deconstructor(singersStore.getSongList);
+  singers_timer.deconstructor(singersStore.getSingers);
+};
+
+// window.addEventListener('beforeunload', handleBeforeUnload);
 
 // remaining time format : second
 // const getRemainingTime = (): number => {
@@ -136,11 +158,18 @@ const doSongListDetail = (idx: number) => {
 }
 
 
-const userDoReFresh = () => {
+const userDoSongListReFresh = () => {
   refreshSongList();
   // resetRemainingTime();
   songList_timer.resetRemainingTime();
 }
+
+const userDoSingersReFresh = () => {
+  refreshSinger();
+  // resetRemainingTime();
+  singers_timer.resetRemainingTime();
+}
+
 </script>
 
 <template>
@@ -151,7 +180,7 @@ const userDoReFresh = () => {
 
         <ul class="refresh">
           <li>
-            <FontAwesomeIcon style="cursor: pointer" icon="fa-refresh" size="2x" @click="userDoReFresh"/>
+            <FontAwesomeIcon style="cursor: pointer" icon="fa-refresh" size="2x" @click="userDoSongListReFresh"/>
           </li>
         </ul>
       </div>
@@ -168,7 +197,7 @@ const userDoReFresh = () => {
         <ul class="refresh">
           <li>
             <FontAwesomeIcon style="cursor: pointer" icon="fa-refresh" size="2x"
-                             @click="refreshSinger"
+                             @click="userDoSingersReFresh"
             />
           </li>
         </ul>
