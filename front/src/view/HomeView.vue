@@ -17,75 +17,96 @@ const singerList = ref([]);
 const singersStore = useSingersStore();
 
 // unit: second
-const TOTAL_TIME = 2;
+const TOTAL_TIME = 20;
 const remainingTime = ref(TOTAL_TIME * 1000);
 let timer = null;
-
-const STORE_KEY = 'remainingTime';
+// const STORE_KEY = 'remainingTime';
+const SONG_LIST_KEY = 'SONG_LIST_KEY';
+const SINGERS_KEY = 'SINGERS_KEY';
+let songList_timer: Timer;
+let singers_timer: Timer;
 
 
 onUnmounted(() => {
-  localStorage.setItem(STORE_KEY, JSON.stringify(
-      {
-        remainingTime: remainingTime.value,
-        savedTime: new Date().valueOf(),
-      }));
-  clearInterval(timer);
+  // localStorage.setItem(SONG_LIST_KEY, JSON.stringify(
+  //     {
+  //       remainingTime: remainingTime.value,
+  //       savedTime: new Date().valueOf(),
+  //     }));
+  // clearInterval(timer);
+  songList_timer.deconstructor();
+  singers_timer.deconstructor();
+  // localStorage.setItem(SONG_LIST_KEY, JSON.stringify(
+  //     {
+  //       remainingTime: songList_timer.remainingTime,
+  //       savedTime: new Date().valueOf(),
+  //     }));
+  //
+  // localStorage.setItem(SINGERS_KEY, JSON.stringify(
+  //     {
+  //       remainingTime: singers_timer.remainingTime,
+  //       savedTime: new Date().valueOf(),
+  //     }));
+  //
+  // clearInterval(songList_timer.timer);
+  // clearInterval(singers_timer.timer);
 });
 
 onMounted(() => {
   refreshSongList();
   refreshSinger();
-  initializeTimer()
+  // initializeTimer()
+  songList_timer = new Timer(SONG_LIST_KEY, TOTAL_TIME, refreshSongList);
+  singers_timer = new Timer(SINGERS_KEY, TOTAL_TIME, refreshSinger);
 })
 
 
 // remaining time format : second
-const getRemainingTime = (): number => {
-  // {millisecond,millisecond}
-  let {
-    remainingTime,
-    savedTime
-  }: { remainingTime: number, savedTime: number }
-      = JSON.parse(localStorage.getItem(STORE_KEY));
-
-  return remainingTime + savedTime - Date.now();
-}
-
-
-const updateTimer = (doStuff: Function) => {
-  console.log('remaining time', Math.floor(remainingTime.value / 1000));
-  remainingTime.value -= 1000;
-  if (remainingTime.value <= 0) {
-    doStuff();
-    resetRemainingTime();
-  }
-}
+// const getRemainingTime = (): number => {
+//   // {millisecond,millisecond}
+//   let {
+//     remainingTime,
+//     savedTime
+//   }: { remainingTime: number, savedTime: number }
+//       = JSON.parse(localStorage.getItem(SONG_LIST_KEY));
+//
+//   return remainingTime + savedTime - Date.now();
+// }
 
 
-const startTimer = () => {
-  // console.log("start");
-  timer = setInterval(updateTimer, 1000, refreshSongList);
-  // console.log('timer', timer);
-}
+// const updateTimer = (doStuff: Function) => {
+//   console.log('remaining time', Math.floor(remainingTime.value / 1000));
+//   remainingTime.value -= 1000;
+//   if (remainingTime.value <= 0) {
+//     doStuff();
+//     resetRemainingTime();
+//   }
+// }
 
-const resetRemainingTime = () => {
-  remainingTime.value = TOTAL_TIME * 1000;
-}
 
-const initializeTimer = () => {
-  const item = localStorage.getItem(STORE_KEY);
-  // console.log("remainingTime", item);
-  if (item) {
-    remainingTime.value = getRemainingTime();
-    if (remainingTime.value <= 0) {
-      resetRemainingTime();
-    }
-  } else {
-    resetRemainingTime();
-  }
-  startTimer();
-}
+// const startTimer = () => {
+//   // console.log("start");
+//   timer = setInterval(updateTimer, 1000, refreshSongList);
+//   // console.log('timer', timer);
+// }
+
+// const resetRemainingTime = () => {
+//   remainingTime.value = TOTAL_TIME * 1000;
+// }
+
+// const initializeTimer = () => {
+//   const item = localStorage.getItem(SONG_LIST_KEY);
+//   // console.log("remainingTime", item);
+//   if (item) {
+//     remainingTime.value = getRemainingTime();
+//     if (remainingTime.value <= 0) {
+//       resetRemainingTime();
+//     }
+//   } else {
+//     resetRemainingTime();
+//   }
+//   startTimer();
+// }
 
 
 const refreshSongList = () => {
@@ -117,7 +138,8 @@ const doSongListDetail = (idx: number) => {
 
 const userDoReFresh = () => {
   refreshSongList();
-  resetRemainingTime();
+  // resetRemainingTime();
+  songList_timer.resetRemainingTime();
 }
 </script>
 
