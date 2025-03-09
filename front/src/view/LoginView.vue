@@ -16,11 +16,14 @@ import {
   MIN_LEN_PWD, validateAccount,
   validateNickname, validatePassword, validateRepass,
 } from "@/enum/UserPropsRule";
+import {Cookie} from "@/api/utils/Cookie";
 
 interface NewUser extends User {
   rePassword: string
 }
 
+// unit:second
+const accountExpiredTime = 300;
 const formSize = ref<ComponentSize>('default');
 const form = ref<FormInstance>()
 
@@ -144,7 +147,11 @@ const signUp = () => {
         ElMessage({
           type: 'success',
           message: `提示: ${value.data.message}`,
-        })
+        });
+        Cookie.set(`${value.data.data}=v;max-age=${accountExpiredTime};secure;path=${Behavior.HOME}`);
+        // Cookie.set(`${value.data.data}=v;secure;path=${Behavior.HOME}`);
+        console.log(document.cookie);
+        router.push(Behavior.ABOUT_ACCOUNT + '/' + value.data.data);
       }, reason => {
         ElMessage({
           type: 'info',

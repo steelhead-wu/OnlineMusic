@@ -10,7 +10,7 @@ import SongListDetailView from '../view/songList/SongListDetailView.vue'
 import SongListView from '../view/songList/SongListView.vue'
 import SearchView from '@/view/search/SearchView.vue'
 import LyricsView from '@/view/lyrics/LyricsView.vue'
-import Test from '@/view/Test.vue'
+import AboutAccountView from '@/view/AboutAccountView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
@@ -57,13 +57,8 @@ const routes = [
             },
             {// lyrics
                 // path: Behavior.LYRICS + '/:id(\\d+)',
-                path: Behavior.LYRICS ,
+                path: Behavior.LYRICS,
                 component: LyricsView,
-            },
-            {// lyrics
-                // path: Behavior.LYRICS + '/:id(\\d+)',
-                path: '/test' ,
-                component: Test,
             },
         ]
     },
@@ -72,7 +67,11 @@ const routes = [
         component: LoginView,
         alias: Behavior.SIGN_UP,
     },
-
+    {// 设置
+        path: Behavior.ABOUT_ACCOUNT + '/:id(\\d+)',
+        // path: Behavior.ABOUT_ACCOUNT,
+        component: AboutAccountView,
+    },
 ]
 
 // const routes = [{ path: '/singer', redirect: '/' }]
