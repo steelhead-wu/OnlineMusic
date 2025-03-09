@@ -83,9 +83,8 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User loginUser) {
         User user = userService.login(loginUser);
-        return Objects.isNull(user) ? R.error("用户名或密码错误！") : R.success("登录成功",user);
+        return Objects.isNull(user) ? R.error("用户名或密码错误！") : R.success("登录成功", user);
     }
-
 
 
 }

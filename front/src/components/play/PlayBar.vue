@@ -9,6 +9,8 @@ import {useRouter} from "vue-router";
 import {Behavior} from "@/enum/Behavior";
 import {addLike, conditionalDelete, conditionalQuery} from "@/api/likes/LikesApi";
 import {useUserStore} from "@/store/UserStore";
+import {ElMessage} from "element-plus";
+import {tips} from "@/api/utils/MyUtils";
 
 const songStore = useSongStore()
 const userStore = useUserStore();
@@ -52,27 +54,31 @@ const music_pic_src = computed(() => {
 
 
 const doDownloadMusic = () => {
-  if (songStore.getCurrentSong == null || songStore.getCurrentSong.title === '') return;
-  try {
-    download(songStore.getCurrentSong).then(value => {
-      // console.log("开始下载...");
-      const eleLink = document.createElement("a");
-      eleLink.download = songStore.getCurrentSong.url.slice(songStore.getCurrentSong.url.lastIndexOf('/') + 1);
-      eleLink.style.display = "none";
-      // // 字符内容转变成 blob 地址
-      const blob = new Blob([value.data]);
-      eleLink.href = URL.createObjectURL(blob);
-      document.body.appendChild(eleLink); // 触发点击
-      eleLink.click();
-      document.body.removeChild(eleLink); // 移除
+  if (!userStore.getIsOnline) {
+    tips();
+  } else {
+    if (songStore.getCurrentSong == null || songStore.getCurrentSong.title === '') return;
+    try {
+      download(songStore.getCurrentSong).then(value => {
+        // console.log("开始下载...");
+        const eleLink = document.createElement("a");
+        eleLink.download = songStore.getCurrentSong.url.slice(songStore.getCurrentSong.url.lastIndexOf('/') + 1);
+        eleLink.style.display = "none";
+        // // 字符内容转变成 blob 地址
+        const blob = new Blob([value.data]);
+        eleLink.href = URL.createObjectURL(blob);
+        document.body.appendChild(eleLink); // 触发点击
+        eleLink.click();
+        document.body.removeChild(eleLink); // 移除
 
-    })
-  } catch (error) {
-    console.error('下载失败:', error);
-    if (error.response && error.response.status === 404) {
-      alert('文件不存在！');
-    } else {
-      alert('文件下载失败，请稍后重试！');
+      })
+    } catch (error) {
+      console.error('下载失败:', error);
+      if (error.response && error.response.status === 404) {
+        alert('文件不存在！');
+      } else {
+        alert('文件下载失败，请稍后重试！');
+      }
     }
   }
 }
@@ -117,7 +123,9 @@ const next = () => {
     songStore.setCurrentSongIdx(randomIdx());
   }
   playMusic();
-  queryIsLikedSong();
+  if (userStore.getIsOnline) {
+    queryIsLikedSong();
+  }
 }
 
 
@@ -128,7 +136,9 @@ const previous = () => {
     songStore.setCurrentSongIdx(randomIdx());
   }
   playMusic();
-  queryIsLikedSong();
+  if (userStore.getIsOnline) {
+    queryIsLikedSong();
+  }
 }
 
 const playThisMusic = (song: Song, song_idx: number) => {
@@ -210,7 +220,9 @@ onMounted(() => {
   /*
    query whether the user likes the song
   */
-  queryIsLikedSong();
+  if (userStore.getIsOnline) {
+    queryIsLikedSong();
+  }
 
 });
 
@@ -288,23 +300,28 @@ const isLiked = ref(false);
 
 // add song to my like
 const addToMyFavorite = () => {
-  const like: Likes = {
-    userId: userStore.getLoginUser.id,
-    songId: songStore.getCurrentSong.id,
-  }
-  if (isLiked.value) {
-    conditionalDelete(like).then(value => {
-      if (value.data.data) {
-        isLiked.value = false;
-      }
-    })
+  if (!userStore.getIsOnline) {
+    tips();
   } else {
-    addLike(like).then(value => {
-      if (value.data.data) {
-        isLiked.value = true;
-        console.log("新增喜欢成功");
-      }
-    })
+
+    const like: Likes = {
+      userId: userStore.getLoginUser.id,
+      songId: songStore.getCurrentSong.id,
+    }
+    if (isLiked.value) {
+      conditionalDelete(like).then(value => {
+        if (value.data.data) {
+          isLiked.value = false;
+        }
+      })
+    } else {
+      addLike(like).then(value => {
+        if (value.data.data) {
+          isLiked.value = true;
+          console.log("新增喜欢成功");
+        }
+      })
+    }
   }
 }
 

@@ -116,7 +116,7 @@ const singIn = () => {
         });
         console.log(value.data.data);
         userStore.setLoginUser(value.data.data);
-        userStore.isOnline = true;
+        userStore.setIsOnline(true);
         console.log(userStore.getLoginUser)
         // globalStatusStore.isLoginOrSignup = false;
         // console.log("globalStatusStore:" + JSON.stringify(globalStatusStore));

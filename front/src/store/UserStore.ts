@@ -5,6 +5,13 @@ import {ref, computed} from "vue";
 export const useUserStore = defineStore('userStore', () => {
         // 是否登录状态
         let isOnline = ref<boolean>(false);
+
+        const getIsOnline = computed(() => isOnline.value);
+
+        const setIsOnline = (online: boolean) => {
+            isOnline.value = online;
+        }
+
         let loginUser = ref<User>({
             id: '',
             account: '',
@@ -49,7 +56,7 @@ export const useUserStore = defineStore('userStore', () => {
             loginUser.value.avatar = 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png';
         }
 
-        return {loginUser, isOnline, setLoginUser, getLoginUser, $reset};
+        return {loginUser, isOnline, getIsOnline, setIsOnline, setLoginUser, getLoginUser, $reset};
     },
     {
         persist: true,
