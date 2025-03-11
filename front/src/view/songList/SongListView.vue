@@ -25,7 +25,7 @@ const doStyleClick = (item) => {
       singersStores.setSongList(playList.value);
     })
   } else {
-    getSongListByStyle(item.name).then(value => {
+    getSongListByStyle(item.id).then(value => {
       playList.value = value.data.data;
       singersStores.setSongList(playList.value);
     })

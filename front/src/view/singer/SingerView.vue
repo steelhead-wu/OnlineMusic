@@ -32,7 +32,7 @@ const doClick = (item) => {
 }
 const handlePopState = (event) => {
   console.log(event);
-  console.log('后退按钮被点击');
+  // console.log('后退按钮被点击');
 }
 
 onMounted(

@@ -7,10 +7,10 @@ export const getAllSongList = async () => {
 }
 
 
-export const getSongListByStyle = async (style: string) => {
+export const getSongListByStyle = async (id) => {
     return await myAxios.get(prefix, {
         params: {
-            style
+            id
         }
     })
 }

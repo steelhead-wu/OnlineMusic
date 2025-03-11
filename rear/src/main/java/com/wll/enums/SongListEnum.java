@@ -14,7 +14,7 @@ public enum SongListEnum {
     INSTRUMENTS("乐器", 7);
 
 
-    private int id;
+    private final int id;
     private final String value;
     private final String originalValue;
 

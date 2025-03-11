@@ -1,13 +1,16 @@
 package com.wll.controller;
 
+import com.wll.enums.SingerEnum;
 import com.wll.pojo.Singer;
 import com.wll.service.ISingerService;
 import com.wll.utils.R;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -23,16 +26,27 @@ import java.util.*;
 public class SingerController {
     @Resource
     private ISingerService singerService;
+    @Resource
+    private RedisTemplate<String, List<Singer>> redisTemplate;
 
     @GetMapping
     public R getAllSinger() {
-        List<Singer> singers = singerService.list();
-        return Objects.isNull(singers) ? R.error() : R.success(singers);
+        List<Singer> res = redisTemplate.opsForValue().get(SingerEnum.ALL_SINGER.getValue());
+        if (Objects.isNull(res)) {
+            res = singerService.list();
+            redisTemplate.opsForValue().set(SingerEnum.ALL_SINGER.getValue(), res, Duration.ofSeconds(1800));
+        }
+
+        return R.success(res);
     }
 
     @GetMapping(params = "sex")
     public R getSingerBySex(Integer sex) {
-        List<Singer> res = singerService.listByMap(Map.of("sex", sex));
+        List<Singer> res = redisTemplate.opsForValue().get("singer:" + sex);
+        if (Objects.isNull(res)) {
+            res = singerService.listByMap(Map.of("sex", sex));
+            redisTemplate.opsForValue().set("singer:" + sex, res, Duration.ofSeconds(1800));
+        }
         return R.success(res);
     }
 
