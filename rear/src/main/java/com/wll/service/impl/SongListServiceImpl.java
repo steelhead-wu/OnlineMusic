@@ -2,6 +2,7 @@ package com.wll.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wll.enums.SongListEnum;
 import com.wll.mapper.SongListMapper;
 import com.wll.pojo.SongList;
 import com.wll.service.ISongListService;
@@ -60,5 +61,10 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Override
     public Map<String, Object> getRatingBy(long userId, int songListId) {
         return songListMapper.getRatingBy(userId, songListId);
+    }
+
+    @Override
+    public SongListEnum chooseCategory(Integer id) {
+        return SongListEnum.values()[id];
     }
 }

@@ -1,6 +1,7 @@
 package com.wll.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.wll.enums.SongListEnum;
 import com.wll.pojo.SongList;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface ISongListService extends IService<SongList> {
     int getEvenRatingOfSongList(int songListId);
 
     List<SongList> getRandomSongList(Integer capacity);
+
+    SongListEnum chooseCategory(Integer style);
 }

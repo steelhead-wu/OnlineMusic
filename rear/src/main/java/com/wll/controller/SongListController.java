@@ -1,14 +1,18 @@
 package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.wll.enums.SongListEnum;
 import com.wll.pojo.SongList;
 import com.wll.service.ISongListService;
 import com.wll.utils.R;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -24,16 +28,30 @@ public class SongListController {
 
 
     @Resource
+    private RedisTemplate<String, List<SongList>> redisTemplate;
+
+    @Resource
     private ISongListService songListService;
 
     @GetMapping
     public R getAllSongList() {
-        return R.success(songListService.list());
+        List<SongList> res = redisTemplate.opsForValue().get(SongListEnum.ALL_SONG_LIST.getValue());
+        if (Objects.isNull(res)) {
+            res = songListService.list();
+            redisTemplate.opsForValue().set(SongListEnum.ALL_SONG_LIST.getValue(), res, Duration.ofSeconds(1800));
+        }
+        return R.success(res);
     }
 
-    @GetMapping(params = "style")
-    public R getSongListByStyle(String style) {
-        return R.success(songListService.listByMap(Map.of("style", style)));
+    @GetMapping(params = "id")
+    public R getSongListByStyle(Integer id) {
+        SongListEnum songListEnum = songListService.chooseCategory(id);
+        List<SongList> res = redisTemplate.opsForValue().get(songListEnum.getValue());
+        if (Objects.isNull(res)) {
+            res = songListService.listByMap(Map.of("style", songListEnum.getOriginalValue()));
+            redisTemplate.opsForValue().set(songListEnum.getValue(), res, Duration.ofSeconds(1800));
+        }
+        return R.success(res);
     }
 
 

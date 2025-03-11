@@ -56,6 +56,7 @@
             <version>3.0.0</version>
         </dependency>
 
+
         <!--        swaggerUI-->
         <dependency>
             <groupId>io.springfox</groupId>
@@ -68,6 +69,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>31.1-jre</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope> <!-- 表示该依赖由外部容器提供 -->
         </dependency>
 
         <dependency>
@@ -107,6 +114,16 @@
             <scope>runtime</scope>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
