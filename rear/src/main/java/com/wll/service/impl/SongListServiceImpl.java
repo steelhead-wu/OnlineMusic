@@ -7,8 +7,7 @@ import com.wll.mapper.SongListMapper;
 import com.wll.pojo.SongList;
 import com.wll.service.ISongListService;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.*;
 
 /**

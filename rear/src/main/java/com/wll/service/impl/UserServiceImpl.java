@@ -6,8 +6,8 @@ import com.wll.mapper.UserMapper;
 import com.wll.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import jakarta.annotation.Resource;
 
-import javax.annotation.Resource;
 import java.util.UUID;
 
 /**

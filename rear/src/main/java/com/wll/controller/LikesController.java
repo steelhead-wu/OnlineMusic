@@ -6,10 +6,11 @@ import com.wll.pojo.Likes;
 import com.wll.service.ILikesService;
 import com.wll.utils.MyUtils;
 import com.wll.utils.R;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import java.lang.reflect.Field;
+
+
 import java.util.*;
 
 /**

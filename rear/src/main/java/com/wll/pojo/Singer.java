@@ -6,8 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDate;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("singer")
-@ApiModel(value = "Singer对象", description = "")
+//@ApiModel(value = "Singer对象", description = "")
+@Schema(name = "Singer对象", description = "")
 public class Singer implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -2,14 +2,11 @@ package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.Comment;
-import com.wll.pojo.DO.CommentDO;
 import com.wll.service.ICommentService;
 import com.wll.utils.R;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

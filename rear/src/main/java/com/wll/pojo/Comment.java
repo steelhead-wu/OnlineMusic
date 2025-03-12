@@ -6,11 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.errorprone.annotations.FormatString;
-import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModel;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
-import org.checkerframework.checker.formatter.qual.Format;
+//import org.checkerframework.checker.formatter.qual.Format;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -27,7 +28,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @TableName("comment")
-@ApiModel(value = "Comment对象", description = "")
+//@ApiModel(value = "Comment对象", description = "")
+@Schema(name = "Comment对象", description = "")
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;

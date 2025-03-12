@@ -7,8 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+//import io.swagger.annotations.ApiModel;
+//import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 /**
@@ -24,7 +25,8 @@ import lombok.*;
 @Setter
 @Getter
 @TableName("likes")
-@ApiModel(value = "Likes对象", description = "")
+//@ApiModel(value = "Likes对象", description = "")
+@Schema(name = "Likes对象", description = "")
 public class Likes implements Serializable {
 
     private static final long serialVersionUID = 1L;

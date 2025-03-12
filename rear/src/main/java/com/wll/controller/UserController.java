@@ -2,13 +2,12 @@ package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.wll.pojo.Song;
 import com.wll.pojo.User;
 import com.wll.service.impl.UserServiceImpl;
 import com.wll.utils.R;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
