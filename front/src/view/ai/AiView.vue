@@ -1,50 +1,53 @@
 <script setup lang="ts">
 
-import {ref} from "vue";
+import {nextTick, ref} from "vue";
 import {MagicStick} from '@element-plus/icons-vue'
 import {useUserStore} from "@/store/UserStore";
+import {getDefaultAIResponse} from "@/api/ai/AiApi";
 
 const userStore = useUserStore();
-const messages = ref<Array<object>>([{
-  text: "帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌帮我收藏一首歌",
-  type: 'user'
-},
-  {
-    text: "帮我收藏一首歌",
-    type: 'user'
-  }
-  , {
-    text: "帮我收藏一首歌",
-    type: 'user'
-  }
-  , {
-    text: "帮我收藏一首歌",
-    type: 'user'
-  }
-]);
+const messages = ref<Array<object>>([]);
 const isShowAi = ref(true)
 const iconColor = ref('#7e57c2')
 const iconSize = ref(32)
 const userInput = ref<string>('');
+const chatBody = ref(null);
 const toggleAi = () => {
   isShowAi.value = !isShowAi.value
 }
 
 
-const sendMessage = () => {
-  if (!userInput.value.trim()) return;
+const scrollToBottom = () => {
+  nextTick(() => {
+    if (chatBody.value) {
+      chatBody.value.scrollTop = chatBody.value.scrollHeight;
+    }
+  });
+};
 
+
+const sendMessage = async () => {
+
+  if (!userInput.value.trim()) return;
   // 添加用户消息
   messages.value.push({type: 'user', text: userInput.value});
 
+
   // 发送到后端 AI 服务
   try {
-    // const response = await axios.post('/api/chat', {
-    //   message: this.userInput,
-    // });
-
-    // 添加 AI 响应
-    // messages.value.push({type: 'ai', text: response.data});
+    const aFunc = (data: string) => {
+      const lastEle = messages.value[messages.value.length - 1];
+      if (lastEle.type === 'user') {
+        messages.value.push({
+          type: 'ai',
+          text: data,
+        })
+      } else {
+        lastEle.text += data;
+      }
+      scrollToBottom();
+    };
+    await getDefaultAIResponse(userInput.value, aFunc);
   } catch (error) {
     console.error('Error sending message:', error);
     messages.value.push({type: 'ai', text: 'Error: Failed to get AI response.'});
@@ -71,11 +74,11 @@ const sendMessage = () => {
         <button @click="isShowAi=false">Close</button>
       </div>
 
-      <div class="chat-body">
+      <div class="chat-body" ref="chatBody">
         <div v-for="(message, index) in messages" :key="index" :class="message.type" class="chat-area">
           <el-container>
             <el-aside class="el-aside">
-              <el-avatar class="avatar" :src="userStore.getLoginUser.avatar"/>
+              <el-avatar class="avatar" :src="message.type==='user' ? userStore.getLoginUser.avatar :''">AI</el-avatar>
             </el-aside>
             <el-main class="el-main">
               <span class="body">{{ message.text }}</span>
@@ -86,11 +89,9 @@ const sendMessage = () => {
       <div class="chat-input">
         <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Type a message..."/>
         <button @click="sendMessage">Send</button>
+        <button @click="sendMessage">Stop</button>
       </div>
     </div>
-
-    <!-- 打开聊天窗口的按钮 -->
-    <button class="open-chat-button" @click="openChat">Open Chat</button>
   </div>
 
 </template>
