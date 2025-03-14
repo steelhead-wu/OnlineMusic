@@ -9,8 +9,11 @@ import {useRouter} from "vue-router";
 import {Behavior} from "@/enum/Behavior";
 import {addLike, conditionalDelete, conditionalQuery} from "@/api/likes/LikesApi";
 import {useUserStore} from "@/store/UserStore";
-import {ElMessage} from "element-plus";
 import {tips} from "@/api/utils/MyUtils";
+import {ElIcon} from 'element-plus'
+import {Aim, Cpu, DataAnalysis} from '@element-plus/icons-vue'
+import AiChat from '@/components/ai/AiChat.vue'
+
 
 const songStore = useSongStore()
 const userStore = useUserStore();
@@ -173,10 +176,8 @@ const songTime = ref<number>(0);
 const isUserChanging = ref<boolean>(false);
 
 const formattedCurrentTime = computed(() => {
-  return `${Math.floor(progress.value / 60).toString().padStart(2, '0')}:${
-      Math.floor(progress.value % 60).toString().padStart(2, '0')} /
-    ${Math.floor(songTime.value / 60).toString().padStart(2, '0')}:${
-      Math.floor(songTime.value % 60).toString().padStart(2, '0')}`;
+  return `${Math.floor(progress.value / 60).toString().padStart(2, '0')}:${Math.floor(progress.value % 60).toString().padStart(2, '0')} /
+    ${Math.floor(songTime.value / 60).toString().padStart(2, '0')}:${Math.floor(songTime.value % 60).toString().padStart(2, '0')}`;
 });
 
 const queryIsLikedSong = () => {
@@ -332,7 +333,7 @@ const addToMyFavorite = () => {
     <div class="player-module">
       <div class="left-part">
         <!--        上一首-->
-        <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"
+        <FontAwesomeIcon class="control-btn-each" :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
                          icon="fa-step-backward" size="2x" @click="previous"/>
 
         <!--        暂停-->
@@ -341,17 +342,18 @@ const addToMyFavorite = () => {
 
         <!--        播放-->
         <FontAwesomeIcon v-else icon="fa-play" class="control-btn-each"
-                         :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                         :class="{ 'fa-disabled': songStore.getCurrentSong == null }" size="2x"
                          @click="toggle_music_status"/>
 
         <!--        下一首-->
-        <FontAwesomeIcon class="control-btn-each" :class="{'fa-disabled':songStore.getCurrentSong==null}"
+        <FontAwesomeIcon class="control-btn-each" :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
                          icon="fa-step-forward" size="2x" @click="next"/>
       </div>
 
       <div class="main-part">
         <div class="cover-part" ref="cover">
-          <el-image class="cover-img" :src="music_pic_src" alt="" srcset="" @click="isShowLyricsPage=!isShowLyricsPage">
+          <el-image class="cover-img" :src="music_pic_src" alt="" srcset=""
+                    @click="isShowLyricsPage = !isShowLyricsPage">
             <template #error>
               <div class="image-slot">
                 <el-icon>
@@ -370,8 +372,7 @@ const addToMyFavorite = () => {
           <div class="song-time">{{ formattedCurrentTime }}
           </div>
           <div class="song-progress">
-            <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime"
-                       @input="onProgressChange"
+            <el-slider :max="songTime" id="progress" v-model="progress" @change="changeTime" @input="onProgressChange"
                        :format-tooltip="formatTooltip"/>
           </div>
           <audio preload="metadata" ref="music" id="myAudio" :src="music_src" type="audio/mpeg" @ended="ended">
@@ -391,39 +392,23 @@ const addToMyFavorite = () => {
         <!--        下载-->
         <div class="control-btn-wrap">
           <FontAwesomeIcon icon="fa-cloud-download" class="control-btn-each"
-                           :class="{'fa-disabled':songStore.getCurrentSong==null}" size="2x"
+                           :class="{ 'fa-disabled': songStore.getCurrentSong == null }" size="2x"
                            @click="doDownloadMusic"/>
         </div>
         <div class="control-btn-wrap">
           <!-- 音量按钮 -->
           <div @mouseenter="showVolumePanel" @mouseleave="hideVolumePanel">
-            <FontAwesomeIcon
-                title="turn-off"
-                v-if="!isMute"
-                icon="fa-volume-up"
-                class="control-btn-each"
-                :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
-                size="2x"
-                @click="mutedThePlayer"
-            />
+            <FontAwesomeIcon title="turn-off" v-if="!isMute" icon="fa-volume-up" class="control-btn-each"
+                             :class="{ 'fa-disabled': songStore.getCurrentSong == null }" size="2x"
+                             @click="mutedThePlayer"/>
 
-            <FontAwesomeIcon
-                v-else
-                title="turn-on"
-                icon="fa-volume-off"
-                class="control-btn-each"
-                :class="{ 'fa-disabled': songStore.getCurrentSong == null }"
-                size="2x"
-                @click="mutedThePlayer"
-            />
+            <FontAwesomeIcon v-else title="turn-on" icon="fa-volume-off" class="control-btn-each"
+                             :class="{ 'fa-disabled': songStore.getCurrentSong == null }" size="2x"
+                             @click="mutedThePlayer"/>
           </div>
 
-          <div
-              class="volume-panel-area"
-              v-show="isVolumePanelVisible"
-              @mouseenter="showVolumePanel"
-              @mouseleave="hideVolumePanel"
-          >
+          <div class="volume-panel-area" v-show="isVolumePanelVisible" @mouseenter="showVolumePanel"
+               @mouseleave="hideVolumePanel">
             <el-slider vertical v-model="volume" @change="changeVolume"/>
           </div>
         </div>
@@ -432,13 +417,13 @@ const addToMyFavorite = () => {
         <!--        like-收藏-->
         <div class="control-btn-wrap">
           <FontAwesomeIcon title="like" @click="addToMyFavorite" icon="fa-heart" class="control-btn-each"
-                           :class="{red:isLiked}"
-                           size="2x"/>
+                           :class="{ red: isLiked }" size="2x"/>
         </div>
 
         <!--        歌曲列表-->
         <div class="control-btn-wrap">
-          <FontAwesomeIcon title="queue" @click="showPlayList=!showPlayList" icon="fa-navicon" class="control-btn-each"
+          <FontAwesomeIcon title="queue" @click="showPlayList = !showPlayList" icon="fa-navicon"
+                           class="control-btn-each"
                            size="2x"/>
         </div>
 
@@ -447,17 +432,28 @@ const addToMyFavorite = () => {
             <h2 class="title">当前播放</h2>
             <div class="control">共 {{ songStore.getSongList.length }} 首</div>
             <ul class="playlist">
-              <li v-for="(asong,song_idx) in songStore.getSongList"
-                  :key="asong.id"
-                  @click="playThisMusic(asong,song_idx)"
-                  :class="{'current-play' : songStore.getCurrentSong.id === asong.id && song_idx === songStore.getCurrentSongIdx}"
-              >
-                {{ asong.title.split('-')[1] + '-  ' + asong.title.split('-')[0] }}
+              <li v-for="(asong, song_idx) in songStore.getSongList" :key="asong.id"
+                  @click="playThisMusic(asong, song_idx)"
+                  :class="{ 'current-play': songStore.getCurrentSong.id === asong.id && song_idx === songStore.getCurrentSongIdx }">
+                {{ asong.title.split('-')[1] + '- ' + asong.title.split('-')[0] }}
                 <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>
               </li>
             </ul>
           </div>
         </transition>
+
+<!--        <div class="ai-view-container">-->
+<!--          <div class="ai-icon-container">-->
+<!--            <el-icon-->
+<!--                :size="32"-->
+<!--                class="animated-icon"-->
+<!--            >-->
+<!--              <magic-stick/>-->
+<!--            </el-icon>-->
+<!--          </div>-->
+<!--          <AiChat/>-->
+<!--        </div>-->
+
       </div>
     </div>
 
@@ -471,7 +467,6 @@ const addToMyFavorite = () => {
 
 
 <style scoped lang="scss">
-
 .audio-module {
   position: fixed;
   min-width: 940px;
@@ -480,6 +475,7 @@ const addToMyFavorite = () => {
   bottom: 0;
   z-index: 1000;
   background: snow;
+
   //bottom: -100px;
   .player-module {
     position: relative;
@@ -515,6 +511,7 @@ const addToMyFavorite = () => {
       height: 100px;
       width: 540px;
       margin-left: 160px;
+
       //margin-top: 10px;
       //background: url(//www.kugou.com/yy/static/images/play/default.jpg) no-repeat left top;
       //background-position: 100% 100%;
@@ -526,14 +523,18 @@ const addToMyFavorite = () => {
         animation: spin 5s infinite linear;
         animation-play-state: paused;
         cursor: pointer;
+
         /*animation-play-state: running;*/
         @keyframes spin {
           from
+
             /*0% */
           {
             transform: rotate(0deg);
           }
+
           to
+
             /*100%*/
           {
             transform: rotate(360deg);
@@ -611,13 +612,39 @@ const addToMyFavorite = () => {
         .volume-panel-area {
           height: 80px;
           position: absolute;
-          bottom: 100%; /* 将面板放在按钮上方 */
+          bottom: 100%;
+          /* 将面板放在按钮上方 */
           left: 50%;
           transform: translateX(-50%);
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
       }
+
+      .ai-view-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        padding: 20px;
+
+        .ai-icon-container {
+          display: flex;
+          justify-content: center;
+          padding: 20px;
+          margin-bottom: 30px;
+
+          .animated-icon {
+            color: #7e57c2;
+            transition: all 0.3s ease;
+
+            &:hover {
+              transform: scale(1.1);
+              filter: drop-shadow(0 0 8px rgba(126, 87, 194, 0.5));
+            }
+          }
+        }
+      }
+
 
       .fa-disabled {
         opacity: 0.5;
@@ -638,7 +665,6 @@ const addToMyFavorite = () => {
 
 
         .title {
-
         }
 
         .control {
@@ -646,7 +672,8 @@ const addToMyFavorite = () => {
           color: grey;
         }
 
-        .title, .control {
+        .title,
+        .control {
           padding-left: 20px;
           box-sizing: border-box;
 
@@ -662,19 +689,25 @@ const addToMyFavorite = () => {
 
           li {
             display: flex;
-            justify-content: space-between; /* 左右内容分列两端 */
-            align-items: center; /* 垂直居中 */
+            justify-content: space-between;
+            /* 左右内容分列两端 */
+            align-items: center;
+            /* 垂直居中 */
             width: 100%;
             height: 40px;
             line-height: 40px;
-            position: relative; /* 为子元素定位提供基准 */
+            position: relative;
+            /* 为子元素定位提供基准 */
 
             .remove {
-              opacity: 0.3; /* 轻微透明度效果 */
+              opacity: 0.3;
+              /* 轻微透明度效果 */
               height: 15px;
               width: 15px;
-              margin-left: auto; /* 将图标推到最右侧 */
-              transition: opacity 0.3s; /* 添加悬停效果 */
+              margin-left: auto;
+              /* 将图标推到最右侧 */
+              transition: opacity 0.3s;
+              /* 添加悬停效果 */
               display: none;
 
               &:hover {
@@ -687,7 +720,8 @@ const addToMyFavorite = () => {
               background-color: #EFEFEF;
 
               .remove {
-                pointer-events: auto; /* 确保图标可以点击 */
+                pointer-events: auto;
+                /* 确保图标可以点击 */
                 display: block;
               }
             }
@@ -730,7 +764,8 @@ const addToMyFavorite = () => {
       background: url(../../assets/img/shbar.png) no-repeat;
       opacity: 0.3;
       cursor: pointer;
-      pointer-events: auto; /* 确保图标可以点击 */
+      pointer-events: auto;
+      /* 确保图标可以点击 */
     }
 
     #showHide_playbar {

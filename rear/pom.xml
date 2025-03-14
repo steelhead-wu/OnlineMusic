@@ -27,7 +27,8 @@
         <mybatis-plus.v>3.5.7</mybatis-plus.v>
         <mybatis-plus-generator.v>3.5.2</mybatis-plus-generator.v>
         <java-jwt.v>4.4.0</java-jwt.v>
-        <spring-ai.version>1.0.0-M6</spring-ai.version>
+        <!--                <spring-ai.version>1.0.0-M6</spring-ai.version>-->
+        <spring-ai.version>1.0.0-SNAPSHOT</spring-ai.version>
     </properties>
 
     <repositories>
@@ -47,6 +48,17 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
+        <repository>
+            <name>Central Portal Snapshots</name>
+            <id>central-portal-snapshots</id>
+            <url>https://central.sonatype.com/repository/maven-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -59,6 +71,7 @@
                 <scope>import</scope>
             </dependency>
         </dependencies>
+
     </dependencyManagement>
 
     <dependencies>
@@ -68,6 +81,13 @@
             <artifactId>annotations</artifactId>
             <!--            <version>16.0.1</version>-->
             <version>13.0</version>
+        </dependency>
+
+
+<!--        zhipu-->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-zhipuai-spring-boot-starter</artifactId>
         </dependency>
 
         <dependency>

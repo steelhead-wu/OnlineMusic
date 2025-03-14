@@ -12,6 +12,7 @@ import SearchView from '@/view/search/SearchView.vue'
 import LyricsView from '@/view/lyrics/LyricsView.vue'
 import AboutAccountView from '@/view/AboutAccountView.vue'
 import BasicLayout from '@/layouts/BasicLayout.vue'
+import AiView from '@/view/ai/AiView.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
 
@@ -59,6 +60,11 @@ const routes = [
                 // path: Behavior.LYRICS + '/:id(\\d+)',
                 path: Behavior.LYRICS,
                 component: LyricsView,
+            },
+            {// ai
+                // path: Behavior.LYRICS + '/:id(\\d+)',
+                path: Behavior.AI,
+                component: AiView,
             },
         ]
     },

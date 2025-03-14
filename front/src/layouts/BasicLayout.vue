@@ -3,6 +3,7 @@
 import BasicFooter from "@/layouts/BasicFooter.vue";
 import BasicHeader from "@/layouts/BasicHeader.vue";
 import PlayBar from "@/components/play/PlayBar.vue";
+import AiView from "@/view/ai/AiView.vue";
 
 
 </script>
@@ -18,12 +19,14 @@ import PlayBar from "@/components/play/PlayBar.vue";
         <!--                <keep-alive include="SingerView">-->
         <RouterView/>
         <!--                </keep-alive>-->
+        <AiView/>
         <PlayBar/>
         <!--        <Test/>-->
       </el-main>
 
       <el-footer class="footer">
-        <BasicFooter></BasicFooter>
+        <BasicFooter>
+        </BasicFooter>
       </el-footer>
     </el-container>
   </div>
