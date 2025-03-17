@@ -3,11 +3,12 @@
 import {nextTick, ref} from "vue";
 import {MagicStick} from '@element-plus/icons-vue'
 import {useUserStore} from "@/store/UserStore";
-import {getDefaultAIResponse} from "@/api/ai/AiApi";
+import {getDefaultAIResponse, zhipuAi} from "@/api/ai/AiApi";
+import {ZhiPu} from "@/enum/AIModel";
 
 const userStore = useUserStore();
 const messages = ref<Array<object>>([]);
-const isShowAi = ref(true)
+const isShowAi = ref(false)
 const iconColor = ref('#7e57c2')
 const iconSize = ref(32)
 const userInput = ref<string>('');
@@ -31,7 +32,7 @@ const sendMessage = async () => {
   if (!userInput.value.trim()) return;
   // 添加用户消息
   messages.value.push({type: 'user', text: userInput.value});
-
+  scrollToBottom();
 
   // 发送到后端 AI 服务
   try {
@@ -47,10 +48,20 @@ const sendMessage = async () => {
       }
       scrollToBottom();
     };
+
+    // await getDefaultAIResponse(userInput.value, aFunc);
+    const chatModel: ChatModel = {
+      model: ZhiPu.GLM_4_AIR,
+      message: userInput.value,
+      temperature: 0.7,
+    }
+    // await zhipuAi(chatModel, aFunc);
     await getDefaultAIResponse(userInput.value, aFunc);
+
   } catch (error) {
-    console.error('Error sending message:', error);
+    console.log(error);
     messages.value.push({type: 'ai', text: 'Error: Failed to get AI response.'});
+    scrollToBottom();
   }
 
   // 清空输入框

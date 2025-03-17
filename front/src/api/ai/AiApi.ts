@@ -1,27 +1,62 @@
+import {fetchPost} from "@/api/MyFetch";
 import {baseURL} from "@/api/request";
 
 
-const prefix = baseURL + '/api/ai';
+const prefix = '/api/ai';
 
 
 // AiApi.ts
-export const getDefaultAIResponse = (msg: string, aFunc: (data: string) => void): Promise<void> => {
-    return new Promise((resolve, reject) => {
-        const sse = new EventSource(prefix + '/default?msg=' + msg);
-
-        sse.onmessage = (ev) => {
-            console.log('ev', ev);
-            if (ev.data === '[complete]') {
-                sse.close();
-                resolve(); // 返回完整的 AI 响应
-                return;
-            }
-            aFunc(ev.data );
-        };
-
-        sse.onerror = () => {
-            sse.close();
-            reject(new Error('SSE error occurred')); // 返回错误
-        };
-    });
+export const getDefaultAIResponse = async (msg: string, aFunc: (data: string) => void): Promise<void> => {
+    handleSSE(prefix + '/default?msg=' + msg, aFunc)
 };
+
+
+export const zhipuAi = async (chatModel: ChatModel, aFunc: (data: string) => void) => {
+    const response = await fetchPost(prefix + '/zhipu', chatModel);
+    await handleResponse(response, aFunc);
+}
+
+
+const handleResponse = async (response, aFunc: (data: string) => void) => {
+    if (!response.body) {
+        throw new Error('ReadableStream not supported');
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+        const {done, value} = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, {stream: true});
+        // 处理数据
+        aFunc(chunk);
+    }
+}
+
+
+const handleSSE = (url: string, aFunc) => {
+    const sse = new EventSource(baseURL + url);
+    const message = (ev) => {
+        console.log('ev', ev.data);
+        if (ev.data === '[complete]') {
+            sse.close();
+            // resolve(); // 返回完整的 AI 响应
+            return;
+        }
+        aFunc(ev.data);
+    };
+
+    const error = () => {
+        sse.close();
+        // reject(new Error('SSE error occurred')); // 返回错误
+    };
+
+
+    set_SSE_Event(sse, message, error);
+}
+const set_SSE_Event = (sse: EventSource, message: (ev: MessageEvent) => void, error: () => void) => {
+    sse.onmessage = message;
+    sse.onerror = error;
+}
