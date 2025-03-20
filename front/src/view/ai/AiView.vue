@@ -5,10 +5,12 @@ import {MagicStick} from '@element-plus/icons-vue'
 import {useUserStore} from "@/store/UserStore";
 import {getDefaultAIResponse, zhipuAi} from "@/api/ai/AiApi";
 import {ZhiPu} from "@/enum/AIModel";
+import {Cookie} from "@/api/utils/Cookie";
+import {CookiesName} from "@/enum/CookiesName";
 
 const userStore = useUserStore();
 const messages = ref<Array<object>>([]);
-const isShowAi = ref(false)
+const isShowAi = ref(true)
 const iconColor = ref('#7e57c2')
 const iconSize = ref(32)
 const userInput = ref<string>('');
@@ -29,10 +31,27 @@ const scrollToBottom = () => {
 
 const sendMessage = async () => {
 
+
+
   if (!userInput.value.trim()) return;
   // 添加用户消息
   messages.value.push({type: 'user', text: userInput.value});
   scrollToBottom();
+
+
+  const us_au: string = Cookie.get(CookiesName.US_AU);
+  console.log(us_au);
+  // 如果用户未登录
+  if (us_au == '') {
+    messages.value.push(
+        {
+          type: 'ai',
+          text: '请先登入再跟我聊天吧~',
+        }
+    )
+    userInput.value = '';
+    return;
+  }
 
   // 发送到后端 AI 服务
   try {
@@ -55,15 +74,14 @@ const sendMessage = async () => {
       message: userInput.value,
       temperature: 0.7,
     }
-    // await zhipuAi(chatModel, aFunc);
-    await getDefaultAIResponse(userInput.value, aFunc);
+    // zhipuAi(chatModel, aFunc).then();
+    getDefaultAIResponse(userInput.value, aFunc);
 
   } catch (error) {
     console.log(error);
     messages.value.push({type: 'ai', text: 'Error: Failed to get AI response.'});
     scrollToBottom();
   }
-
   // 清空输入框
   userInput.value = '';
 }
@@ -81,7 +99,7 @@ const sendMessage = async () => {
     <!-- 聊天窗口 -->
     <div class="chat-window" v-show="isShowAi">
       <div class="chat-header">
-        <h3>AI Chat</h3>
+        <h3>ChatBot</h3>
         <button @click="isShowAi=false">Close</button>
       </div>
 

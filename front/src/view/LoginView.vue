@@ -17,6 +17,7 @@ import {
   validateNickname, validatePassword, validateRepass,
 } from "@/enum/UserPropsRule";
 import {Cookie} from "@/api/utils/Cookie";
+import {CookiesName} from "@/enum/CookiesName";
 
 interface NewUser extends User {
   rePassword: string
@@ -115,8 +116,11 @@ const singIn = () => {
           message: `提示: ${value.data.message}`,
         });
         console.log(value.data.data);
-        userStore.setLoginUser(value.data.data);
+        userStore.setLoginUser(value.data.data[0]);
         userStore.setIsOnline(true);
+
+        document.cookie = `${CookiesName.US_AU}=${value.data.data[1]};Max-Age=${60 * 60 * 24 * 3};path=/;`;
+
         console.log(userStore.getLoginUser)
         // globalStatusStore.isLoginOrSignup = false;
         // console.log("globalStatusStore:" + JSON.stringify(globalStatusStore));

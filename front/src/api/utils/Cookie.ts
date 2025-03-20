@@ -1,5 +1,9 @@
 export class Cookie {
-
+    /**
+     *
+     * @param key cookie的键
+     * @return 未找到返回空字符串，否则返回cookie的值
+     */
     static get(key: string): string {
         const strings = document.cookie.split('; ');
 

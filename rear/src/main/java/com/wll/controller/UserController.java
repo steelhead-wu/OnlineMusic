@@ -4,11 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.User;
 import com.wll.service.impl.UserServiceImpl;
+import com.wll.utils.JWTUtils;
 import com.wll.utils.R;
 import jakarta.annotation.Resource;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -25,6 +31,22 @@ import java.util.Objects;
 public class UserController {
     @Resource
     private UserServiceImpl userService;
+
+
+    public static final ThreadLocal<User> threadLocal = new ThreadLocal<>();
+
+    // 直接获取用户 ID
+//    public Long getCurrentUserId() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        if (authentication == null || !authentication.isAuthenticated()) {
+//            throw new RuntimeException("用户未登录");
+//        }
+
+    // 假设用户信息是 UserDetails 的实现类
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        return ((org.springframework.security.core.userdetails.User) userDetails).get(); // 替换为实际获取 ID 的方法
+//        return 1L;
+//    }
 
 
     @GetMapping
@@ -82,7 +104,12 @@ public class UserController {
     @PostMapping("/login")
     public R login(@RequestBody User loginUser) {
         User user = userService.login(loginUser);
-        return Objects.isNull(user) ? R.error("用户名或密码错误！") : R.success("登录成功", user);
+        if (Objects.isNull(user)) return R.error("用户名或密码错误！");
+        else {
+            user.setPassword(null);
+            return R.success("登录成功", List.of(user,
+                    JWTUtils.create(Map.of("user", new User(user.getAccount(), user.getId())), 1000 * 60 * 60 * 24 * 3)));
+        }
     }
 
 

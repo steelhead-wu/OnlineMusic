@@ -7,13 +7,13 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -23,14 +23,26 @@ import lombok.Setter;
  * @author wll
  * @since 2025-01-20
  */
-@Getter
-@Setter
+@Data
 @TableName("user")
 //@ApiModel(value = "User对象", description = "")
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "User对象", description = "")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    public User(Long id, String nickname) {
+        this.id = id;
+        this.nickname = nickname;
+    }
+
+    public User(String account, Long id) {
+        this.id = id;
+        this.account = account;
+    }
 
     @JsonSerialize(using = ToStringSerializer.class)
     @TableId("id")
@@ -56,5 +68,6 @@ public class User implements Serializable {
 
     @TableField("sex")
     private int sex;
+
 
 }

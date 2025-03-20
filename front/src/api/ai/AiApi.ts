@@ -6,8 +6,10 @@ const prefix = '/api/ai';
 
 
 // AiApi.ts
-export const getDefaultAIResponse = async (msg: string, aFunc: (data: string) => void): Promise<void> => {
+// export const getDefaultAIResponse = (msg: string, aFunc: (data: string) => void): Promise<void> => {
+export const getDefaultAIResponse = (msg: string, aFunc: (data: string) => void)/*: Promise<void> */ => {
     handleSSE(prefix + '/default?msg=' + msg, aFunc)
+    // handleSSE(prefix + '?msg=' + msg, aFunc)
 };
 
 
@@ -37,9 +39,11 @@ const handleResponse = async (response, aFunc: (data: string) => void) => {
 
 
 const handleSSE = (url: string, aFunc) => {
-    const sse = new EventSource(baseURL + url);
+    const sse = new EventSource(baseURL + url, {
+        withCredentials: true
+    });
     const message = (ev) => {
-        console.log('ev', ev.data);
+        // console.log('ev', ev.data);
         if (ev.data === '[complete]') {
             sse.close();
             // resolve(); // 返回完整的 AI 响应
