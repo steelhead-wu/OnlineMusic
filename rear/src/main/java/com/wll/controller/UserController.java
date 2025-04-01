@@ -7,10 +7,6 @@ import com.wll.service.impl.UserServiceImpl;
 import com.wll.utils.JWTUtils;
 import com.wll.utils.R;
 import jakarta.annotation.Resource;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.context.SecurityContextHolder;
-//import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +29,6 @@ public class UserController {
     private UserServiceImpl userService;
 
 
-    public static final ThreadLocal<User> threadLocal = new ThreadLocal<>();
 
     // 直接获取用户 ID
 //    public Long getCurrentUserId() {
@@ -70,19 +65,16 @@ public class UserController {
     @PutMapping
     public R updateUserById(@RequestBody User user) {
         boolean res = userService.updateById(user);
-        return res ? R.success(res) : R.error();
+        return res ? R.success(true) : R.error();
     }
 
-    /**
-     * @param user
-     * @return
-     */
+
     @PutMapping("/account")
     public R updateUserByAccount(@RequestBody User user) {
         LambdaUpdateWrapper<User> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         lambdaUpdateWrapper.eq(User::getAccount, user.getAccount());
         boolean res = userService.update(user, lambdaUpdateWrapper);
-        return res ? R.success("更新成功", res) : R.error();
+        return res ? R.success("更新成功", true) : R.error();
     }
 
     @PostMapping("/registry")
@@ -94,7 +86,7 @@ public class UserController {
 
     @GetMapping("/account")
     public R getUserByAccount(@RequestBody User user) {
-        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<User>();
+        LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
         userLambdaQueryWrapper.eq(User::getAccount, user.getAccount());
         User res = userService.getOne(userLambdaQueryWrapper);
         return Objects.isNull(res) ? R.error() : R.success(res);

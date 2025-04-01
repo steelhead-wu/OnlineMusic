@@ -31,6 +31,11 @@ public class Likes implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Likes(Long userId, Integer songId) {
+        this.userId = userId;
+        this.songId = songId;
+    }
+
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 

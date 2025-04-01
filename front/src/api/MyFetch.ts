@@ -20,9 +20,10 @@ export const fetchCommon = async (url: string, method: string, body = null) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include' // 允许携带 Cookie
             })
         }
-        throw TypeError("Failed to execute 'fetch' on 'Window': Request with GET/HEAD method cannot have body.1");
+        throw TypeError("Failed to execute 'fetch' on 'Window': Request with GET/HEAD method cannot have body");
     }
 
     return await fetch(baseURL + url, {
@@ -31,6 +32,7 @@ export const fetchCommon = async (url: string, method: string, body = null) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include' // 允许携带 Cookie
     })
 }
 

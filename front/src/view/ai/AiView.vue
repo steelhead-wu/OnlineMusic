@@ -74,8 +74,8 @@ const sendMessage = async () => {
       message: userInput.value,
       temperature: 0.7,
     }
-    // zhipuAi(chatModel, aFunc).then();
-    getDefaultAIResponse(userInput.value, aFunc);
+    zhipuAi(chatModel, aFunc).then();
+    // getDefaultAIResponse(userInput.value, aFunc);
 
   } catch (error) {
     console.log(error);

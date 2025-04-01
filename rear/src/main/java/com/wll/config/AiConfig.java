@@ -13,7 +13,10 @@ import org.springframework.ai.chat.model.ChatModel;
 //import org.springframework.ai.openai.OpenAiChatModel;
 //import org.springframework.ai.openai.OpenAiChatOptions;
 //import org.springframework.ai.openai.api.OpenAiApi;
+import org.springframework.ai.chat.prompt.ChatOptions;
+import org.springframework.ai.model.tool.ToolCallingChatOptions;
 import org.springframework.ai.zhipuai.ZhiPuAiChatModel;
+import org.springframework.ai.zhipuai.ZhiPuAiChatOptions;
 import org.springframework.ai.zhipuai.api.ZhiPuAiApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,16 +38,40 @@ public class AiConfig {
 
     // 直接标记自动配置的 openAiChatModel 为首选 Bean
 //    @Primary
-//    @Bean
-//    public ChatModel deepSeekAiChatModel(@Qualifier("openAiChatModel") ChatModel openAiChatModel) {
-//        return openAiChatModel;
-//    }
+    @Bean
+    public ChatModel deepSeekAiChatModel(@Qualifier("openAiChatModel") ChatModel openAiChatModel) {
+        return openAiChatModel;
+    }
+
     @Primary  // 标记为首选Bean
     @Bean
     public ChatModel zhipuAiChatModel(@Qualifier("zhiPuAiChatModel") ChatModel zhiPuAiChatModel) {
-
         return zhiPuAiChatModel;
     }
+
+//    @Primary  // 标记为首选Bean
+//    @Bean
+//    public ChatModel zhipuAiChatModel() {
+//        ZhiPuAiApi zhiPuAiApi = new ZhiPuAiApi(System.getenv("ZHIPU_AI_API_KEY"));
+//        ZhiPuAiApi zhiPuAiApi = new ZhiPuAiApi("2a2b96976ff44651b64b0daba109ef27.BQAw3ytpnb6HCFXr");
+//        return new ZhiPuAiChatModel(zhiPuAiApi, ZhiPuAiChatOptions.builder()
+//                .model(ZhiPuAiApi.ChatModel.GLM_3_Turbo.getValue())
+//                .temperature(0.4)
+//                .maxTokens(200)
+//                .build());
+//        return new ZhiPuAiChatModel(zhiPuAiApi,
+//                ZhiPuAiChatOptions.builder()
+//                        .model("GLM-3-Turbo")
+//                        .build());
+
+//        return new ZhiPuAiChatModel(new ZhiPuAiApi("2a2b96976ff44651b64b0daba109ef27.BQAw3ytpnb6HCFXr"),
+//                ZhiPuAiChatOptions.builder()
+//                        .model(ZhiPuAiApi.ChatModel.GLM_3_Turbo.getValue())
+//                        .temperature(0.4)
+//                        .maxTokens(200)
+//                        .build()
+//        );
+//    }
 
     @Bean
     public Generation generation() {

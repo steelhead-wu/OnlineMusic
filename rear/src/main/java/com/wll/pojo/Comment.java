@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 @TableName("comment")
 //@ApiModel(value = "Comment对象", description = "")
 @Schema(name = "Comment对象", description = "")
-public class Comment implements Serializable {
+    public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

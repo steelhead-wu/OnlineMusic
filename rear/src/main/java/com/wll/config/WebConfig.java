@@ -1,35 +1,20 @@
 package com.wll.config;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.wll.controller.AiController;
 import com.wll.pojo.User;
 import com.wll.utils.HTTPUtils;
-import com.wll.utils.JWTUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import reactor.core.publisher.Flux;
 
-import java.io.IOException;
-import java.lang.invoke.MethodHandle;
-import java.lang.reflect.Method;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -37,8 +22,7 @@ import java.util.Objects;
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Resource
-    private AiController aiController;
+
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -52,7 +36,8 @@ public class WebConfig implements WebMvcConfigurer {
 //                .allowedOriginPatterns("http://localhost:5173")
                 .allowedOrigins("http://localhost:5173")
                 .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
-                .maxAge(-1);
+                .allowedHeaders("*")
+                .maxAge(3600);
     }
 
     @Override
@@ -62,7 +47,8 @@ public class WebConfig implements WebMvcConfigurer {
                     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
                         Cookie[] cookies = request.getCookies();
                         String path = request.getRequestURI();
-
+                        System.out.println("Request Method: " + request.getMethod());
+                        System.out.println("Request Headers: " + Collections.list(request.getHeaderNames()));
                         Cookie us_au;
                         // cookies为空或者不存在名字为us_au的cookie
                         if (Objects.isNull(cookies) || Objects.isNull(us_au = HTTPUtils.getCookie(cookies, "us_au"))
@@ -71,13 +57,16 @@ public class WebConfig implements WebMvcConfigurer {
                             return false;
                         }
 
-
+                        User user;
                         try {
-                            HTTPUtils.validateCookie(us_au);
+                            user = (User) HTTPUtils.validateCookie(us_au);
                         } catch (Exception e) {
                             System.out.println("拦截器: preHandle - 拦截路径: " + path);
                             return false;
                         }
+//                        userContext.setCurrentUser(user);
+//                        userContext.setCurrentUser(user.getId());
+
                         System.out.println("拦截器: preHandle - 释放路径: " + path);
                         return true;
                     }
