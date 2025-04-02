@@ -49,30 +49,6 @@ public class AiConfig {
         return zhiPuAiChatModel;
     }
 
-//    @Primary  // 标记为首选Bean
-//    @Bean
-//    public ChatModel zhipuAiChatModel() {
-//        ZhiPuAiApi zhiPuAiApi = new ZhiPuAiApi(System.getenv("ZHIPU_AI_API_KEY"));
-//        ZhiPuAiApi zhiPuAiApi = new ZhiPuAiApi("2a2b96976ff44651b64b0daba109ef27.BQAw3ytpnb6HCFXr");
-//        return new ZhiPuAiChatModel(zhiPuAiApi, ZhiPuAiChatOptions.builder()
-//                .model(ZhiPuAiApi.ChatModel.GLM_3_Turbo.getValue())
-//                .temperature(0.4)
-//                .maxTokens(200)
-//                .build());
-//        return new ZhiPuAiChatModel(zhiPuAiApi,
-//                ZhiPuAiChatOptions.builder()
-//                        .model("GLM-3-Turbo")
-//                        .build());
-
-//        return new ZhiPuAiChatModel(new ZhiPuAiApi("2a2b96976ff44651b64b0daba109ef27.BQAw3ytpnb6HCFXr"),
-//                ZhiPuAiChatOptions.builder()
-//                        .model(ZhiPuAiApi.ChatModel.GLM_3_Turbo.getValue())
-//                        .temperature(0.4)
-//                        .maxTokens(200)
-//                        .build()
-//        );
-//    }
-
     @Bean
     public Generation generation() {
         return new Generation();

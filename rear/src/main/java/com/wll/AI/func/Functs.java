@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -34,7 +33,7 @@ public class Functs {
     }
 
     @Bean("addLike")
-    @Description("添加音乐到我喜欢")
+    @Description("添加音乐到我喜欢,如果失败告诉用户这首歌已经你的歌单中")
     Function<MusicUserID, Boolean> addLike() {
         return (music) -> {
             LambdaQueryWrapper<Song> lambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -48,4 +47,7 @@ public class Functs {
         };
 
     }
+
+
+
 }
