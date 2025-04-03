@@ -10,7 +10,7 @@ import {CookiesName} from "@/enum/CookiesName";
 
 const userStore = useUserStore();
 const messages = ref<Array<object>>([]);
-const isShowAi = ref(true)
+const isShowAi = ref(false)
 const iconColor = ref('#7e57c2')
 const iconSize = ref(32)
 const userInput = ref<string>('');

@@ -129,6 +129,8 @@ const singIn = () => {
         router.push(Behavior.HOME);
         console.log("退出signIn");
 
+
+
       }, reason => {
         ElMessage({
           type: 'info',

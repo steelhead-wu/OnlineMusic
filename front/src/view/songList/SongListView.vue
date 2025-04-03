@@ -43,7 +43,7 @@ onMounted(
         // } else if (singersStores.getCurrentNameOpt === '女歌手') {
       } else {
 
-        getSongListByStyle(song_list_style[singersStores.getCurrentSongListNameOptIdx].name).then(value => {
+        getSongListByStyle(song_list_style[singersStores.getCurrentSongListNameOptIdx].id).then(value => {
           playList.value = value.data.data
           singersStores.setSongList(playList.value);
           console.log('total singers:', playList.value.length);

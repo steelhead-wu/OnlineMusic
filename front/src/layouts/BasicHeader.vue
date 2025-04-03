@@ -8,6 +8,7 @@ import {Behavior} from "@/enum/Behavior";
 import {AvatarSize} from "@/enum/AvatarSize";
 import {dropDownList, UserDropDown} from "@/enum/UserDropDown";
 import {useUserStore} from "@/store/UserStore";
+import {CookiesName} from "@/enum/CookiesName";
 
 const keyWord = ref<string>();
 const select = ref<string>('1');
@@ -59,7 +60,11 @@ const doDropDown = (dropdown) => {
   if (dropdown.name === UserDropDown.SIGN_OUT) {
     // userStore.isOnline = false;
     userStore.$reset();
+
     router.push(Behavior.HOME);
+
+    document.cookie = `${CookiesName.US_AU}=;Max-Age=0`;
+
     return;
   } else if (dropdown.name === UserDropDown.PERSONAL) {
 
