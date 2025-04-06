@@ -7,6 +7,7 @@ import com.wll.service.ILikesService;
 import com.wll.utils.MyUtils;
 import com.wll.utils.R;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 

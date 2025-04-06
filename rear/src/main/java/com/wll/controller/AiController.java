@@ -6,9 +6,12 @@ import com.wll.pojo.ChatModel;
 import com.wll.service.impl.AIServiceImpl;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
+
+import javax.validation.Valid;
 
 /**
  * @time 2025/3/12 22:46 周三
