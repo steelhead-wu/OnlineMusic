@@ -71,6 +71,3 @@ logging:
           chat:
             client:
               advisor: DEBUG
-
-n:
-  k: ni

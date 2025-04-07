@@ -12,7 +12,7 @@ export const fetchGet = async (url: string) => {
 export const fetchCommon = async (url: string, method: string, body = null) => {
     method = method.toUpperCase();
     if (method == 'GET' || method == 'HEAD') {
-        console.log('body', body != {})
+       // console.log('body', body != {})
 
         if (body == null) {
             return await fetch(baseURL + url, {

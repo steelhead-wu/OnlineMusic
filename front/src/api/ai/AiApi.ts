@@ -1,5 +1,6 @@
 import {fetchPost} from "@/api/MyFetch";
 import {baseURL} from "@/api/request";
+import type {ChatModel} from "@/pojo/ChatModel.ts";
 
 
 const prefix = '/api/ai';
@@ -19,7 +20,7 @@ export const zhipuAi = async (chatModel: ChatModel, aFunc: (data: string) => voi
 }
 
 
-const handleResponse = async (response, aFunc: (data: string) => void) => {
+const handleResponse = async (response: any, aFunc: (data: string) => void) => {
     if (!response.body) {
         throw new Error('ReadableStream not supported');
     }
@@ -38,11 +39,11 @@ const handleResponse = async (response, aFunc: (data: string) => void) => {
 }
 
 
-const handleSSE = (url: string, aFunc) => {
+const handleSSE = (url: string, aFunc: (data: string) => void) => {
     const sse = new EventSource(baseURL + url, {
         withCredentials: true
     });
-    const message = (ev) => {
+    const message = (ev: MessageEvent) => {
         // console.log('ev', ev.data);
         if (ev.data === '[complete]') {
             sse.close();
