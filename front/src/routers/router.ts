@@ -15,6 +15,10 @@ import BasicLayout from '@/layouts/BasicLayout.vue'
 import AiView from '@/view/ai/AiView.vue'
 import {Behavior} from "@/enum/Behavior";
 import {useGlobalStatusStore} from "@/store/GlobalStatusStore";
+import {useUserStore} from "@/store/UserStore.ts";
+import {ElMessage} from "element-plus";
+import {Cookie} from "@/api/utils/Cookie.ts";
+import {CookiesName} from "@/enum/CookiesName.ts";
 
 const routes = [
     {
@@ -101,6 +105,23 @@ router.beforeEach((to, from, next) => {
     // console.log(to);
     // console.log(from);
     // console.log(next);
+    const userStore = useUserStore();
+    // 用户登录中且的cookie过期
+    if (userStore.getIsOnline) {
+        let cookie = Cookie.get(CookiesName.US_AU);
+        if (cookie === '') {
+            userStore.$reset();
+            return next(Behavior.HOME);
+        }
+    } else {
+        // 未登录访问用户中心
+        if (to.path === Behavior.PERSONAL || to.path === Behavior.SETTINGS) {
+            ElMessage.info("请先登录");
+            return next(Behavior.SIGN_IN);
+        }
+    }
+
+
     const globalStatusStore = useGlobalStatusStore();
     if (to.path === Behavior.SIGN_IN) {
         globalStatusStore.isLogin = true;

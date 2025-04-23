@@ -1,4 +1,4 @@
-interface Singer {
+export interface Singer {
     id?: string,
     name?: string,
     sex?: number,

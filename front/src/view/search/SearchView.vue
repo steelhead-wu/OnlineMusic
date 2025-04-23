@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, watch} from "vue";
-import {onBeforeRouteLeave, useRoute, useRouter} from "vue-router";
-import {getAllSongBySingerId, searchSong} from "@/api/song/SongApi";
+import {ref, watch} from "vue";
+import {useRoute} from "vue-router";
+import {searchSong} from "@/api/song/SongApi";
 import {baseURL} from "@/api/request";
-import {Behavior} from "@/enum/Behavior";
 import {useSingersStore} from "@/store/SingersStore";
 import SongList from "@/components/song/SongList.vue";
 

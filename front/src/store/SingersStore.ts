@@ -1,5 +1,7 @@
 import {defineStore} from "pinia";
 import {computed, ref} from "vue";
+import type {Singer} from "@/pojo/Singer.ts";
+import type {SongList} from "@/pojo/SongList.ts";
 
 export const useSingersStore = defineStore('singersStore', () => {
 

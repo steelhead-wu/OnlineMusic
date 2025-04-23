@@ -1,4 +1,4 @@
-interface SongList {
+export interface SongList {
     id?: string,
     title?: string,
     pic?: string,

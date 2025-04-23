@@ -1,12 +1,17 @@
 package com.wll.config;
 
+import com.alibaba.druid.support.json.JSONUtils;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wll.pojo.User;
 import com.wll.utils.HTTPUtils;
+import com.wll.utils.R;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.ai.model.Media;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -14,7 +19,11 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.awt.*;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -44,7 +53,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HandlerInterceptor() {
                     @Override
-                    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+                    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
                         Cookie[] cookies = request.getCookies();
                         String path = request.getRequestURI();
                         System.out.println("Request Method: " + request.getMethod());
@@ -54,6 +63,15 @@ public class WebConfig implements WebMvcConfigurer {
                         if (Objects.isNull(cookies) || Objects.isNull(us_au = HTTPUtils.getCookie(cookies, "us_au"))
                         ) {
                             System.out.println("拦截器: preHandle - 拦截路径: " + path);
+
+                            // 未登录无法评论
+                            if ("/api/comment".equals(path)) {
+                                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                                response.setCharacterEncoding("utf-8");
+                                new ObjectMapper().writeValue(response.getWriter(), R.unAuthorization());
+                            }
+
+
                             return false;
                         }
 
@@ -70,6 +88,8 @@ public class WebConfig implements WebMvcConfigurer {
                         System.out.println("拦截器: preHandle - 释放路径: " + path);
                         return true;
                     }
+
+
                 })
 
                 .addPathPatterns("/api/**")
@@ -87,5 +107,26 @@ public class WebConfig implements WebMvcConfigurer {
                         , "/asset/**"
                 )
         ;
+    }
+
+
+    /*返回客户端数据*/
+    private void returnJson(HttpServletResponse response, int code, String message) {
+        PrintWriter writer = null;
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=utf-8");
+        response.setStatus(code);
+        try {
+
+            response.getWriter()
+                    .print(Map.of("status", 401))
+            ;
+
+
+        } catch (IOException e) {
+        } finally {
+            if (writer != null)
+                writer.close();
+        }
     }
 }

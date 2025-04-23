@@ -26,6 +26,8 @@ import java.util.Objects;
 @RequestMapping("/songList")
 public class SongListController {
 
+    private static Integer stock = 10;
+    private static int stock_cnt = 0;
 
     @Resource
     private RedisTemplate<String, List<SongList>> redisTemplate;
@@ -82,7 +84,7 @@ public class SongListController {
 
 
     @GetMapping("/random")
-    public R getRandomSongList(@RequestParam Integer capacity) {
+    public synchronized R getRandomSongList(@RequestParam Integer capacity) {
         return R.success(songListService.getRandomSongList(capacity));
     }
 

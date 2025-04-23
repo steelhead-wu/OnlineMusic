@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9a117984-b94d-4f9c-9a0a-877e7fa25884" name="Changes" comment="test">
+      <change afterPath="$PROJECT_DIR$/../front/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/.vscode/extensions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/api/utils/SingerTimer.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/api/utils/Test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/assets/img/background/3.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/assets/svg/pause1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/assets/svg/pause2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/store/TestStore.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/test/Test.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/test/Test.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../front/src/test/Test.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/pojo/Singer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/pojo/Singer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/pojo/SongList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/pojo/SongList.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/pojo/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/pojo/User.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/routers/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/routers/router.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/SingersStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/SingersStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/store/UserStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/UserStore.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/view/search/SearchView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/view/search/SearchView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front/src/view/songList/SongListDetailView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/view/songList/SongListDetailView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/OM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OM.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/JK.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/controller/SongListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/controller/SongListController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/utils/R.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/utils/R.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+    <option name="PARALLEL_COMPILATION" value="false" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="MyBatisMapper" />
+        <option value="AnnotationType" />
+        <option value="Enum" />
+        <option value="Record" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="RESET_MODE" value="SOFT" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;steelhead-wu&quot;
+  }
+}</component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/steelhead-wu/OnlineMusic.git&quot;,
+    &quot;accountId&quot;: &quot;bf762147-46db-489b-9192-a9610f0157cc&quot;
+  }
+}</component>
+  <component name="HierarchyBrowserManager">
+    <option name="SORT_ALPHABETICALLY" value="true" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.4.3/spring-security-web-6.4.3-sources.jar!/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/wll/controller/UserController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/6.2.3/spring-webmvc-6.2.3-sources.jar!/org/springframework/web/servlet/HandlerExecutionChain.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$PROJECT_DIR$/../../../../DevTools/Java/jdk-17.0.12/lib/src.zip!/java.base/java/util/AbstractList.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\DevTools\Maven\repository" />
+        <option name="showDialogWithAdvancedSettings" value="true" />
+        <option name="userSettingsFile" value="D:\DevTools\Maven\apache-maven-3.9.2\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2rt3CJBfStNvCBh4HEzmlqND38X" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Database Script.OM.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.OM1.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.allsql.sql.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.OnlineMusicApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;b67b982e-5048-4e57-a0a7-0f8797baceb4/schema/\&quot;online_music\&quot;&quot;,
+      &quot;b67b982e-5048-4e57-a0a7-0f8797baceb4&quot;
+    ]
+  }
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="ReaderModeSettings">
+    <option name="enabled" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources\mapper" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\service\impl" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\service" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\pojo" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\mapper" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="" />
+      <recent name="com.wll.controller" />
+      <recent name="com.wll.utils" />
+      <recent name="com.wll.config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.OnlineMusicApplication">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="rear" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OM1.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/OM1.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="b67b982e-5048-4e57-a0a7-0f8797baceb4" />
+      <method v="2" />
+    </configuration>
+    <configuration name="OM.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/OM.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="b67b982e-5048-4e57-a0a7-0f8797baceb4" namespace="schema/&quot;online_music&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="allsql.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/../../../../allsql.sql" />
+      <script-mode>FILE</script-mode>
+      <data-source id="b67b982e-5048-4e57-a0a7-0f8797baceb4" />
+      <method v="2" />
+    </configuration>
+    <configuration name="OnlineMusicApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="rear" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wll.OnlineMusicApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wll.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Database Script.OM1.sql" />
+      <item itemvalue="Database Script.OM.sql" />
+      <item itemvalue="Database Script.allsql.sql" />
+      <item itemvalue="Spring Boot.OnlineMusicApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.OnlineMusicApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9a117984-b94d-4f9c-9a0a-877e7fa25884" name="Changes" comment="" />
+      <created>1737364415878</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1737364415878</updated>
+      <workItem from="1737364416985" duration="1764000" />
+      <workItem from="1737372050949" duration="630000" />
+      <workItem from="1737429350614" duration="2789000" />
+      <workItem from="1737548294671" duration="7397000" />
+      <workItem from="1737608461804" duration="4401000" />
+      <workItem from="1737700238830" duration="6392000" />
+      <workItem from="1737768735542" duration="5111000" />
+      <workItem from="1737859205077" duration="2000000" />
+      <workItem from="1737962829097" duration="2671000" />
+      <workItem from="1738481573708" duration="4034000" />
+      <workItem from="1738563197886" duration="19235000" />
+      <workItem from="1738644245320" duration="1605000" />
+      <workItem from="1738741791354" duration="9281000" />
+      <workItem from="1738775477112" duration="310000" />
+      <workItem from="1738836182971" duration="597000" />
+      <workItem from="1738928818802" duration="6445000" />
+      <workItem from="1738991766577" duration="3475000" />
+      <workItem from="1739025324959" duration="20000" />
+      <workItem from="1739099752814" duration="686000" />
+      <workItem from="1739169464554" duration="4664000" />
+      <workItem from="1739258550331" duration="743000" />
+      <workItem from="1739346286955" duration="4586000" />
+      <workItem from="1739595750748" duration="12214000" />
+      <workItem from="1739687311745" duration="4589000" />
+      <workItem from="1739771276172" duration="1591000" />
+      <workItem from="1739857745146" duration="12200000" />
+      <workItem from="1739947933979" duration="7612000" />
+      <workItem from="1740037278414" duration="605000" />
+      <workItem from="1740119465182" duration="754000" />
+      <workItem from="1740216067038" duration="12336000" />
+      <workItem from="1740292680668" duration="11192000" />
+      <workItem from="1740378286254" duration="14990000" />
+      <workItem from="1740468901442" duration="23843000" />
+      <workItem from="1740504719827" duration="641000" />
+      <workItem from="1740555935835" duration="7637000" />
+      <workItem from="1740635583833" duration="6734000" />
+      <workItem from="1740744880786" duration="4069000" />
+      <workItem from="1740835340952" duration="2365000" />
+      <workItem from="1740885663525" duration="7481000" />
+      <workItem from="1740987000633" duration="613000" />
+      <workItem from="1741069907520" duration="8601000" />
+      <workItem from="1741127515810" duration="12179000" />
+      <workItem from="1741198589196" duration="6420000" />
+      <workItem from="1741212911651" duration="17348000" />
+      <workItem from="1741274127673" duration="3643000" />
+      <workItem from="1741300151439" duration="10232000" />
+      <workItem from="1741389170828" duration="1983000" />
+      <workItem from="1741492192082" duration="14119000" />
+      <workItem from="1741605402259" duration="17913000" />
+      <workItem from="1741653734111" duration="6739000" />
+      <workItem from="1741699505424" duration="12033000" />
+      <workItem from="1741768466392" duration="3790000" />
+      <workItem from="1741790629810" duration="7336000" />
+      <workItem from="1741817031129" duration="30704000" />
+      <workItem from="1741905096097" duration="1937000" />
+      <workItem from="1741923800653" duration="12893000" />
+      <workItem from="1742042100393" duration="3913000" />
+      <workItem from="1742046619437" duration="213000" />
+      <workItem from="1742046889537" duration="491000" />
+      <workItem from="1742047438240" duration="12476000" />
+      <workItem from="1742062208857" duration="4450000" />
+      <workItem from="1742079523804" duration="14630000" />
+      <workItem from="1742167414979" duration="22332000" />
+      <workItem from="1742262062753" duration="16625000" />
+      <workItem from="1742384252555" duration="2965000" />
+      <workItem from="1742400157595" duration="7867000" />
+      <workItem from="1742423028955" duration="36290000" />
+      <workItem from="1742510252573" duration="26748000" />
+      <workItem from="1742597240303" duration="2481000" />
+      <workItem from="1742798826874" duration="1570000" />
+      <workItem from="1742861170616" duration="2322000" />
+      <workItem from="1743065869357" duration="4693000" />
+      <workItem from="1743128770606" duration="595000" />
+      <workItem from="1743229366466" duration="3432000" />
+      <workItem from="1743313518771" duration="10927000" />
+      <workItem from="1743384774198" duration="23776000" />
+      <workItem from="1743484457200" duration="25207000" />
+      <workItem from="1743516472117" duration="113000" />
+      <workItem from="1743516624624" duration="149000" />
+      <workItem from="1743516789782" duration="3200000" />
+      <workItem from="1743563322002" duration="10262000" />
+      <workItem from="1743586671916" duration="80000" />
+      <workItem from="1743587148671" duration="1624000" />
+      <workItem from="1743657982520" duration="3461000" />
+      <workItem from="1743666429423" duration="1354000" />
+      <workItem from="1743682801947" duration="779000" />
+      <workItem from="1743691730562" duration="5000" />
+      <workItem from="1743692163163" duration="799000" />
+      <workItem from="1743697900499" duration="115000" />
+      <workItem from="1743748843677" duration="1288000" />
+      <workItem from="1743769030175" duration="3376000" />
+      <workItem from="1743780052705" duration="1054000" />
+      <workItem from="1743940595834" duration="1107000" />
+      <workItem from="1744004912244" duration="5777000" />
+      <workItem from="1744115848279" duration="2708000" />
+      <workItem from="1744204032288" duration="2382000" />
+      <workItem from="1744291427051" duration="2810000" />
+      <workItem from="1744512217044" duration="14557000" />
+      <workItem from="1744640020447" duration="2714000" />
+      <workItem from="1744688097295" duration="4776000" />
+      <workItem from="1744727502862" duration="1921000" />
+      <workItem from="1744984970638" duration="135000" />
+      <workItem from="1744985115495" duration="2389000" />
+      <workItem from="1745024263686" duration="8537000" />
+      <workItem from="1745038787504" duration="6802000" />
+      <workItem from="1745054687928" duration="1734000" />
+      <workItem from="1745323715635" duration="25000" />
+      <workItem from="1745334035197" duration="4665000" />
+      <workItem from="1745369712332" duration="4619000" />
+    </task>
+    <task id="LOCAL-00001" summary="First Commitment">
+      <created>1737788384629</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737788384629</updated>
+    </task>
+    <task id="LOCAL-00002" summary="用户持久化">
+      <created>1737990802514</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1737990802515</updated>
+    </task>
+    <task id="LOCAL-00003" summary="用户持久化">
+      <created>1737990843112</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737990843112</updated>
+    </task>
+    <task id="LOCAL-00004" summary="为每一个RestController添加动态前缀">
+      <created>1738568707283</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1738568707283</updated>
+    </task>
+    <task id="LOCAL-00005" summary="添加文件控制器">
+      <created>1738571627431</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1738571627431</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add user avatar upload">
+      <created>1738595439995</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738595439995</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add user avatar upload">
+      <created>1738595466083</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738595466083</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add song download">
+      <created>1738775328511</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738775328511</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add music player">
+      <created>1738951581807</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1738951581807</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add music player">
+      <created>1738952519951</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738952519951</updated>
+    </task>
+    <task id="LOCAL-00011" summary="add music player">
+      <created>1738952625487</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738952625487</updated>
+    </task>
+    <task id="LOCAL-00012" summary="perfect music player">
+      <created>1739198618261</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1739198618261</updated>
+    </task>
+    <task id="LOCAL-00013" summary="add singer api">
+      <created>1739602338968</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1739602338968</updated>
+    </task>
+    <task id="LOCAL-00014" summary="add singer detail page">
+      <created>1739639356231</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1739639356231</updated>
+    </task>
+    <task id="LOCAL-00015" summary="add api of 'getAllSongBySingerId'">
+      <created>1739715288514</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1739715288514</updated>
+    </task>
+    <task id="LOCAL-00016" summary="add API 'getAllSongList'">
+      <created>1739900025320</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1739900025320</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add SongListDetailView.vue">
+      <created>1739978772719</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1739978772719</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add API of rating">
+      <created>1740233195909</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1740233195909</updated>
+    </task>
+    <task id="LOCAL-00019" summary="add API of updating rating">
+      <created>1740236426852</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1740236426852</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add user's comment directory">
+      <created>1740505356424</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1740505356424</updated>
+    </task>
+    <task id="LOCAL-00021" summary="fix user upload avatar">
+      <created>1740557204848</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1740557204848</updated>
+    </task>
+    <task id="LOCAL-00022" summary="perfect search function">
+      <created>1740586012222</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1740586012222</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add SettingsView.vue">
+      <created>1740668975514</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1740668975514</updated>
+    </task>
+    <task id="LOCAL-00024" summary="perfect SettingsView.vue">
+      <created>1740755088410</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1740755088410</updated>
+    </task>
+    <task id="LOCAL-00025" summary="add 'like the song' function">
+      <created>1741183553069</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1741183553069</updated>
+    </task>
+    <task id="LOCAL-00026" summary="added related API of user's personal hub">
+      <created>1741186168976</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1741186168976</updated>
+    </task>
+    <task id="LOCAL-00027" summary="perfect LikeController.java">
+      <created>1741203443427</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1741203443427</updated>
+    </task>
+    <task id="LOCAL-00028" summary="perfect LikeController.java">
+      <created>1741278239725</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1741278239725</updated>
+    </task>
+    <task id="LOCAL-00029" summary="added redis cache for SongListController.java">
+      <created>1741707579821</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1741707579821</updated>
+    </task>
+    <task id="LOCAL-00030" summary="enabled type LocalDate serialized.">
+      <created>1741712397688</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1741712397688</updated>
+    </task>
+    <task id="LOCAL-00031" summary="updated Spring Boot 2.7 to 3.4">
+      <created>1741794948626</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1741794948626</updated>
+    </task>
+    <task id="LOCAL-00032" summary="updated Spring Boot 2.7 to 3.4">
+      <created>1741795030974</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1741795030974</updated>
+    </task>
+    <task id="LOCAL-00033" summary="code uploaded">
+      <created>1742492864461</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1742492864461</updated>
+    </task>
+    <task id="LOCAL-00034" summary="added ZhiPu Ai,DeepSeek AI and QIANWEN AI">
+      <created>1743520373138</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1743520373138</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fixed bugs">
+      <created>1743568863586</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1743568863586</updated>
+    </task>
+    <task id="LOCAL-00036" summary="uploaded static resources">
+      <created>1743666677889</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1743666677889</updated>
+    </task>
+    <task id="LOCAL-00037" summary="uploaded static resources">
+      <option name="closed" value="true" />
+      <created>1743940778848</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1743940778848</updated>
+    </task>
+    <task id="LOCAL-00038" summary="uploaded static resources">
+      <option name="closed" value="true" />
+      <created>1743941576503</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1743941576503</updated>
+    </task>
+    <task id="LOCAL-00039" summary="MODIFIED UNKNOWN ERROR">
+      <option name="closed" value="true" />
+      <created>1744006177219</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1744006177219</updated>
+    </task>
+    <task id="LOCAL-00040" summary="SANITY CHECK">
+      <option name="closed" value="true" />
+      <created>1744534021658</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1744534021658</updated>
+    </task>
+    <task id="LOCAL-00041" summary="test">
+      <option name="closed" value="true" />
+      <created>1744539513418</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1744539513418</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="gitee/master" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="TEXT_FILTER_SETTINGS">
+                <TextFilterSettings>
+                  <option name="MATCH_CASE" value="true" />
+                  <option name="REGEX" value="true" />
+                </TextFilterSettings>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add singer api" />
+    <MESSAGE value="add singer detail page" />
+    <MESSAGE value="add api of 'getAllSongBySingerId'" />
+    <MESSAGE value="add API 'getAllSongList'" />
+    <MESSAGE value="add SongListDetailView.vue" />
+    <MESSAGE value="add API of rating" />
+    <MESSAGE value="add API of updating rating" />
+    <MESSAGE value="add user's comment directory" />
+    <MESSAGE value="fix user upload avatar" />
+    <MESSAGE value="perfect search function" />
+    <MESSAGE value="add SettingsView.vue" />
+    <MESSAGE value="perfect SettingsView.vue" />
+    <MESSAGE value="add 'like the song' function" />
+    <MESSAGE value="added related API of user's personal hub" />
+    <MESSAGE value="perfect LikeController.java" />
+    <MESSAGE value="added redis cache for SongListController.java" />
+    <MESSAGE value="enabled type LocalDate serialized." />
+    <MESSAGE value="updated Spring Boot 2.7 to 3.4" />
+    <MESSAGE value="code uploaded" />
+    <MESSAGE value="added ZhiPu Ai,DeepSeek AI and QIANWEN AI" />
+    <MESSAGE value="fixed bugs" />
+    <MESSAGE value="uploaded static resources" />
+    <MESSAGE value="MODIFIED UNKNOWN ERROR" />
+    <MESSAGE value="SANITY CHECK" />
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.4.3/spring-security-web-6.4.3-sources.jar!/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="assistantMessage" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/rear$OnlineMusicApplication.ic" NAME="OnlineMusicApplication Coverage Results" MODIFIED="1741905122076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.wll.*</FILTER>
+    </SUITE>
+  </component>
+</project>

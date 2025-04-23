@@ -1,21 +1,17 @@
 package com.wll.utils;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-/**
- * @Author 祝英台炸油条
- * @Time : 2022/6/4 19:04
- **/
-@Data
+
+@Getter
+@Setter
 public class R {
 
     private int code;
 
     private String message;
 
-    private String type;
-
-    private Boolean success;
 
     private Object data;
 
@@ -23,12 +19,35 @@ public class R {
     private String link;
 
 
+    public R(int code, String message, Object data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
+    public R() {
+    }
+
+
+    @Override
+    public String toString() {
+        return """
+                {
+                code:%d
+                message:%s
+                }
+                """.formatted(code, message)
+                ;
+    }
+
+    public static R unAuthorization() {
+        return new R(401, "未登录", null);
+    }
+
     public static R success() {
         R r = new R();
         r.setCode(200);
         r.setMessage("执行成功");
-        r.setSuccess(true);
-        r.setType("success");
         r.setData(null);
         return r;
     }
@@ -37,8 +56,6 @@ public class R {
         R r = new R();
         r.setCode(200);
         r.setMessage("执行成功");
-        r.setSuccess(true);
-        r.setType("success");
         r.setData(data);
         return r;
     }
@@ -53,8 +70,6 @@ public class R {
         R r = new R();
         r.setCode(200);
         r.setMessage(message);
-        r.setSuccess(true);
-        r.setType("success");
         r.setData(null);
         return r;
     }
@@ -67,14 +82,13 @@ public class R {
 
     public static R warning(String message) {
         R r = error(message);
-        r.setType("warning");
+
         return r;
     }
 
     public static R error(String message) {
         R r = new R();
-        r.setSuccess(false);
-        r.setType("error");
+
         r.setCode(501);
         r.setMessage(message);
         return r;
@@ -82,8 +96,8 @@ public class R {
 
     public static R error() {
         R r = new R();
-        r.setSuccess(false);
-        r.setType("error");
+
+
         r.setCode(501);
         return r;
     }

@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {ref, computed} from "vue";
+import type {User} from "@/pojo/User.ts";
 
 
 export const useUserStore = defineStore('userStore', () => {

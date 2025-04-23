@@ -15,6 +15,7 @@ import CommentDO from "@/pojo/DO/CommentDO";
 import {CommentSortMode, SORT_MODE_LENGTH, SORTING_NAME} from "@/enum/CommentSortMode";
 import FroalaEditor from 'froala-editor';
 import {PictureRepoType} from "@/enum/PictureRepoType";
+import {ElMessage} from "element-plus";
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -173,6 +174,8 @@ const submitComment = () => {
     up: 0,
     songListId: current_song_list.value.id,
   }).then(value => {
+
+    console.log(value);
     if (value.data.code === 200) {
       comments.value.push({
             id: value.data.data,
@@ -184,6 +187,8 @@ const submitComment = () => {
           }
       )
       myComment.value = '';
+    } else if (value.data.code == 401) {
+      ElMessage.info('请先登录！')
     } else {
       console.log("评论添加失败");
     }
