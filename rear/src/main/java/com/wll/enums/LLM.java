@@ -4,7 +4,7 @@ package com.wll.enums;
  * @time 2025/3/12 22:59 周三
  */
 public enum LLM {
-    DEEP_SEEK("sk-200dfb5a16e4410aa00d9a2dcae9d6c0",
+    DEEP_SEEK(System.getenv("DEEPSEEK_AI_API_KEY"),
             "https://api.deepseek.com");
 
 
