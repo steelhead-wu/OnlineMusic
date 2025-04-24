@@ -11,8 +11,8 @@ import {addLike, conditionalDelete, conditionalQuery} from "@/api/likes/LikesApi
 import {useUserStore} from "@/store/UserStore";
 import {tips} from "@/api/utils/MyUtils";
 import {ElIcon} from 'element-plus'
-import {Aim, Cpu, DataAnalysis} from '@element-plus/icons-vue'
-import AiChat from '@/components/ai/AiChat.vue'
+import type {Likes} from "@/pojo/Likes.ts";
+import type Song from "@/pojo/Song.ts";
 
 
 const songStore = useSongStore()
@@ -150,11 +150,12 @@ const playThisMusic = (song: Song, song_idx: number) => {
   playMusic();
 }
 
-
+// 歌曲结束的时候调用
 const ended = () => {
   // console.log("come ended");
   progress.value = 0;
-  music.value.addEventListener('ended', next);
+  next();
+  // music.value.addEventListener('ended', next);
 }
 // song play bar in right aside
 const showPlayList = ref(false);
@@ -441,18 +442,6 @@ const addToMyFavorite = () => {
             </ul>
           </div>
         </transition>
-
-<!--        <div class="ai-view-container">-->
-<!--          <div class="ai-icon-container">-->
-<!--            <el-icon-->
-<!--                :size="32"-->
-<!--                class="animated-icon"-->
-<!--            >-->
-<!--              <magic-stick/>-->
-<!--            </el-icon>-->
-<!--          </div>-->
-<!--          <AiChat/>-->
-<!--        </div>-->
 
       </div>
     </div>
