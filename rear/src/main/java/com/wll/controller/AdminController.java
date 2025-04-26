@@ -6,6 +6,7 @@ import com.wll.pojo.Singer;
 import com.wll.service.impl.AdminServiceImpl;
 import com.wll.service.impl.SingerServiceImpl;
 import com.wll.utils.R;
+import com.wll.utils.Result;
 import jakarta.annotation.Resource;
 import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
@@ -30,31 +31,49 @@ public class AdminController {
     private SingerServiceImpl singerService;
 
     @PostMapping("/login")
-    public R login(@RequestBody Admin loginAdmin) {
+    public Result login(@RequestBody Admin loginAdmin) {
         Admin admin = adminService.login(loginAdmin);
         if (Objects.isNull(admin)) {
-            return R.other(HTTPStatus.CLIENT_ERROR.getCode(), "用户名或者密码错误", null);
+            return Result.other(HTTPStatus.CLIENT_ERROR.getCode(), "用户名或者密码错误", null);
         } else {
-            return R.success("登录成功", admin);
+            return Result.success("登录成功", admin);
         }
     }
 
 
     @PostMapping("/registry")
-    public R registry(@RequestBody Admin registryAdmin) {
+    public Result registry(@RequestBody Admin registryAdmin) {
         boolean res = adminService.registry(registryAdmin);
 
         if (res) {
-            return R.success("注册成功", res);
+            return Result.success("注册成功", res);
         } else {
-            return R.other(HTTPStatus.CLIENT_ERROR.getCode(), "不合规范", res);
+            return Result.other(HTTPStatus.CLIENT_ERROR.getCode(), "不合规范", res);
         }
     }
 
-
+    /**
+     * 根据条件查询歌手
+     */
     @PostMapping("/singer")
-    public R conditionalQuerySinger(@RequestBody Singer singer) {
-        return R.success(singerService.conditionalQuerySinger(singer));
+    public Result conditionalQuerySinger(@RequestBody Singer singer) {
+        return Result.success(singerService.conditionalQuerySinger(singer));
     }
 
+
+    /**
+     * 根据id删除歌手
+     */
+    @PutMapping(value = "/singer/delete", params = "id")
+    public Result deleteSingerById(Integer id) {
+        return Result.success(singerService.deleteSingerById(id));
+    }
+
+    /**
+     * 更新歌手
+     */
+    @PutMapping(value = "/singer")
+    public Result updateSinger(@RequestBody Singer singer) {
+        return Result.success(singerService.updateSinger(singer));
+    }
 }

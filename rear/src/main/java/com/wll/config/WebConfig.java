@@ -43,7 +43,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/api/**")
                 .allowCredentials(true)
 //                .allowedOriginPatterns("http://localhost:5173")
-                .allowedOrigins("http://localhost:5173")
+                .allowedOrigins("http://localhost:5173", "http://localhost:5174")
                 .allowedMethods("GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
                 .maxAge(3600);
@@ -104,6 +104,7 @@ public class WebConfig implements WebMvcConfigurer {
                         , "/api/song"
                         , "/api/song/s"
 //                        , "/api/ai/**"
+                        , "/api/admin/**"
                         , "/asset/**"
                 )
         ;

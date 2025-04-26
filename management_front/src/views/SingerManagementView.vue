@@ -67,7 +67,9 @@ const edit = (singer: Singer) => {
   currentSinger.value = {...singer};
   const date = new Date(singer.birth);
   console.log('date',date);
-  currentSinger.value.birth = formatDate(date);
+  const s = formatDate(date);
+  console.log('s',s);
+  currentSinger.value.birth = s;
   console.log('currentSinger.value.birth',currentSinger.value.birth);
 }
 

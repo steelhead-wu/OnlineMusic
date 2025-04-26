@@ -4,17 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 //import io.swagger.annotations.ApiModel;
 //import io.swagger.annotations.ApiModelProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author wll
@@ -22,8 +22,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("singer")
-//@ApiModel(value = "Singer对象", description = "")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(name = "Singer对象", description = "")
 public class Singer implements Serializable {
 
@@ -55,4 +56,7 @@ public class Singer implements Serializable {
 
     @TableField("album_number")
     private String albumNumber;
+
+    @TableField("delete_flag")
+    private Boolean deleteFlag;
 }

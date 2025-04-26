@@ -1,14 +1,19 @@
 package com.wll.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.Singer;
 import com.wll.mapper.SingerMapper;
 import com.wll.service.ISingerService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
+
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author wll
@@ -16,5 +21,38 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> implements ISingerService {
+    public List<Singer> conditionalQuerySinger(Singer singer) {
+        return list(new LambdaQueryWrapper<Singer>()
+                        .select(
+                                List.of(Singer::getId, Singer::getName, Singer::getSex, Singer::getBirth,
+                                        Singer::getIntroduction, Singer::getLocation, Singer::getPic
+                                ))
+                        .eq(Singer::getDeleteFlag, false)
+                        .like(Objects.nonNull(singer.getName()), Singer::getName, singer.getName())
+                        .eq(Objects.nonNull(singer.getSex()), Singer::getSex, singer.getSex())
+//                .between(Objects.nonNull(singer.getSex()), Singer::getBirth, singer.getBirth())
+        );
+    }
 
+    public boolean deleteSingerById(Integer id) {
+        return updateSinger(Singer.builder()
+                .id(id)
+                .deleteFlag(true)
+                .build());
+    }
+
+    public boolean updateSinger(Singer singer) {
+        return update(new LambdaUpdateWrapper<Singer>()
+                .set(Objects.nonNull(singer.getIntroduction()), Singer::getIntroduction, singer.getIntroduction())
+                .set(Objects.nonNull(singer.getBirth()), Singer::getBirth, singer.getBirth())
+                .set(Objects.nonNull(singer.getPic()), Singer::getPic, singer.getPic())
+                .set(Objects.nonNull(singer.getLocation()), Singer::getLocation, singer.getLocation())
+                .set(Objects.nonNull(singer.getAlbumNumber()), Singer::getAlbumNumber, singer.getAlbumNumber())
+                .set(Objects.nonNull(singer.getSongNumber()), Singer::getSongNumber, singer.getSongNumber())
+                .set(Objects.nonNull(singer.getDeleteFlag()), Singer::getDeleteFlag, singer.getDeleteFlag())
+                .set(Objects.nonNull(singer.getName()), Singer::getName, singer.getName())
+                .set(Objects.nonNull(singer.getSex()), Singer::getSex, singer.getSex())
+                .eq(Objects.nonNull(singer.getId()), Singer::getId, singer.getId())
+        );
+    }
 }
