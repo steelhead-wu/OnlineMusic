@@ -3,9 +3,12 @@ import {onMounted, ref} from "vue";
 import {conditionalQuerySinger, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
 import type Singer from "@/pojo/Singer.ts";
 import {baseURL} from "@/api/request.ts";
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox, type UploadRawFile} from "element-plus";
 import {useRouter} from "vue-router";
 import {formatDate} from "@/util/MyUtils.ts";
+import {PictureRepoType} from "@/enums/PictureRepoType.ts";
+import {beforeFileUpload} from "@/util/FileUtil.ts";
+import type Result from "@/util/Result.ts";
 
 
 const dialogVisible = ref<boolean>(false);
@@ -60,31 +63,32 @@ const confirm_delete = (id: number) => {
   })
 }
 
-
+// display edit box
 const edit = (singer: Singer) => {
-  console.log('singer.birth', singer.birth);
   dialogVisible.value = true;
   currentSinger.value = {...singer};
-  const date = new Date(singer.birth);
-  console.log('date',date);
-  const s = formatDate(date);
-  console.log('s',s);
-  currentSinger.value.birth = s;
-  console.log('currentSinger.value.birth',currentSinger.value.birth);
 }
 
 // save modified info
 const updateEdit = () => {
-  console.log(currentSinger.value.birth);
+  currentSinger.value.birth = formatDate(new Date(currentSinger.value.birth as string));
   dialogVisible.value = false;
   updateSinger(currentSinger.value).then(value => {
     if (value.data.data) {
       ElMessage.success('修改成功');
-      // router.go(0);
+      router.go(0);
     } else {
       ElMessage.success('修改失败');
     }
   })
+}
+
+
+const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
+  // updating the position of singer avatar
+  let file_position = response.link;
+  // file_position.indexOf("\\asset")
+
 }
 
 </script>
@@ -124,6 +128,31 @@ const updateEdit = () => {
         <el-form-item label="歌手姓名">
           <el-input v-model="currentSinger.name"/>
         </el-form-item>
+
+        <el-form-item label="图片">
+          <el-upload
+              name="blob"
+              :action="baseURL + '/api/files/upload'"
+              :data="{
+                            'Picture-Repo-Type': PictureRepoType.SINGER_AVATAR,
+                           'ID': currentSinger.id,
+                                }"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file)"
+              limit="1"
+          >
+
+            <!--            <el-avatar v-if="userStore.getLoginUser.avatar" style="width: 100px;height: 100px"-->
+            <!--                       alt="default avatar" :size="AvatarSize.LARGE"-->
+            <!--                       :src="userStore.getLoginUser.avatar"/>-->
+            <!--            <el-icon v-else class="avatar-uploader-icon">-->
+            <!--              <Plus/>-->
+            <!--            </el-icon>-->
+          </el-upload>
+
+        </el-form-item>
+
         <el-form-item label="性别">
           <el-radio-group v-model="currentSinger.sex">
             <el-radio :label="1">女</el-radio>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {reactive, ref} from 'vue'
-import type {ComponentSize, FormInstance, FormRules} from 'element-plus'
+import type {ComponentSize, FormInstance, FormRules, UploadRawFile} from 'element-plus'
 import {useUserStore} from "@/store/UserStore";
 import {
   MAX_LEN_NK, MAX_LEN_PWD,
@@ -20,6 +20,7 @@ import {formatDate, getFormatTime} from "@/api/utils/MyUtils";
 import {useRouter} from "vue-router";
 import router from "@/routers/router";
 import {Behavior} from "@/enum/Behavior";
+import {beforeFileUpload} from "@/api/utils/FileUtil.ts";
 
 
 const userStore = useUserStore();
@@ -182,6 +183,7 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
   console.log('response', response);
   userStore.getLoginUser.avatar = response.link;
   console.log(userStore.getLoginUser);
+  // 更新用户头像地址
   updateUserById(userStore.getLoginUser).then(value => {
     console.log(value);
   })
@@ -282,12 +284,13 @@ const validateChangePWD = () => {
                               :action="baseURL + '/api/files/upload'"
                               :data="{
                           'Picture-Repo-Type': PictureRepoType.USER_AVATAR,
-                          'User-ID': userStore.getLoginUser.id,
+                          'ID': userStore.getLoginUser.id,
                                 }"
                               :show-file-list="false"
                               :on-success="handleAvatarSuccess"
-                              :before-upload="beforeAvatarUpload"
+                              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,'image/jpeg',5)"
                               limit="1"
+                              with-credentials
                           >
 
                             <el-avatar v-if="userStore.getLoginUser.avatar" style="width: 100px;height: 100px"

@@ -56,6 +56,7 @@ public class WebConfig implements WebMvcConfigurer {
                     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
                         Cookie[] cookies = request.getCookies();
                         String path = request.getRequestURI();
+                        System.out.println("Request Path: " + path);
                         System.out.println("Request Method: " + request.getMethod());
                         System.out.println("Request Headers: " + Collections.list(request.getHeaderNames()));
                         Cookie us_au;

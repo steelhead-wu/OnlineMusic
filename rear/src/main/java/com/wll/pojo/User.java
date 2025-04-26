@@ -67,7 +67,7 @@ public class User implements Serializable {
     private String whatsUp;
 
     @TableField("sex")
-    private int sex;
+    private Integer sex;
 
 
 }

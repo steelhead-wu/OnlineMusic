@@ -9,9 +9,16 @@ public enum ResourcesPath {
      * System.getProperty("user.dir") returns project path
      */
 
-    USER_AVATAR_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\img\\avatarImages", 0),
+//    USER_AVATAR_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\img\\avatarImages", 0),
+    USER_AVATAR_PATH(System.getProperty("user.dir") + "/src/main/resources/static/asset/img/avatarImages", 0),
 
-    COMMENT_PICTURE_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\commentPicture", 1);
+//    COMMENT_PICTURE_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\commentPicture", 1),
+    COMMENT_PICTURE_PATH(System.getProperty("user.dir") + "/src/main/resources/static/asset/commentPicture", 1),
+
+//    SINGER_PICTURE_PATH(System.getProperty("user.dir") +"\\src\\main\\resources\\static\\asset\\img\\singerPic",2)
+    SINGER_PICTURE_PATH(System.getProperty("user.dir") +"/src/main/resources/static/asset/img/singerPic",2)
+
+    ;
 
     private final String path;
     private final int type;

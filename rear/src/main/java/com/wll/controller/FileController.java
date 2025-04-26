@@ -22,20 +22,27 @@ import java.util.Objects;
 @RequestMapping("/files")
 public class FileController {
 
+    /**
+     * @param multipartFile   uploaded file
+     * @param pictureRepoType picture repository type
+     * @param ID              repository id
+     * @param request         http request
+     * @return the location where file is stored
+     */
     @PostMapping("/upload")
     public synchronized R upload(@RequestParam("blob") MultipartFile multipartFile,
                                  @RequestParam("Picture-Repo-Type") int pictureRepoType,
-                                 @RequestParam("User-ID") String userID,
+                                 @RequestParam("ID") String ID,
                                  HttpServletRequest request) {
         long timeMillis = System.currentTimeMillis();
         String fileFullName = "";
         BufferedOutputStream outputStream = null;
         try {
-            Path filepath = Paths.get(ResourcesPath.values()[pictureRepoType].toString() + "\\" + userID);
+            Path filepath = Paths.get(String.format("%s\\%s", ResourcesPath.values()[pictureRepoType].toString(), ID));
             if (!Files.exists(filepath)) {
                 Files.createDirectories(filepath);
             }
-            fileFullName = filepath + "\\" + timeMillis + "_" + multipartFile.getOriginalFilename();
+            fileFullName = "%s\\%d_%s".formatted(filepath, timeMillis, multipartFile.getOriginalFilename());
             outputStream = new BufferedOutputStream(new FileOutputStream(fileFullName));
             outputStream.write(multipartFile.getBytes());
         } catch (FileNotFoundException e) {
@@ -55,10 +62,11 @@ public class FileController {
         String scheme = request.getScheme(); // 获取协议（http 或 https）
         String serverName = request.getServerName(); // 获取服务器地址
         int serverPort = request.getServerPort(); // 获取服务器端口
-        String serverAddress = scheme + "://" + serverName + ":" + serverPort;
+        String serverAddress = "%s://%s:%d".formatted(scheme, serverName, serverPort);
 
 
-        return R.successWithLink(timeMillis, serverAddress + fileFullName.substring(fileFullName.indexOf("\\asset")));
+        return R.successWithLink(timeMillis, "%s%s".formatted(serverAddress
+                , fileFullName.substring(fileFullName.indexOf("\\asset"))));
     }
 
 
