@@ -66,17 +66,16 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public boolean addSinger(Singer singer) {
         singer.setId(null);
         boolean res = save(singer);
-
         if (res) {
             // move the position of singer avatar
-
             int src_filename_idx = singer.getPic().lastIndexOf('\\');
+            if (src_filename_idx < 2) throw new RuntimeException("文件路径不合法");
+
             String source = "src/main/resources/static".concat(singer.getPic());
             String src_filename = singer.getPic().substring(src_filename_idx);
 
-            if (src_filename_idx < 2) throw new RuntimeException("文件路径不合法");
 
-            String s = "%s/%d".formatted(singer.getPic().substring(0, src_filename_idx - 2), singer.getId());
+            String s = "%s\\%d".formatted(singer.getPic().substring(0, src_filename_idx - 2), singer.getId());
             String target = "src/main/resources/static%s".formatted(s);
 
 
