@@ -30,3 +30,10 @@ export const deleteSingerById = async (id: number) => {
 export const updateSinger = async (singer: Singer) => {
     return await myAxios.put(prefix + '/singer', singer);
 }
+
+/**
+ * add a singer
+ */
+export const addSinger = async (singer: Singer) => {
+    return await myAxios.post(prefix + '/singer/add', singer);
+}

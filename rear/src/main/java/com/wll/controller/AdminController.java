@@ -74,6 +74,12 @@ public class AdminController {
      */
     @PutMapping(value = "/singer")
     public Result updateSinger(@RequestBody Singer singer) {
-        return Result.success(singerService.updateSinger(singer));
+        return Result.success(singerService.updateSingerByID(singer));
     }
+
+    @PostMapping(value = "/singer/add")
+    public Result addSinger(@RequestBody Singer singer) {
+        return Result.success(singerService.addSinger(singer));
+    }
+
 }

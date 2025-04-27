@@ -4,44 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a117984-b94d-4f9c-9a0a-877e7fa25884" name="Changes" comment="test">
-      <change afterPath="$PROJECT_DIR$/../front/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/.vscode/extensions.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/utils/SingerTimer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/api/utils/Test.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/assets/img/background/3.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/assets/svg/pause1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/assets/svg/pause2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/store/TestStore.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/test/Test.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/test/Test.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../front/src/test/Test.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/pojo/Singer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/pojo/Singer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/pojo/SongList.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/pojo/SongList.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/pojo/User.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/pojo/User.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/routers/router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/routers/router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/store/SingersStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/SingersStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/store/UserStore.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/store/UserStore.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/view/search/SearchView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/view/search/SearchView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front/src/view/songList/SongListDetailView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/view/songList/SongListDetailView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/OM.sql" beforeDir="false" afterPath="$PROJECT_DIR$/OM.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/JK.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/controller/SongListController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/controller/SongListController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/utils/R.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/utils/R.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Tests.java" afterDir="false" />
+    <list default="true" id="9a117984-b94d-4f9c-9a0a-877e7fa25884" name="Changes" comment="improved the speed of files upload speed.">
+      <change beforePath="$PROJECT_DIR$/../management_front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../management_front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../management_front/src/api/admin/AdminApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/src/api/admin/AdminApi.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../management_front/src/views/SingerManagementView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/src/views/SingerManagementView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/controller/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/enums/ResourcesPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/enums/ResourcesPath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/service/impl/SingerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/service/impl/SingerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/utils/FilesUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/utils/FilesUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,12 +58,12 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/steelhead-wu/OnlineMusic.git&quot;,
-    &quot;accountId&quot;: &quot;bf762147-46db-489b-9192-a9610f0157cc&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/steelheadz/OnlineMusic.git",
+    "accountId": "bf762147-46db-489b-9192-a9610f0157cc"
   }
-}</component>
+}]]></component>
   <component name="HierarchyBrowserManager">
     <option name="SORT_ALPHABETICALLY" value="true" />
   </component>
@@ -125,39 +97,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Database Script.OM.sql.executor&quot;: &quot;Run&quot;,
-    &quot;Database Script.OM1.sql.executor&quot;: &quot;Run&quot;,
-    &quot;Database Script.allsql.sql.executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;Spring Boot.OnlineMusicApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Database Script.OM.sql.executor": "Run",
+    "Database Script.OM1.sql.executor": "Run",
+    "Database Script.allsql.sql.executor": "Run",
+    "JUnit.Main.test.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.OnlineMusicApplication.executor": "Debug",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;RunConfigurationTargetLRU&quot;: [
-      &quot;b67b982e-5048-4e57-a0a7-0f8797baceb4/schema/\&quot;online_music\&quot;&quot;,
-      &quot;b67b982e-5048-4e57-a0a7-0f8797baceb4&quot;
+  "keyToStringList": {
+    "RunConfigurationTargetLRU": [
+      "b67b982e-5048-4e57-a0a7-0f8797baceb4/schema/\"online_music\"",
+      "b67b982e-5048-4e57-a0a7-0f8797baceb4"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -184,13 +157,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.OnlineMusicApplication">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="rear" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="OM1.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/OM1.sql" />
       <script-mode>FILE</script-mode>
@@ -209,6 +175,16 @@
       <data-source id="b67b982e-5048-4e57-a0a7-0f8797baceb4" />
       <method v="2" />
     </configuration>
+    <configuration name="Main.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="rear" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="OnlineMusicApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="rear" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.wll.OnlineMusicApplication" />
@@ -223,14 +199,15 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Main" />
       <item itemvalue="Database Script.OM1.sql" />
       <item itemvalue="Database Script.OM.sql" />
       <item itemvalue="Database Script.allsql.sql" />
+      <item itemvalue="JUnit.Main.test" />
       <item itemvalue="Spring Boot.OnlineMusicApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.Main.test" />
         <item itemvalue="Spring Boot.OnlineMusicApplication" />
       </list>
     </recent_temporary>
@@ -363,6 +340,7 @@
       <workItem from="1745323715635" duration="25000" />
       <workItem from="1745334035197" duration="4665000" />
       <workItem from="1745369712332" duration="4619000" />
+      <workItem from="1745723513987" duration="18141000" />
     </task>
     <task id="LOCAL-00001" summary="First Commitment">
       <created>1737788384629</created>
@@ -656,7 +634,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744539513418</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="add api of updating singer management">
+      <option name="closed" value="true" />
+      <created>1745653106911</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1745653106911</updated>
+    </task>
+    <task id="LOCAL-00043" summary="improved the speed of files upload speed.">
+      <option name="closed" value="true" />
+      <created>1745664326258</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1745664326258</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -711,8 +705,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add singer api" />
-    <MESSAGE value="add singer detail page" />
     <MESSAGE value="add api of 'getAllSongBySingerId'" />
     <MESSAGE value="add API 'getAllSongList'" />
     <MESSAGE value="add SongListDetailView.vue" />
@@ -736,7 +728,9 @@
     <MESSAGE value="MODIFIED UNKNOWN ERROR" />
     <MESSAGE value="SANITY CHECK" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="add api of updating singer management" />
+    <MESSAGE value="improved the speed of files upload speed." />
+    <option name="LAST_COMMIT_MESSAGE" value="improved the speed of files upload speed." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -745,6 +739,11 @@
           <url>jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.4.3/spring-security-web-6.4.3-sources.jar!/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java</url>
           <line>76</line>
           <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/wll/service/impl/SingerServiceImpl.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="62" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {nextTick, onMounted, ref} from "vue";
-import {conditionalQuerySinger, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
+import {addSinger, conditionalQuerySinger, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
 import type Singer from "@/pojo/Singer.ts";
 import {baseURL} from "@/api/request.ts";
 import {ElMessage, ElMessageBox, type UploadRawFile} from "element-plus";
@@ -11,6 +11,7 @@ import {beforeFileUpload} from "@/util/FileUtil.ts";
 import type Result from "@/util/Result.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import {nonEmpty} from "@/util/StringUtils.ts";
+import {Plus} from "@element-plus/icons-vue";
 
 
 const dialogVisible = ref<boolean>(false);
@@ -65,10 +66,21 @@ const confirm_delete = (id: number) => {
   })
 }
 
+// 0:修改；1：添加
+const opt = ref<boolean>(false);
+
 // display edit box
 const edit = (singer: Singer) => {
-  dialogVisible.value = true;
   currentSinger.value = {...singer};
+  dialogVisible.value = true;
+  opt.value = false;
+}
+
+// display add box
+const add = () => {
+  currentSinger.value = {id: '0'};
+  dialogVisible.value = true;
+  opt.value = true;
 }
 
 // save modified info
@@ -78,33 +90,60 @@ const updateEdit = () => {
   }
   dialogVisible.value = false;
 
-  updateSinger(currentSinger.value).then(value => {
-    if (value.data.code == HttpStatusCode.OK) {
-      sessionStorage.setItem('showSingerModifiedSuccessMessage', '修改成功！')
-      router.go(0);
-    } else {
-      ElMessage.error('修改失败')
-    }
-  })
+  if (opt.value) {
+    addSinger(currentSinger.value).then(value => {
+      if (value.data.code == HttpStatusCode.OK) {
+        sessionStorage.setItem('showSingerAddSuccessMessage', '添加成功！')
 
+
+        router.go(0);
+      } else {
+        ElMessage.error('修改失败')
+      }
+    });
+
+  } else {
+    updateSinger(currentSinger.value).then(value => {
+      if (value.data.code == HttpStatusCode.OK) {
+        sessionStorage.setItem('showSingerModifiedSuccessMessage', '修改成功！')
+        router.go(0);
+      } else {
+        ElMessage.error('修改失败')
+      }
+    })
+  }
 }
 
 
 const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
+
   // updating the position of singer avatar
   currentSinger.value.pic = response.link.substring(response.link.indexOf("\\asset"));
   ElMessage.success('歌手头像上传成功！');
+
+
 }
+
 
 </script>
 
 <template>
+  <div class="add-context">
+    <el-icon class="animated-icon" size="32" color="red" @click="add" title="新增歌手">
+      <template #default>
+
+        <Plus/>
+
+      </template>
+
+    </el-icon>
+  </div>
   <!--  singer data-->
   <el-table :data="singerData" style="width: 100%" border height="731px">
     <el-table-column prop="name" label="姓名" width="180" align="center"/>
     <el-table-column prop="sex" label="性别" width="180" align="center">
       <template #default="s">
-        {{ s.row.sex === 1 ? '女' : s.row.sex === 2 ? '男' : '团体' }}
+        {{ s.row.sex === 1 ? '女' : s.row.sex === 2 ? '男' : s.row.sex === 3 ? '团体' : '未知' }}
       </template>
     </el-table-column>
     <el-table-column prop="pic" label="照片" width="180" align="center">
@@ -123,6 +162,7 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
     </el-table-column>
   </el-table>
 
+
   <!--edit box -->
   <el-dialog v-model="dialogVisible" title="Tips" width="500" draggable>
     <template #header>
@@ -131,7 +171,7 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
     <template #default>
       <el-form :model="currentSinger" label-width="120px">
         <el-form-item label="歌手姓名">
-          <el-input v-model="currentSinger.name"/>
+          <el-input v-model="currentSinger.name" placeholder="不可为空"/>
         </el-form-item>
 
         <el-form-item label="图片">
@@ -146,15 +186,11 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
               :on-success="handleAvatarSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file)"
               with-credentials
-              limit="1"
           >
-            <el-button type="info">更新头像</el-button>
-            <!--            <el-avatar v-if="userStore.getLoginUser.avatar" style="width: 100px;height: 100px"-->
-            <!--                       alt="default avatar" :size="AvatarSize.LARGE"-->
-            <!--                       :src="userStore.getLoginUser.avatar"/>-->
-            <!--            <el-icon v-else class="avatar-uploader-icon">-->
-            <!--              <Plus/>-->
-            <!--            </el-icon>-->
+            <el-image v-if="opt && currentSinger.pic" style="width: 100px;height: 100px"
+                      :src="baseURL + currentSinger.pic"/>
+            <el-button style="margin-left: 5px" type="info">上传头像</el-button>
+
           </el-upload>
 
         </el-form-item>
@@ -190,5 +226,23 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
 </template>
 
 <style scoped lang="scss">
+.add-context {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  right: -25px;
+  bottom: 120px;
+  z-index: 2100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  .animated-icon {
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateX(-20px);
+    }
+  }
+}
 </style>
