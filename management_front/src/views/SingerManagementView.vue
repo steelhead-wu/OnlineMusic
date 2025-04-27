@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
 import {conditionalQuerySinger, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
 import type Singer from "@/pojo/Singer.ts";
 import {baseURL} from "@/api/request.ts";
@@ -9,6 +9,8 @@ import {formatDate} from "@/util/MyUtils.ts";
 import {PictureRepoType} from "@/enums/PictureRepoType.ts";
 import {beforeFileUpload} from "@/util/FileUtil.ts";
 import type Result from "@/util/Result.ts";
+import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
+import {nonEmpty} from "@/util/StringUtils.ts";
 
 
 const dialogVisible = ref<boolean>(false);
@@ -71,24 +73,27 @@ const edit = (singer: Singer) => {
 
 // save modified info
 const updateEdit = () => {
-  currentSinger.value.birth = formatDate(new Date(currentSinger.value.birth as string));
+  if (nonEmpty(currentSinger.value.birth as string)) {
+    currentSinger.value.birth = formatDate(new Date(currentSinger.value.birth as string));
+  }
   dialogVisible.value = false;
+
   updateSinger(currentSinger.value).then(value => {
-    if (value.data.data) {
-      ElMessage.success('修改成功');
+    if (value.data.code == HttpStatusCode.OK) {
+      sessionStorage.setItem('showSingerModifiedSuccessMessage', '修改成功！')
       router.go(0);
     } else {
-      ElMessage.success('修改失败');
+      ElMessage.error('修改失败')
     }
   })
+
 }
 
 
 const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
   // updating the position of singer avatar
-  let file_position = response.link;
-  // file_position.indexOf("\\asset")
-
+  currentSinger.value.pic = response.link.substring(response.link.indexOf("\\asset"));
+  ElMessage.success('歌手头像上传成功！');
 }
 
 </script>
@@ -134,15 +139,16 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
               name="blob"
               :action="baseURL + '/api/files/upload'"
               :data="{
-                            'Picture-Repo-Type': PictureRepoType.SINGER_AVATAR,
-                           'ID': currentSinger.id,
-                                }"
+                'Picture-Repo-Type': PictureRepoType.SINGER_AVATAR,
+                'ID': currentSinger.id,
+                }"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file)"
+              with-credentials
               limit="1"
           >
-
+            <el-button type="info">更新头像</el-button>
             <!--            <el-avatar v-if="userStore.getLoginUser.avatar" style="width: 100px;height: 100px"-->
             <!--                       alt="default avatar" :size="AvatarSize.LARGE"-->
             <!--                       :src="userStore.getLoginUser.avatar"/>-->
