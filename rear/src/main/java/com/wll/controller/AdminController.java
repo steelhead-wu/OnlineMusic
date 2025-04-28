@@ -82,4 +82,9 @@ public class AdminController {
         return Result.success(singerService.addSinger(singer));
     }
 
+    @GetMapping(value = "/singer/s", params = "keyword")
+    public Result searchSinger(String keyword) {
+        return Result.success(singerService.searchSinger(keyword));
+    }
+
 }

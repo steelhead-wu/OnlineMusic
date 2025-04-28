@@ -13,5 +13,6 @@ export enum Behavior {
     SEARCH = '/s',
     LYRICS = '/lyrics',
     ABOUT_ACCOUNT = '/about-account',
-    AI = '/ai'
+    AI = '/ai',
+    SONG = '/song',
 }

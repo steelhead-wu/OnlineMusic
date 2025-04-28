@@ -37,3 +37,12 @@ export const updateSinger = async (singer: Singer) => {
 export const addSinger = async (singer: Singer) => {
     return await myAxios.post(prefix + '/singer/add', singer);
 }
+
+
+export const searchSinger = async (keyword: string) => {
+    return await myAxios.get(prefix + '/singer/s', {
+        params: {
+            keyword
+        }
+    });
+}

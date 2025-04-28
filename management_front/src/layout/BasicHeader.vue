@@ -2,10 +2,37 @@
 import {useAdminStore} from "@/stores/AdminStore.ts";
 import {baseURL} from "@/api/request.ts";
 import {Search} from "@element-plus/icons-vue";
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {useRouter, useRoute} from "vue-router";
+import {Behavior} from "@/enums/Behavior.ts";
+import {searchSinger} from "@/api/admin/AdminApi.ts";
+import {useSearchStore} from "@/stores/SearchStore.ts";
+import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 
 const adminStore = useAdminStore();
-const keyword = ref<string>();
+const keyword = ref<string>('');
+
+const router = useRouter();
+const route = useRoute();
+const searchStore = useSearchStore();
+
+watch(keyword, () => {
+  search();
+})
+
+// accora
+const search = async () => {
+  if (route.path == Behavior.SINGER) {
+    const res = await searchSinger(keyword.value);
+    if(res.data.code == HttpStatusCode.OK) {
+      searchStore.setContext(res.data.data)
+    }
+
+
+  } else if (route.path == Behavior.SONG_LIST) {
+
+  }
+}
 </script>
 
 <template>
@@ -16,20 +43,21 @@ const keyword = ref<string>();
     <div class="title-area">
       <div class="title">在线音乐后台管理系统</div>
     </div>
-
+    <!--搜索框-->
     <div class="search-box-area">
       <el-input
-
           placeholder="请输入内容"
-          class="search-box">
+          class="search-box"
+          v-model.trim="keyword"
+          @keyup.enter="search"
+      >
         <template #append>
-          <el-button :icon="Search"/>
+          <el-button :icon="Search" @click="search"/>
         </template>
       </el-input>
     </div>
     <div class="avatar-area">
       <img class="avatar" :src="baseURL+adminStore.getAdmin?.avatar">
-      <!--      <el-avatar class="avatar" :src="baseURL+adminStore.getAdmin?.avatar"/>-->
     </div>
   </div>
 </template>

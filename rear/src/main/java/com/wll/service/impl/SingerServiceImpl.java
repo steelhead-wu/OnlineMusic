@@ -90,4 +90,19 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
         }
         return false;
     }
+
+    public List<Singer> searchSinger(String keyword) {
+        return list(new LambdaQueryWrapper<Singer>()
+                .eq(Singer::getDeleteFlag, false)
+                .like(StringUtils.isNotEmpty(keyword), Singer::getName, keyword)
+                .or()
+                .like(StringUtils.isNotEmpty(keyword), Singer::getLocation, keyword)
+                .or()
+                .like(StringUtils.isNotEmpty(keyword), Singer::getBirth, keyword)
+                .or()
+                .like(StringUtils.isNotEmpty(keyword), Singer::getIntroduction, keyword)
+                .or()
+                .like(StringUtils.isNotEmpty(keyword), Singer::getSex, keyword)
+        );
+    }
 }

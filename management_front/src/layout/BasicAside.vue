@@ -9,6 +9,10 @@ const router = useRouter();
 const goSingerManagement = () => {
   router.push(Behavior.SINGER);
 }
+
+const goSongManagement = () => {
+  router.push(Behavior.SONG);
+}
 </script>
 
 
@@ -24,7 +28,7 @@ const goSingerManagement = () => {
         </template>
       </el-menu-item>
 
-      <el-menu-item index="2">
+      <el-menu-item index="2" @click="goSongManagement">
         <template #title>
           <el-icon>
             <message/>

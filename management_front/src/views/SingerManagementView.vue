@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {nextTick, onMounted, ref} from "vue";
+import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, watch} from "vue";
 import {addSinger, conditionalQuerySinger, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
 import type Singer from "@/pojo/Singer.ts";
 import {baseURL} from "@/api/request.ts";
@@ -12,6 +12,7 @@ import type Result from "@/util/Result.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import {nonEmpty} from "@/util/StringUtils.ts";
 import {Plus} from "@element-plus/icons-vue";
+import {useSearchStore} from "@/stores/SearchStore.ts";
 
 
 const dialogVisible = ref<boolean>(false);
@@ -19,6 +20,11 @@ const router = useRouter();
 const singerData = ref<Array<Singer>>([]);
 
 const currentSinger = ref<Singer>({});
+
+const searchStore = useSearchStore();
+watch(() => searchStore.getContext, () => {
+  singerData.value = searchStore.getContext;
+})
 
 onMounted(() => {
   const singer: Singer = {
