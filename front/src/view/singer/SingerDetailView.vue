@@ -6,6 +6,7 @@ import {baseURL} from "@/api/request";
 import {onMounted, ref} from "vue";
 import SongList from "@/components/song/SongList.vue";
 import {getAllSongBySingerId} from "@/api/song/SongApi";
+import type {Singer} from "@/pojo/Singer.ts";
 
 const route = useRoute();
 const singersStore = useSingersStore();
@@ -35,9 +36,9 @@ onMounted(() => {
       <div class="album-info">
         <h2>基本信息</h2>
         <ul>
-          <li>出生: {{ current_singer.birth }}</li>
+          <li>出生: {{ `${current_singer.birth[0]}-${current_singer.birth[1]}-${current_singer.birth[2]}` }}</li>
           <li>年龄: {{
-              new Date().getFullYear() - current_singer.birth.slice(0, current_singer.birth.indexOf('-'))
+              `${new Date().getFullYear() - current_singer.birth[0]}岁`
             }}
           </li>
           <li>性别: {{ current_singer.sex ? '男' : '女' }}</li>

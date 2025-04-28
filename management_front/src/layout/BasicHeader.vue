@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import {useAdminStore} from "@/stores/AdminStore.ts";
 import {baseURL} from "@/api/request.ts";
+import {Search} from "@element-plus/icons-vue";
+import {ref} from "vue";
 
 const adminStore = useAdminStore();
-
+const keyword = ref<string>();
 </script>
 
 <template>
@@ -13,6 +15,17 @@ const adminStore = useAdminStore();
     </div>
     <div class="title-area">
       <div class="title">在线音乐后台管理系统</div>
+    </div>
+
+    <div class="search-box-area">
+      <el-input
+
+          placeholder="请输入内容"
+          class="search-box">
+        <template #append>
+          <el-button :icon="Search"/>
+        </template>
+      </el-input>
     </div>
     <div class="avatar-area">
       <img class="avatar" :src="baseURL+adminStore.getAdmin?.avatar">
@@ -49,6 +62,16 @@ const adminStore = useAdminStore();
       color: #f2f2f2;
       font-size: 40px;
       text-align: center;
+
+    }
+  }
+
+  .search-box-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .search-box {
 
     }
   }
