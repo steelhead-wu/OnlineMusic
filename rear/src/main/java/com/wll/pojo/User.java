@@ -69,5 +69,7 @@ public class User implements Serializable {
     @TableField("sex")
     private Integer sex;
 
+    @TableField("delete_flag")
+    private Boolean deleteFlag;
 
 }

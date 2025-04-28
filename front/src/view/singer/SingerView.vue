@@ -7,6 +7,7 @@ import PlayBody from "@/layouts/PlayBody.vue";
 import {Behavior} from "@/enum/Behavior";
 import {useRouter} from "vue-router";
 import {useSingersStore} from "@/store/SingersStore";
+import type {Singer} from "@/pojo/Singer.ts";
 
 
 // const nameOpt = ref('全部歌手');

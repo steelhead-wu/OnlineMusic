@@ -18,7 +18,7 @@ const emits = defineEmits<{
     <!--    <div class="play-title" v-if="title">{{ title }}</div>-->
     <ul class="play-body">
       <li class="card-frame" v-for="(item,idx) in props.playList" :key="item.id" @click="emits('click',idx)">
-        <div class="card">
+        <div class="card" :title="item.introduction">
           <el-image class="card-img" fit="contain" loading="lazy" :src="baseURL + item.pic"/>
         </div>
         <p class="card-name">{{ item.name || item.title }}</p>

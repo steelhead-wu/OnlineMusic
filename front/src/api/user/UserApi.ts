@@ -1,4 +1,5 @@
 import myAxios from "@/api/request";
+import type {User} from "@/pojo/User.ts";
 
 
 const prefix = '/api/user';
@@ -30,6 +31,14 @@ export const login = async (user: User) => {
     return await myAxios.post(prefix + '/login', user);
 }
 
+
+export const logoff = async (id: string) => {
+    return await myAxios.get(prefix + '/logoff', {
+        params: {
+            id
+        }
+    });
+}
 
 
 

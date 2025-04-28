@@ -72,7 +72,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public User login(User loginUser) {
         LambdaQueryWrapper<User> userLambdaQueryWrapper = new LambdaQueryWrapper<User>();
-        userLambdaQueryWrapper.eq(User::getAccount, loginUser.getAccount()).eq(User::getPassword, loginUser.getPassword());
+        userLambdaQueryWrapper
+                .eq(StringUtils.isNotEmpty(loginUser.getAccount()), User::getAccount, loginUser.getAccount())
+                .eq(StringUtils.isNotEmpty(loginUser.getPassword()), User::getPassword, loginUser.getPassword())
+                .eq(User::getDeleteFlag, false)
+        ;
         return userMapper.selectOne(userLambdaQueryWrapper);
+    }
+
+    public boolean logoff(Long id) {
+        return update(new LambdaUpdateWrapper<User>()
+                .set(User::getDeleteFlag, true)
+                .eq(Objects.nonNull(id), User::getId, id)
+        );
     }
 }

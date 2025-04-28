@@ -105,5 +105,8 @@ public class UserController {
         }
     }
 
-
+    @GetMapping(value = "/logoff",params = "id")
+    public R logoff(Long id) {
+        return R.success(userService.logoff(id));
+    }
 }

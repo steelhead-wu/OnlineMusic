@@ -13,7 +13,7 @@ import {
 import {Plus, Check} from '@element-plus/icons-vue'
 import {ElMessage, ElMessageBox, UploadProps} from "element-plus";
 import {AvatarSize} from "@/enum/AvatarSize";
-import {updateUserById} from "@/api/user/UserApi";
+import {logoff, updateUserById} from "@/api/user/UserApi";
 import {PictureRepoType} from "@/enum/PictureRepoType";
 import {baseURL} from "@/api/request";
 import {formatDate, getFormatTime} from "@/api/utils/MyUtils";
@@ -21,6 +21,7 @@ import {useRouter} from "vue-router";
 import router from "@/routers/router";
 import {Behavior} from "@/enum/Behavior";
 import {beforeFileUpload} from "@/api/utils/FileUtil.ts";
+import {HttpStatusCode} from "axios";
 
 
 const userStore = useUserStore();
@@ -159,14 +160,16 @@ const handleLogOff = () => {
         cancelButtonText: '取消',
         type: 'warning',
       }
-  ).then(() => {
-    userStore.$reset();
-    router.push(Behavior.HOME);
-    ElMessage({
-      type: 'success',
-      message: '删除成功',
-    });
-
+  ).then(async () => {
+    const res = await logoff(userStore.getLoginUser.id as string);
+    if (res.data.code == HttpStatusCode.Ok) {
+      userStore.$reset();
+      router.push(Behavior.HOME);
+      ElMessage({
+        type: 'success',
+        message: '删除成功',
+      });
+    }
   }).catch(() => {
     ElMessage({
       type: 'info',
