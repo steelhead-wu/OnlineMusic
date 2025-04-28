@@ -4,7 +4,7 @@ import {useSingersStore} from "@/store/SingersStore";
 import {baseURL} from "@/api/request";
 
 import {onMounted, ref, watch} from "vue";
-import SongList from "@/components/song/SongList.vue";
+
 import {getSongBySongListID} from "@/api/song/SongApi";
 import {getEvenRatingOfSongList, getRatingBy, updateOrSaveRating, updateSongList} from "@/api/songList/SongListApi";
 import {useUserStore} from "@/store/UserStore";
@@ -16,6 +16,9 @@ import {CommentSortMode, SORT_MODE_LENGTH, SORTING_NAME} from "@/enum/CommentSor
 import FroalaEditor from 'froala-editor';
 import {PictureRepoType} from "@/enum/PictureRepoType";
 import {ElMessage} from "element-plus";
+// import type {SongList} from "@/pojo/SongList.ts";
+import SongList from "@/components/song/SongList.vue";
+import type Song from "@/pojo/Song.ts";
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -30,12 +33,14 @@ const tableData = ref<Array<unknown>>([]);
 
 onMounted(() => {
   getSongBySongListID(current_song_list.value.id).then(value => {
-    for (const song: Song of value.data.data) {
-      const split = song.title?.split('-');
-      song['song'] = split[1];
-      song['singer'] = split[0];
-      tableData.value.push(song);
-    }
+    console.log('jkl',value.data.data);
+    tableData.value = value.data.data;
+    // for (const song: Song of value.data.data) {
+    //   const split = song.title?.split('-');
+    //   song['song'] = split[1];
+    //   song['singer'] = split[0];
+    //   tableData.value.push(song);
+    // }
   });
 
   getRatingBy(userStore.getLoginUser.id, current_song_list.value.id,).then(value => {

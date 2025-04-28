@@ -25,16 +25,14 @@ import java.util.Objects;
  */
 @Service
 public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> implements ISingerService {
-    public List<Singer> conditionalQuerySinger(Singer singer) {
+    public List<Singer> querySingerByID(Singer singer) {
         return list(new LambdaQueryWrapper<Singer>()
                         .select(
                                 List.of(Singer::getId, Singer::getName, Singer::getSex, Singer::getBirth,
                                         Singer::getIntroduction, Singer::getLocation, Singer::getPic
                                 ))
                         .eq(Singer::getDeleteFlag, false)
-                        .like(Objects.nonNull(singer.getName()), Singer::getName, singer.getName())
-                        .eq(Objects.nonNull(singer.getSex()), Singer::getSex, singer.getSex())
-//                .between(Objects.nonNull(singer.getSex()), Singer::getBirth, singer.getBirth())
+                        .eq(Objects.nonNull(singer.getId()), Singer::getId, singer.getId())
         );
     }
 

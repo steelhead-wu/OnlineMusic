@@ -1,6 +1,7 @@
 import type Admin from "@/pojo/Admin.ts";
 import myAxios from "@/api/request.ts";
 import type Singer from "@/pojo/Singer.ts";
+import type Song from "@/pojo/Song.ts";
 
 const prefix = '/api/admin';
 
@@ -13,7 +14,7 @@ export const registry = async (registryAdmin: Admin) => {
     return await myAxios.post(prefix + '/registry', registryAdmin);
 }
 
-export const conditionalQuerySinger = async (singer: Singer) => {
+export const querySingerByID = async (singer: Singer) => {
     return await myAxios.post(prefix + '/singer', singer);
 }
 
@@ -45,4 +46,8 @@ export const searchSinger = async (keyword: string) => {
             keyword
         }
     });
+}
+
+export const querySongByID = async (song: Song) => {
+    return await myAxios.patch(prefix + '/song', song);
 }

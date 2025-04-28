@@ -1,5 +1,7 @@
 import {defineStore} from "pinia";
 import {computed, ref} from "vue";
+import type Song from "@/pojo/Song.ts";
+import type SongDO from "@/pojo/DO/SongDO.ts";
 
 export const useSongStore = defineStore('songStore', () => {
 
@@ -23,9 +25,9 @@ export const useSongStore = defineStore('songStore', () => {
 
         const isPlay = ref(false);
         const currentSongIdx = ref(0);
-        const songList = ref<Array<Song>>([]);
+        const songList = ref<Array<SongDO>>([]);
 
-        let currentSong = ref<Song>(songList.value[currentSongIdx.value]);
+        let currentSong = ref<SongDO>(songList.value[currentSongIdx.value]);
 
 
         const getIsPlay = computed(() => isPlay.value);
@@ -45,7 +47,8 @@ export const useSongStore = defineStore('songStore', () => {
                 album: '',
                 picture: '/asset/img/songPic/tubiao.jpg',
                 lyric: '[00:00.00]暂无歌词',
-                url: ''
+                url: '',
+                singerName: ''
             };
         });
         const getSongList = computed(() => songList.value);

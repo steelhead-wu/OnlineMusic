@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {baseURL} from "@/api/request";
+import type {Singer} from "@/pojo/Singer.ts";
 
 const props = defineProps<{
   playList: Array<Singer>

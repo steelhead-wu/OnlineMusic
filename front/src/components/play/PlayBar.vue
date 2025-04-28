@@ -367,7 +367,7 @@ const addToMyFavorite = () => {
         <div class="song-part">
           <div class="song-name">
             <marquee scrollamount="4">
-              {{ songStore.getCurrentSong.title || '欢迎使用在线音乐' }}
+              {{ `${songStore.getCurrentSong.title}-${songStore.getCurrentSong.singerName}` || '欢迎使用在线音乐' }}
             </marquee>
           </div>
           <div class="song-time">{{ formattedCurrentTime }}
@@ -436,7 +436,7 @@ const addToMyFavorite = () => {
               <li v-for="(asong, song_idx) in songStore.getSongList" :key="asong.id"
                   @click="playThisMusic(asong, song_idx)"
                   :class="{ 'current-play': songStore.getCurrentSong.id === asong.id && song_idx === songStore.getCurrentSongIdx }">
-                {{ asong.title.split('-')[1] + '- ' + asong.title.split('-')[0] }}
+                {{ asong.title + '- ' + asong.singerName }}
                 <FontAwesomeIcon icon="fa-remove" size="ls" class="remove" @click.stop="doRemoveSong(song_idx)"/>
               </li>
             </ul>

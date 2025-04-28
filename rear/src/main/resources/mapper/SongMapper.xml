@@ -2,11 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wll.mapper.SongMapper">
 
-    <select id="getLikedSongByUserId" resultType="com.wll.pojo.Song">
-        select id, singer_id, title, album, picture, lyric, url
+    <select id="getLikedSongByUserId" resultType="com.wll.pojo.DO.SongDO">
+        select song.id,
+               singer_id,
+               title,
+               singer.name singer_name,
+               album,
+               picture,
+               lyric,
+               url
         from song
-        where id in (select song_id
-                     from likes
-                     where user_id = #{userId});
+                 join singer on song.singer_id = singer.id
+        where song.id in (select song_id
+                          from likes
+                          where user_id = #{userId});
     </select>
 </mapper>

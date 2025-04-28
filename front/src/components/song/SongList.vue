@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import {download} from "@/api/song/SongApi";
-import {useRoute} from "vue-router";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {useSongStore} from "@/store/SongStore";
-import {ref} from "vue";
+import type Song from "@/pojo/Song.ts";
 
 const props = defineProps<{
   tableData: Song & {
@@ -29,7 +28,8 @@ const doRowClick = (row: any, column: any, event: Event) => {
     picture: row.picture,
     singerId: row.singerId,
     title: row.title,
-    url: row.url
+    url: row.url,
+    singerName: row.singerName
   });
   // songStore.setCurrentSongIdx(songStore.getSongList.length - 1);
   // console.log('songStore.getSongList:', songStore.getSongList);
@@ -73,8 +73,8 @@ const doDownloadMusic = (song: Song) => {
     <el-table v-loading="props.loading" element-loading-text="请稍等" highlight-current-row class="song-list"
               :data="props.tableData" stripe @row-click="doRowClick"
               scrollbar-always-on>
-      <el-table-column prop="song" label="歌曲" width="250" align="center"/>
-      <el-table-column prop="singer" label="歌手" width="250" align="center"/>
+      <el-table-column prop="title" label="歌曲" width="250" align="center"/>
+      <el-table-column prop="singerName" label="歌手" width="250" align="center"/>
       <el-table-column prop="album" label="专辑" width="250" align="center"/>
       <el-table-column prop="op" label="操作" width="150" align="center">
         <template #default="table">

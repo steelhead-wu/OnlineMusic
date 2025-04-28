@@ -7,6 +7,7 @@ import {onMounted, ref} from "vue";
 import SongList from "@/components/song/SongList.vue";
 import {getAllSongBySingerId} from "@/api/song/SongApi";
 import type {Singer} from "@/pojo/Singer.ts";
+import type Song from "@/pojo/Song.ts";
 
 const route = useRoute();
 const singersStore = useSingersStore();
@@ -17,11 +18,9 @@ const tableData = ref<Array<unknown>>([]);
 
 onMounted(() => {
   getAllSongBySingerId(current_singer.value.id).then(value => {
-    console.log(value.data.data);
-    for (const song: Song of value.data.data) {
-      const split = song.title?.split('-');
-      song['song'] = split[1];
-      song['singer'] = split[0];
+    for (let song: Song of value.data.data) {
+      song['title'] = song.title;
+      song['singerName'] = current_singer.value.name;
       tableData.value.push(song);
     }
   })
@@ -51,7 +50,7 @@ onMounted(() => {
       <p class="singer-introduction">
         {{ current_singer.introduction }}
       </p>
-            <SongList class="songList" :table-data="tableData"/>
+      <SongList class="songList" :table-data="tableData"/>
     </el-main>
   </el-container>
 </template>

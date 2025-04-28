@@ -1,5 +1,6 @@
 package com.wll.service;
 
+import com.wll.pojo.DO.SongDO;
 import com.wll.pojo.Song;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -15,5 +16,5 @@ import java.util.List;
  */
 public interface ISongService extends IService<Song> {
 
-    List<Song> getLikedSongByUserId(long userId);
+    List<SongDO> getLikedSongByUserId(long userId);
 }

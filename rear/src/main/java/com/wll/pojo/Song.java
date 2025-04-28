@@ -48,5 +48,6 @@ public class Song implements Serializable {
     @TableField("url")
     private String url;
 
-
+    @TableField("delete_flag")
+    private Boolean deleteFlag;
 }

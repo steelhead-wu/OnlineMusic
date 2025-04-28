@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, watch} from "vue";
-import {addSinger, conditionalQuerySinger, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
+import {addSinger, querySingerByID, deleteSingerById, updateSinger} from "@/api/admin/AdminApi.ts";
 import type Singer from "@/pojo/Singer.ts";
 import {baseURL} from "@/api/request.ts";
 import {ElMessage, ElMessageBox, type UploadRawFile} from "element-plus";
@@ -30,7 +30,7 @@ onMounted(() => {
   const singer: Singer = {
     // sex: 1,
   }
-  conditionalQuerySinger(singer).then(value => {
+  querySingerByID(singer).then(value => {
     singerData.value = value.data.data;
   })
 })
@@ -135,6 +135,7 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
 
 <template>
   <div class="add-context">
+    <!--    add singer-->
     <el-icon class="animated-icon" size="32" color="red" @click="add" title="新增歌手">
       <template #default>
 

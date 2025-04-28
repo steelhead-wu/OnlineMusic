@@ -5,6 +5,7 @@ import SongList from "@/components/song/SongList.vue";
 import Update from "@/components/user/Update.vue";
 import {onMounted, ref} from "vue";
 import {getLikedSongByUserId} from "@/api/song/SongApi";
+import type Song from "@/pojo/Song.ts";
 
 const userStore = useUserStore();
 
@@ -16,13 +17,8 @@ onMounted(() => {
   getLikedSongByUserId(userStore.getLoginUser.id).then(value => {
 
     if (value.data.data) {
-      // tableData.value
-      for (const song: Song of value.data.data) {
-        const split = song.title?.split('-');
-        song['song'] = split[1];
-        song['singer'] = split[0];
-        tableData.value.push(song);
-      }
+      console.log('qeweqw',value.data.data)
+      tableData.value = value.data.data;
     }
   })
 });

@@ -3,12 +3,12 @@ package com.wll.controller;
 import com.wll.enums.HTTPStatus;
 import com.wll.pojo.Admin;
 import com.wll.pojo.Singer;
+import com.wll.pojo.Song;
 import com.wll.service.impl.AdminServiceImpl;
 import com.wll.service.impl.SingerServiceImpl;
-import com.wll.utils.R;
+import com.wll.service.impl.SongServiceImpl;
 import com.wll.utils.Result;
 import jakarta.annotation.Resource;
-import lombok.Getter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
@@ -29,6 +29,9 @@ public class AdminController {
 
     @Resource
     private SingerServiceImpl singerService;
+
+    @Resource
+    private SongServiceImpl songService;
 
     @PostMapping("/login")
     public Result login(@RequestBody Admin loginAdmin) {
@@ -53,11 +56,11 @@ public class AdminController {
     }
 
     /**
-     * 根据条件查询歌手
+     * 根据ID查询歌手
      */
     @PostMapping("/singer")
-    public Result conditionalQuerySinger(@RequestBody Singer singer) {
-        return Result.success(singerService.conditionalQuerySinger(singer));
+    public Result querySingerByID(@RequestBody Singer singer) {
+        return Result.success(singerService.querySingerByID(singer));
     }
 
 
@@ -87,4 +90,9 @@ public class AdminController {
         return Result.success(singerService.searchSinger(keyword));
     }
 
+
+    @PatchMapping("/song")
+    public Result querySongByID(@RequestBody Song song) {
+        return Result.success(songService.querySongByID(song));
+    }
 }
