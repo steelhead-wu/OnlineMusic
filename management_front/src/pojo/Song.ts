@@ -5,5 +5,6 @@ export default interface Song {
     album?: string,
     picture?: string,
     lyric?: string,
-    url?: string
+    url?: string,
+    lyricUrl?: string,
 }

@@ -2,6 +2,7 @@ import type Admin from "@/pojo/Admin.ts";
 import myAxios from "@/api/request.ts";
 import type Singer from "@/pojo/Singer.ts";
 import type Song from "@/pojo/Song.ts";
+import type Transfer from "@/pojo/Transfer.ts";
 
 const prefix = '/api/admin';
 
@@ -50,4 +51,23 @@ export const searchSinger = async (keyword: string) => {
 
 export const querySongByID = async (song: Song) => {
     return await myAxios.patch(prefix + '/song', song);
+}
+
+
+export const updateSongByID = async (song: Song) => {
+    return await myAxios.put(prefix + '/song', song);
+}
+
+
+export const deleteSongById = async (id: string) => {
+    return await myAxios.put(prefix + '/song/delete', null, {
+        params: {
+            id
+        }
+    });
+}
+
+
+export const download = async (transfer: Transfer) => {
+    return await myAxios.post('/api/files/download', transfer);
 }

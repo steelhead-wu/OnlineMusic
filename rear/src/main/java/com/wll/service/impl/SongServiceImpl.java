@@ -1,6 +1,7 @@
 package com.wll.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.DO.SongDO;
 import com.wll.pojo.Song;
 import com.wll.mapper.SongMapper;
@@ -40,11 +41,14 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
         return songMapper.getLikedSongByUserId(userId);
     }
 
-    public List<Song> querySongByID(Song song) {
-        return list(new LambdaQueryWrapper<Song>()
-                .select(Song::getId, Song::getSingerId, Song::getTitle, Song::getUrl, Song::getAlbum, Song::getLyric
-                        , Song::getPicture
-                )
-                .eq(Objects.nonNull(song.getId()), Song::getId, song.getId()));
+    public List<SongDO> querySongByID(Song song) {
+        return songMapper.querySongByID(song);
+    }
+
+    public boolean deleteSongByID(Integer id) {
+        return update(new LambdaUpdateWrapper<Song>()
+                .set(Song::getDeleteFlag, true)
+                .eq(Objects.nonNull(id), Song::getId, id)
+        );
     }
 }

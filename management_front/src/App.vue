@@ -3,10 +3,10 @@ import {ElMessage} from "element-plus";
 
 
 // after statement router.go(0) ran, display 修改成功
-const showMessage = sessionStorage.getItem('showSingerModifiedSuccessMessage')
+const showMessage = sessionStorage.getItem('showSuccessMessage')
 if (showMessage) {
   ElMessage.success(showMessage)
-  sessionStorage.removeItem('showSingerModifiedSuccessMessage') // 清除状态
+  sessionStorage.removeItem('showSuccessMessage') // 清除状态
 }
 
 </script>

@@ -99,7 +99,7 @@ const updateEdit = () => {
   if (opt.value) {
     addSinger(currentSinger.value).then(value => {
       if (value.data.code == HttpStatusCode.OK) {
-        sessionStorage.setItem('showSingerAddSuccessMessage', '添加成功！')
+        sessionStorage.setItem('showSuccessMessage', '添加成功！')
 
 
         router.go(0);
@@ -111,7 +111,7 @@ const updateEdit = () => {
   } else {
     updateSinger(currentSinger.value).then(value => {
       if (value.data.code == HttpStatusCode.OK) {
-        sessionStorage.setItem('showSingerModifiedSuccessMessage', '修改成功！')
+        sessionStorage.setItem('showSuccessMessage', '修改成功！')
         router.go(0);
       } else {
         ElMessage.error('修改失败')

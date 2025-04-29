@@ -2,6 +2,7 @@ package com.wll.controller;
 
 import com.wll.enums.HTTPStatus;
 import com.wll.pojo.Admin;
+import com.wll.pojo.DO.SongDO;
 import com.wll.pojo.Singer;
 import com.wll.pojo.Song;
 import com.wll.service.impl.AdminServiceImpl;
@@ -94,5 +95,16 @@ public class AdminController {
     @PatchMapping("/song")
     public Result querySongByID(@RequestBody Song song) {
         return Result.success(songService.querySongByID(song));
+    }
+
+
+    @PutMapping("/song")
+    public Result updateSongByID(@RequestBody Song song) {
+        return Result.success(songService.updateById(song));
+    }
+
+    @PutMapping(value = "/song/delete",params = "id")
+    public Result deleteSongByID(Integer id) {
+        return Result.success(songService.deleteSongByID(id));
     }
 }

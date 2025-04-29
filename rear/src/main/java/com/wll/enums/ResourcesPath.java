@@ -15,9 +15,10 @@ public enum ResourcesPath {
     COMMENT_PICTURE_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\commentPicture", 1),
 //    COMMENT_PICTURE_PATH(System.getProperty("user.dir") + "/src/main/resources/static/asset/commentPicture", 1),
 
-    SINGER_PICTURE_PATH(System.getProperty("user.dir") +"\\src\\main\\resources\\static\\asset\\img\\singerPic",2)
-//    SINGER_PICTURE_PATH(System.getProperty("user.dir") +"/src/main/resources/static/asset/img/singerPic",2)
-
+    SINGER_PICTURE_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\img\\singerPic", 2),
+    //    SINGER_PICTURE_PATH(System.getProperty("user.dir") +"/src/main/resources/static/asset/img/singerPic",2)
+    ALBUM_PICTURE_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\img\\songPic", 3),
+    LYRIC_PATH(System.getProperty("user.dir") + "\\src\\main\\resources\\static\\asset\\lyrics", 4)
     ;
 
     private final String path;

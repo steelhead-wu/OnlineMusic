@@ -17,4 +17,12 @@
                           from likes
                           where user_id = #{userId});
     </select>
+
+    <select id="querySongByID" resultType="com.wll.pojo.DO.SongDO">
+        select song.id, singer_id, title, singer.name singer_name, album, picture, lyric, url,lyric_url
+        from song join singer on song.singer_id = singer.id
+        where song.delete_flag = false
+        <if test="id != null">and song.id = #{id}</if>
+    </select>
+
 </mapper>

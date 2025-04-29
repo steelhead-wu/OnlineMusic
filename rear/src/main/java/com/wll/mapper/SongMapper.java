@@ -46,4 +46,7 @@ public interface SongMapper extends BaseMapper<Song> {
     List<Map<String, Object>> searchSongByTitle(String kw);
 
     List<SongDO> getLikedSongByUserId(long userId);
+
+
+    List<SongDO> querySongByID(Song song);
 }

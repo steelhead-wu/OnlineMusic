@@ -3,4 +3,5 @@ export enum PictureRepoType {
     USER_COMMENT,
     SINGER_AVATAR,
     ALBUM_AVATAR,
+    LYRIC,
 }
