@@ -54,8 +54,12 @@ export const querySongByID = async (song: Song) => {
 }
 
 
-export const updateSongByID = async (song: Song) => {
-    return await myAxios.put(prefix + '/song', song);
+export const updateSongByID = async (song: Song, isUploadLyric: boolean) => {
+    return await myAxios.put(prefix + '/song', song, {
+        params: {
+            isUploadLyric
+        }
+    });
 }
 
 

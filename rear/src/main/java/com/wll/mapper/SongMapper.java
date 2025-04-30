@@ -49,4 +49,7 @@ public interface SongMapper extends BaseMapper<Song> {
 
 
     List<SongDO> querySongByID(Song song);
+
+
+    List<SongDO> searchSong(String keyword);
 }

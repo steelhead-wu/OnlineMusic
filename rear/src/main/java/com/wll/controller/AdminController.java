@@ -1,6 +1,7 @@
 package com.wll.controller;
 
 import com.wll.enums.HTTPStatus;
+import com.wll.enums.ResourcesPath;
 import com.wll.pojo.Admin;
 import com.wll.pojo.DO.SongDO;
 import com.wll.pojo.Singer;
@@ -8,10 +9,13 @@ import com.wll.pojo.Song;
 import com.wll.service.impl.AdminServiceImpl;
 import com.wll.service.impl.SingerServiceImpl;
 import com.wll.service.impl.SongServiceImpl;
+import com.wll.utils.FilesUtils;
 import com.wll.utils.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Objects;
 
 /**
@@ -98,8 +102,18 @@ public class AdminController {
     }
 
 
-    @PutMapping("/song")
-    public Result updateSongByID(@RequestBody Song song) {
+    @PutMapping(value = "/song", params = "isUploadLyric")
+    public Result updateSongByID(@RequestBody Song song, Boolean isUploadLyric) {
+        if (isUploadLyric) {
+            try {
+                song.setLyric(FilesUtils.readFile("%s\\%d\\%s".formatted(
+                        ResourcesPath.LYRIC_PATH.toString()
+                        , song.getId()
+                        , song.getLyricUrl().substring(song.getLyricUrl().lastIndexOf('\\')))));
+            } catch (IOException e) {
+                return Result.serverError("读取文件失败", false);
+            }
+        }
         return Result.success(songService.updateById(song));
     }
 
@@ -114,8 +128,8 @@ public class AdminController {
         return Result.success(songService.addSong(song));
     }
 
-//    @GetMapping(value = "/singer/s", params = "keyword")
-//    public Result searchSinger(String keyword) {
-//        return Result.success(singerService.searchSinger(keyword));
-//    }
+    @GetMapping(value = "/song/s", params = "keyword")
+    public Result searchSong(String keyword) {
+        return Result.success(songService.searchSong(keyword));
+    }
 }

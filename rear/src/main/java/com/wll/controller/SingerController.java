@@ -1,5 +1,6 @@
 package com.wll.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wll.enums.SingerEnum;
 import com.wll.pojo.Singer;
 import com.wll.service.ISingerService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.annotation.Resource;
+
 import java.time.Duration;
 import java.util.*;
 
@@ -32,7 +34,8 @@ public class SingerController {
     public R getAllSinger() {
         List<Singer> res = redisTemplate.opsForValue().get(SingerEnum.ALL_SINGER.getValue());
         if (Objects.isNull(res)) {
-            res = singerService.list();
+            res = singerService.list(new LambdaQueryWrapper<Singer>()
+                    .eq(Singer::getDeleteFlag, false));
             redisTemplate.opsForValue().set(SingerEnum.ALL_SINGER.getValue(), res, Duration.ofSeconds(1800));
         }
 

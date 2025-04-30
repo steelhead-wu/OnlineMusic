@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.enums.ResourcesPath;
 import com.wll.pojo.DO.SongDO;
+import com.wll.pojo.Singer;
 import com.wll.pojo.Song;
 import com.wll.mapper.SongMapper;
 import com.wll.service.ISongService;
@@ -68,7 +69,7 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
         String src_lyric = "src\\main\\resources\\static%s".formatted(song.getLyricUrl());
         // 读歌词内容
         try {
-            String lyric = readFile(src_lyric);
+            String lyric = FilesUtils.readFile(src_lyric);
             song.setLyric(StringUtils.isEmpty(lyric) ? "[00:00.00]暂无歌词" : lyric);
         } catch (IOException e) {
             return false;
@@ -111,17 +112,8 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
 
     }
 
-    private String readFile(String path) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
-            String line;
-            while (true) {
-                line = bufferedReader.readLine();
-                if (Objects.isNull(line)) break;
-                sb.append(line);
-            }
-        }
 
-        return sb.toString();
+    public List<SongDO> searchSong(String keyword) {
+        return songMapper.searchSong(keyword);
     }
 }

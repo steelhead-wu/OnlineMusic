@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import {baseURL} from "@/api/request.ts";
-import {onMounted, ref} from "vue";
+import {onMounted, ref, watch} from "vue";
 import type Song from "@/pojo/Song.ts";
 import {
   addSong,
@@ -23,8 +23,9 @@ import {useRouter} from "vue-router";
 import type Transfer from "@/pojo/Transfer.ts";
 import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import {Plus} from "@element-plus/icons-vue";
+import {useSearchStore} from "@/stores/SearchStore.ts";
 
-
+const isUploadLyric = ref(false);
 const songData = ref<Array<SongDO>>([])
 const currentSong = ref<SongDO>({});
 const dialogVisible = ref(false);
@@ -32,6 +33,12 @@ const opt = ref(false);
 const router = useRouter();
 
 let singers: Array<Singer> = [];
+
+
+const searchStore = useSearchStore();
+watch(() => searchStore.getContext, () => {
+  songData.value = searchStore.getContext;
+})
 
 onMounted(async () => {
   // query all singers
@@ -89,6 +96,7 @@ const confirm_delete = (id: string) => {
 
 // 处理专辑照片上传成功后处理的函数
 const handleAlbumPictureSuccess = (response: Result, uploadFile: UploadRawFile) => {
+  isUploadLyric.value = true;
   currentSong.value.picture = response.link.substring(response.link.indexOf("\\asset"));
   ElMessage.success('专辑照片上传成功！');
 }
@@ -96,8 +104,8 @@ const handleAlbumPictureSuccess = (response: Result, uploadFile: UploadRawFile) 
 // 上传歌词文件成功后的处理函数
 const handleLyricFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
   currentSong.value.lyricUrl = response.link.substring(response.link.indexOf("\\asset"));
-
-  console.log('上传的文件', uploadFile);
+  isUploadLyric.value = true;
+  // console.log('上传的文件', uploadFile);
   ElMessage.success('歌词文件上传成功！');
 }
 // 上传歌曲文件成功后的处理函数
@@ -189,7 +197,13 @@ const updateEdit = async () => {
       ElMessage.error("添加失败");
     }
   } else {
-    const res = await updateSongByID(currentSong.value);
+    let res = null;
+    if (isUploadLyric.value) {
+      res = await updateSongByID(currentSong.value, true);
+      isUploadLyric.value = false;
+    } else {
+      res = await updateSongByID(currentSong.value, false);
+    }
     if (res.data.code == HttpStatusCode.OK) {
       sessionStorage.setItem('showSuccessMessage', '修改成功！')
       dialogVisible.value = false;
