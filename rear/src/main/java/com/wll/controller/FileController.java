@@ -83,7 +83,9 @@ public class FileController {
     public synchronized ResponseEntity<FileSystemResource> download(@RequestBody Transfer transfer) {
 //        ClassPathResource resource = new ClassPathResource("static".concat(transfer.getPath()));
         transfer.setPath("%s\\src\\main\\resources\\static%s".formatted(System.getProperty("user.dir"), transfer.getPath()));
-        // 返回文件流
+//        transfer.setPath(ResourcesPath.values()[transfer.getRepoID()].toString()
+//                .concat(transfer.getPath().substring(transfer.getPath().lastIndexOf('\\'))));
+//         返回文件流
         FileSystemResource resource = new FileSystemResource(transfer.getPath());
 
         if (resource.exists()) {

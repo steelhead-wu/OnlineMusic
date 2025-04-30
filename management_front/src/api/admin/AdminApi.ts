@@ -69,5 +69,30 @@ export const deleteSongById = async (id: string) => {
 
 
 export const download = async (transfer: Transfer) => {
-    return await myAxios.post('/api/files/download', transfer);
+    return await myAxios.post('/api/files/download', transfer,
+        {
+            responseType: 'json'
+        });
+
+}
+
+export const downloadMusic = async (transfer: Transfer, responseType = 'json') => {
+    return await myAxios.post('/api/files/download', transfer,
+        {
+            responseType: 'blob'
+        });
+
+}
+
+
+export const addSong = async (song: Song) => {
+    return await myAxios.post(prefix + '/song', song);
+}
+
+export const searchSong = async (keyword: string) => {
+    return await myAxios.get(prefix + '/song/s', {
+        params: {
+            keyword
+        }
+    });
 }

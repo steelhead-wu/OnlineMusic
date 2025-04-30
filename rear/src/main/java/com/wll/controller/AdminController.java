@@ -103,8 +103,19 @@ public class AdminController {
         return Result.success(songService.updateById(song));
     }
 
-    @PutMapping(value = "/song/delete",params = "id")
+    @PutMapping(value = "/song/delete", params = "id")
     public Result deleteSongByID(Integer id) {
         return Result.success(songService.deleteSongByID(id));
     }
+
+
+    @PostMapping("/song")
+    public Result addSong(@RequestBody Song song) {
+        return Result.success(songService.addSong(song));
+    }
+
+//    @GetMapping(value = "/singer/s", params = "keyword")
+//    public Result searchSinger(String keyword) {
+//        return Result.success(singerService.searchSinger(keyword));
+//    }
 }

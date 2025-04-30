@@ -1,5 +1,6 @@
 package com.wll.pojo;
 
+import com.wll.enums.ResourcesPath;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Transfer {
+    private int repoID;
     private String path;
     private String mediaType;
     private String contentDisposition;

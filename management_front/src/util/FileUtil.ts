@@ -9,10 +9,7 @@ import type Result from "@/util/Result.ts";
  * @param size file size in MB
  */
 export const beforeFileUpload = (rawFile: UploadRawFile, type = 'image/jpeg', size = 5) => {
-    if (type == '') {
-        ElMessage.error(`文件必须为lrc类型`)
-        return false;
-    }
+
     if (rawFile.type !== type) {
         ElMessage.error(`file must be ${type} format!`)
         return false

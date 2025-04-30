@@ -4,4 +4,5 @@ export enum PictureRepoType {
     SINGER_AVATAR,
     ALBUM_AVATAR,
     LYRIC,
+    SONG,
 }

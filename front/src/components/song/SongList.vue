@@ -43,8 +43,9 @@ const doDownloadMusic = (song: Song) => {
   try {
     download(song).then(value => {
       // console.log("开始下载...");
+      console.log(value.data);
       const eleLink = document.createElement("a");
-      eleLink.download = song.url?.slice(song.url?.lastIndexOf('/') + 1);
+      eleLink.download = song.url?.slice(song.url?.lastIndexOf('\\') + 1);
       eleLink.style.display = "none";
       // // 字符内容转变成 blob 地址
       const blob = new Blob([value.data]);

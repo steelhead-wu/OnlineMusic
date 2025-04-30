@@ -65,7 +65,7 @@ const doDownloadMusic = () => {
       download(songStore.getCurrentSong).then(value => {
         // console.log("开始下载...");
         const eleLink = document.createElement("a");
-        eleLink.download = songStore.getCurrentSong.url.slice(songStore.getCurrentSong.url.lastIndexOf('/') + 1);
+        eleLink.download = songStore.getCurrentSong.url.slice(songStore.getCurrentSong.url.lastIndexOf('\\') + 1);
         eleLink.style.display = "none";
         // // 字符内容转变成 blob 地址
         const blob = new Blob([value.data]);

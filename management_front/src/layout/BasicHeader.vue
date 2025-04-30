@@ -28,9 +28,11 @@ const search = async () => {
       searchStore.setContext(res.data.data)
     }
 
-
   } else if (route.path == Behavior.SONG_LIST) {
-
+    const res = await searchSong(keyword.value);
+    if(res.data.code == HttpStatusCode.OK) {
+      searchStore.setContext(res.data.data)
+    }
   }
 }
 </script>
