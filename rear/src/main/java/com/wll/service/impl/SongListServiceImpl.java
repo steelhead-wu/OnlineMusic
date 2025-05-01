@@ -6,8 +6,11 @@ import com.wll.enums.SongListEnum;
 import com.wll.mapper.SongListMapper;
 import com.wll.pojo.SongList;
 import com.wll.service.ISongListService;
+import com.wll.utils.Result;
+import com.wll.utils.StringUtils;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
+
 import java.util.*;
 
 /**
@@ -65,5 +68,26 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     @Override
     public SongListEnum chooseCategory(Integer id) {
         return SongListEnum.values()[id];
+    }
+
+    public List<SongList> conditionalQuerySongList(SongList songList) {
+        return list(new LambdaQueryWrapper<SongList>()
+                .eq(SongList::getDeleteFlag, false)
+                .eq(Objects.nonNull(songList.getId()), SongList::getId, songList.getId())
+                .eq(Objects.nonNull(songList.getRating()), SongList::getRating, songList.getRating())
+                .eq(StringUtils.isNotEmpty(songList.getStyle()), SongList::getStyle, songList.getStyle())
+        );
+    }
+
+    public boolean updateSongListByID(SongList songList) {
+        return updateById(songList);
+    }
+
+    public boolean deleteSongListByID(Integer id) {
+        return updateSongListByID(SongList.builder()
+                .id(id)
+                .deleteFlag(true)
+                .build()
+        );
     }
 }

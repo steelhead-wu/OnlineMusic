@@ -46,7 +46,7 @@ public class SingerController {
     public R getSingerBySex(Integer sex) {
         List<Singer> res = redisTemplate.opsForValue().get("singer:" + sex);
         if (Objects.isNull(res)) {
-            res = singerService.listByMap(Map.of("sex", sex));
+            res = singerService.listByMap(Map.of("sex", sex, "delete_flag", false));
             redisTemplate.opsForValue().set("singer:" + sex, res, Duration.ofSeconds(1800));
         }
         return R.success(res);

@@ -6,5 +6,6 @@ export enum HttpHeaders {
     APPLICATION_OCTET_STREAM = 'application/octet-stream',
     TEXT_PLAIN = 'text/plain',
     AUDIO_MPEG = 'audio/mpeg',
+    IMAGE_JPEG = 'image/jpeg',
 
 }

@@ -3,6 +3,7 @@ import myAxios from "@/api/request.ts";
 import type Singer from "@/pojo/Singer.ts";
 import type Song from "@/pojo/Song.ts";
 import type Transfer from "@/pojo/Transfer.ts";
+import type SongList from "@/pojo/SongList.ts";
 
 const prefix = '/api/admin';
 
@@ -80,6 +81,17 @@ export const download = async (transfer: Transfer) => {
 
 }
 
+
+export const upload = async (transfer: object) => {
+    return await myAxios.post('/api/files/upload', transfer, {
+        withCredentials: true,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+
+}
+
 export const downloadMusic = async (transfer: Transfer, responseType = 'json') => {
     return await myAxios.post('/api/files/download', transfer,
         {
@@ -98,5 +110,31 @@ export const searchSong = async (keyword: string) => {
         params: {
             keyword
         }
+    });
+}
+
+export const conditionalQuerySongList = async (songList: SongList) => {
+    return await myAxios.patch(prefix + '/song-list', songList);
+}
+
+export const updateSongListByID = async (songList: SongList) => {
+    return await myAxios.put(prefix + '/song-list', songList);
+}
+
+
+export const deleteSongListByID = async (id: string) => {
+    return await myAxios.put(prefix + '/song-list', null, {
+        params: {
+            id
+        }
+    });
+}
+
+
+export const uploadSongListImg = async (transfer: object) => {
+    return await myAxios.post(prefix + '/song-list/uploadImg', transfer, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        },
     });
 }

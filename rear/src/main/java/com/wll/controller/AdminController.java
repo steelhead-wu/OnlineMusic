@@ -6,13 +6,18 @@ import com.wll.pojo.Admin;
 import com.wll.pojo.DO.SongDO;
 import com.wll.pojo.Singer;
 import com.wll.pojo.Song;
+import com.wll.pojo.SongList;
 import com.wll.service.impl.AdminServiceImpl;
 import com.wll.service.impl.SingerServiceImpl;
+import com.wll.service.impl.SongListServiceImpl;
 import com.wll.service.impl.SongServiceImpl;
 import com.wll.utils.FilesUtils;
+import com.wll.utils.R;
 import com.wll.utils.Result;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -37,6 +42,12 @@ public class AdminController {
 
     @Resource
     private SongServiceImpl songService;
+
+    @Resource
+    private SongListServiceImpl songListService;
+
+    @Resource
+    private FileController fileController;
 
     @PostMapping("/login")
     public Result login(@RequestBody Admin loginAdmin) {
@@ -131,5 +142,40 @@ public class AdminController {
     @GetMapping(value = "/song/s", params = "keyword")
     public Result searchSong(String keyword) {
         return Result.success(songService.searchSong(keyword));
+    }
+
+    @PatchMapping("/song-list")
+    public Result conditionalQuerySongList(@RequestBody SongList songList) {
+        return Result.success(songListService.conditionalQuerySongList(songList));
+    }
+
+    @PutMapping("/song-list")
+    public Result updateSongListByID(@RequestBody SongList songList) {
+        return Result.success(songListService.updateSongListByID(songList));
+    }
+
+    @PutMapping(value = "/song-list", params = "id")
+    public Result deleteSongListByID(Integer id) {
+        return Result.success(songListService.deleteSongListByID(id));
+    }
+
+    @PostMapping("/song-list/uploadImg")
+    public Result uploadSongListImg(@RequestParam("blob") MultipartFile multipartFile,
+                                    @RequestParam("Picture-Repo-Type") int pictureRepoType,
+                                    @RequestParam("ID") String ID,
+                                    HttpServletRequest request) {
+        R file_upload_res = fileController.upload(multipartFile, pictureRepoType, ID, request);
+        if (file_upload_res.getCode() == HTTPStatus.OK.getCode()) {
+            String file_path = file_upload_res.getLink().substring(file_upload_res.getLink().indexOf("\\asset"));
+            Result result = updateSongListByID(SongList.builder()
+                    .id(Integer.valueOf(ID))
+                    .pic(file_path)
+                    .build());
+            if ((Boolean) result.getData()) {
+                return Result.success(file_path);
+            }
+            return Result.serverError("文件路径更新失败！", false);
+        }
+        return Result.serverError("服务器内部错误！", false);
     }
 }

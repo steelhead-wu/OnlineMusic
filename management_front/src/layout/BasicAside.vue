@@ -13,6 +13,11 @@ const goSingerManagement = () => {
 const goSongManagement = () => {
   router.push(Behavior.SONG);
 }
+
+
+const goSongListManagement = () => {
+  router.push(Behavior.SONG_LIST);
+}
 </script>
 
 
@@ -37,7 +42,7 @@ const goSongManagement = () => {
         </template>
       </el-menu-item>
 
-      <el-menu-item index="3">
+      <el-menu-item index="3" @click="goSongListManagement">
         <template #title>
           <el-icon>
             <VideoPlay/>

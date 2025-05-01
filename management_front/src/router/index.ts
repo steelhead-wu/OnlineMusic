@@ -5,6 +5,7 @@ import LoginView from "@/views/LoginView.vue";
 import RegistryView from "@/views/RegistryView.vue";
 import SingerManagementView from "@/views/SingerManagementView.vue";
 import SongManagementView from "@/views/SongManagementView.vue";
+import SongListManagementView from "@/views/SongListManagementView.vue";
 
 
 const router = createRouter({
@@ -21,6 +22,10 @@ const router = createRouter({
                 {
                     path: Behavior.SONG,
                     component: SongManagementView,
+                },
+                {
+                    path: Behavior.SONG_LIST,
+                    component: SongListManagementView,
                 },
             ]
         },
