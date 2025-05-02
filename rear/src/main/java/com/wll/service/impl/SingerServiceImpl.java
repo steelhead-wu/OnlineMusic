@@ -27,12 +27,12 @@ import java.util.Objects;
 public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> implements ISingerService {
     public List<Singer> querySingerByID(Singer singer) {
         return list(new LambdaQueryWrapper<Singer>()
-                        .select(
-                                List.of(Singer::getId, Singer::getName, Singer::getSex, Singer::getBirth,
-                                        Singer::getIntroduction, Singer::getLocation, Singer::getPic
-                                ))
-                        .eq(Singer::getDeleteFlag, false)
-                        .eq(Objects.nonNull(singer.getId()), Singer::getId, singer.getId())
+                .select(
+                        List.of(Singer::getId, Singer::getName, Singer::getSex, Singer::getBirth,
+                                Singer::getIntroduction, Singer::getLocation, Singer::getPic
+                        ))
+                .eq(Singer::getDeleteFlag, false)
+                .eq(Objects.nonNull(singer.getId()), Singer::getId, singer.getId())
         );
     }
 
@@ -92,15 +92,16 @@ public class SingerServiceImpl extends ServiceImpl<SingerMapper, Singer> impleme
     public List<Singer> searchSinger(String keyword) {
         return list(new LambdaQueryWrapper<Singer>()
                 .eq(Singer::getDeleteFlag, false)
-                .like(StringUtils.isNotEmpty(keyword), Singer::getName, keyword)
-                .or()
-                .like(StringUtils.isNotEmpty(keyword), Singer::getLocation, keyword)
-                .or()
-                .like(StringUtils.isNotEmpty(keyword), Singer::getBirth, keyword)
-                .or()
-                .like(StringUtils.isNotEmpty(keyword), Singer::getIntroduction, keyword)
-                .or()
-                .like(StringUtils.isNotEmpty(keyword), Singer::getSex, keyword)
+                .and(t -> t
+                        .like(StringUtils.isNotEmpty(keyword), Singer::getName, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), Singer::getLocation, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), Singer::getBirth, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), Singer::getIntroduction, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), Singer::getSex, keyword))
         );
     }
 }

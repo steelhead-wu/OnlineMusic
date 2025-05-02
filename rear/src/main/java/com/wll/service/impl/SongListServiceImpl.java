@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wll.enums.SongListEnum;
 import com.wll.mapper.SongListMapper;
+import com.wll.pojo.Singer;
 import com.wll.pojo.SongList;
 import com.wll.service.ISongListService;
 import com.wll.utils.Result;
@@ -88,6 +89,20 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
                 .id(id)
                 .deleteFlag(true)
                 .build()
+        );
+    }
+
+    public List<SongList> searchSongList(String keyword) {
+        return list(new LambdaQueryWrapper<SongList>()
+                .eq(SongList::getDeleteFlag, false)
+                .and((t) -> t.like(StringUtils.isNotEmpty(keyword), SongList::getTitle, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), SongList::getStyle, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), SongList::getRating, keyword)
+                        .or()
+                        .like(StringUtils.isNotEmpty(keyword), SongList::getIntroduction, keyword))
+
         );
     }
 }

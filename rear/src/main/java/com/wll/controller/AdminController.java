@@ -14,6 +14,7 @@ import com.wll.service.impl.SongServiceImpl;
 import com.wll.utils.FilesUtils;
 import com.wll.utils.R;
 import com.wll.utils.Result;
+import com.wll.utils.StringUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -178,4 +180,38 @@ public class AdminController {
         }
         return Result.serverError("服务器内部错误！", false);
     }
+
+
+    @PostMapping("/song-list")
+    public Result addSongList(@RequestPart("blob") MultipartFile multipartFile,
+                              @RequestParam("Picture-Repo-Type") int pictureRepoType,
+                              @RequestPart("songList") SongList songList,
+                              HttpServletRequest request) {
+        // 对象用RequestPart传输
+
+        if (StringUtils.isEmpty(songList.getTitle())) {
+            return Result.clientError("标题不可为空", false);
+        }
+        boolean save_res = songListService.save(songList);
+        if (save_res) {
+            R upload_res = fileController.upload(multipartFile, pictureRepoType, songList.getId().toString(), request);
+            if (upload_res.getCode() == HTTPStatus.OK.getCode()) {
+                songList.setPic(upload_res.getLink().substring(upload_res.getLink().indexOf("\\asset")));
+                songListService.updateById(songList);
+                return Result.success("新增成功", true);
+            } else {
+                return Result.serverError("照片上传失败", false);
+            }
+        } else
+            return Result.serverError("新增失败！",false);
+    }
+
+    @GetMapping(value = "/song-list/s", params = "keyword")
+    public Result searchSongList(String keyword) {
+        return Result.success(songListService.searchSongList(keyword));
+    }
+
+
+
+
 }

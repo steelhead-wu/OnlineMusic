@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import {nextTick, onMounted, reactive, ref} from "vue";
+import {nextTick, onMounted, reactive, ref, watch} from "vue";
 import {
+  addSongList,
   conditionalQuerySongList,
   deleteSongListByID,
   updateSongListByID,
@@ -9,12 +10,21 @@ import {
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import type SongList from "@/pojo/SongList.ts";
 import {baseURL} from "@/api/request.ts";
-import {ElMessage, ElMessageBox, type UploadRawFile, type UploadRequestOptions} from "element-plus";
+import {
+  ElMessage,
+  ElMessageBox,
+  type UploadFile,
+  type UploadFiles,
+  type UploadRawFile,
+  type UploadRequestOptions
+} from "element-plus";
 import {useRouter} from "vue-router";
 import {PictureRepoType} from "@/enums/PictureRepoType.ts";
 import {beforeFileUpload} from "@/util/FileUtil.ts";
 import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import type Result from "@/util/Result.ts";
+import {Plus} from "@element-plus/icons-vue";
+import {useSearchStore} from "@/stores/SearchStore.ts";
 
 const songListData = ref<Array<SongList>>([]);
 const editing = ref({
@@ -23,6 +33,13 @@ const editing = ref({
 })
 const router = useRouter();
 const styles = ref<Array<string>>([]);
+
+const searchStore = useSearchStore();
+watch(() => searchStore.getContext, () => {
+  songListData.value = searchStore.getContext;
+})
+
+
 onMounted(async () => {
   const res = await conditionalQuerySongList({});
   if (res.data.code == HttpStatusCode.OK) {
@@ -115,9 +132,142 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
   sessionStorage.setItem('showSuccessMessage', '上传成功！');
   router.go(0);
 }
+
+const dialogVisible = ref(false);
+const currentSongList = ref<SongList>({});
+const add = () => {
+  dialogVisible.value = true;
+  currentSongList.value = {};
+}
+
+const inputError = ref(true);
+const errorMessage = ref('');
+
+const validateInput = (v: string) => {
+  let val = Number(v);
+  if (val < 0 || val > 5) {
+    errorMessage.value = '只能在0~5之间的整数';
+    return;
+  }
+
+  if (!Number.isInteger(val)) {
+    errorMessage.value = '只能是整数';
+    return;
+  }
+  errorMessage.value = '';
+}
+
+
+const handleAddSongList = async (options: UploadRequestOptions) => {
+  const {filename, file, data, onSuccess} = options;
+  data[filename] = file;
+  data['songList'] = new Blob([JSON.stringify(currentSongList.value)], {
+    type: 'application/json'
+  });
+
+  console.log(data);
+  const res = await addSongList(data);
+
+  if (res.data.code == HttpStatusCode.OK) {
+    onSuccess(res);
+  } else {
+    ElMessage.error(res.data.message);
+  }
+
+}
+
+
+const handleAddSongListPictureSuccess = (response: any, uploadFile: UploadFile, uploadFiles: UploadFiles) => {
+  sessionStorage.setItem('showSuccessMessage', '新增成功！')
+  router.go(0);
+}
+
+const uploadRef = ref();
+const updateEdit = () => {
+  uploadRef.value.submit();
+}
 </script>
 
 <template>
+  <el-dialog v-model="dialogVisible" title="Tips" width="500" draggable>
+    <template #header>
+      <span>歌单信息</span>
+    </template>
+    <template #default>
+      <el-form :model="currentSongList" label-width="120px">
+        <el-form-item label="标题">
+          <el-input v-model="currentSongList.title" placeholder="不可为空"/>
+        </el-form-item>
+
+        <el-form-item label="照片">
+
+          <el-upload
+              :auto-upload="false"
+              ref="uploadRef"
+              name="blob"
+              :data=
+                  "{
+            'Picture-Repo-Type': PictureRepoType.SONG_LIST,
+                    }"
+              :http-request="handleAddSongList"
+              :show-file-list="true"
+              :on-success="handleAddSongListPictureSuccess"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG,HttpHeaders.IMAGE_PNG]))"
+              with-credentials
+          >
+            <!--            <el-image v-if="currentSongList.picture" style="width: 100px;height: 100px;top:5px"-->
+            <!--                      :src="baseURL + currentSong.picture"/>-->
+            <el-button style="margin-left: 5px" type="info">上传照片</el-button>
+
+          </el-upload>
+
+        </el-form-item>
+
+        <el-form-item label="简介">
+          <el-input v-model="currentSongList.introduction" type="textarea" placeholder="最多50词"/>
+        </el-form-item>
+        <!--        选在音乐风格-->
+        <el-form-item label="风格">
+          <el-select v-model="currentSongList.style" placeholder="选择此音乐风格">
+            <el-option
+                :value="style"
+                v-for="style in styles" :key="style"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="评分">
+          <el-input ref="inputRef" type="number" max="5" min="0" v-model="currentSongList.rating"
+                    placeholder="输入0-5的整数"
+                    @input="validateInput"
+          ></el-input>
+          <span v-if="inputError" style="color: red">{{ errorMessage }}</span>
+        </el-form-item>
+
+      </el-form>
+    </template>
+    <template #footer>
+      <div class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="updateEdit">
+          确认
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
+  <div class="add-context">
+    <!--    add singer-->
+    <el-icon class="animated-icon" size="32" color="red" @click="add" title="新增歌单">
+      <template #default>
+
+        <Plus/>
+
+      </template>
+
+    </el-icon>
+  </div>
+
   <el-table :data="songListData" style="width: 100%" border height="731px" highlight-current-row
             @cell-dblclick="handleDBLClick"
   >
@@ -199,8 +349,12 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
       <template #default="s">
         <div
             v-if="editing.row!=null && editing.col!=null  && editing.row.id==s.row.id && editing.col.property==s.column.property">
-          <el-input ref="inputRef" v-model="editing.row.rating" @blur="handleEditing(editing.row,s.row)"
+          <el-input ref="inputRef" type="number" max="5" min="0" v-model="editing.row.rating"
+                    placeholder="输入0-5的整数"
+                    @input="validateInput"
+                    @blur="handleEditing(editing.row,s.row)"
                     @keyup.enter="handleEditing(editing.row,s.row)"></el-input>
+          <span v-if="inputError" style="color: red">{{ errorMessage }}</span>
         </div>
 
         <div v-else>
@@ -229,5 +383,25 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
   white-space: nowrap; /* 不换行 */
   display: block; /* 确保宽度生效 */
   margin: 0; /* 去除默认外边距 */
+}
+
+.add-context {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  right: -25px;
+  bottom: 120px;
+  z-index: 2100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .animated-icon {
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateX(-20px);
+    }
+  }
 }
 </style>

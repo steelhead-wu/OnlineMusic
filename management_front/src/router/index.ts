@@ -5,7 +5,8 @@ import LoginView from "@/views/LoginView.vue";
 import RegistryView from "@/views/RegistryView.vue";
 import SingerManagementView from "@/views/SingerManagementView.vue";
 import SongManagementView from "@/views/SongManagementView.vue";
-import SongListManagementView from "@/views/SongListManagementView.vue";
+import SongListManagementView from "@/views/SongListManagement/SongListManagementView.vue";
+import SongListDetailsView from "@/views/SongListManagement/SongListDetailsView.vue";
 
 
 const router = createRouter({
@@ -37,6 +38,11 @@ const router = createRouter({
             path: Behavior.SIGN_UP,
             component: RegistryView,
         },
+        {
+            path: Behavior.SONG_LIST_DETAIL + '/:id(\\d+)',
+            component: SongListDetailsView,
+        },
+
     ],
 })
 

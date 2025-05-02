@@ -5,7 +5,7 @@ import {Search} from "@element-plus/icons-vue";
 import {ref, watch} from "vue";
 import {useRouter, useRoute} from "vue-router";
 import {Behavior} from "@/enums/Behavior.ts";
-import {searchSinger, searchSong} from "@/api/admin/AdminApi.ts";
+import {searchSinger, searchSong, searchSongList} from "@/api/admin/AdminApi.ts";
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 
@@ -25,13 +25,18 @@ watch(keyword, () => {
 const search = async () => {
   if (route.path == Behavior.SINGER) {
     const res = await searchSinger(keyword.value);
-    if(res.data.code == HttpStatusCode.OK) {
+    if (res.data.code == HttpStatusCode.OK) {
       searchStore.setContext(res.data.data)
     }
 
   } else if (route.path == Behavior.SONG) {
     const res = await searchSong(keyword.value);
-    if(res.data.code == HttpStatusCode.OK) {
+    if (res.data.code == HttpStatusCode.OK) {
+      searchStore.setContext(res.data.data)
+    }
+  } else if (route.path == Behavior.SONG_LIST) {
+    const res = await searchSongList(keyword.value);
+    if (res.data.code == HttpStatusCode.OK) {
       searchStore.setContext(res.data.data)
     }
   }

@@ -46,6 +46,10 @@ public class Result {
         return new Result(HTTPStatus.SERVER_ERROR.getCode(), message, data);
     }
 
+    public static Result clientError(String message, Object data) {
+        return new Result(HTTPStatus.CLIENT_ERROR.getCode(), message, data);
+    }
+
     public static Result other(int code, String message, Object data) {
         return new Result(code, message, data);
     }

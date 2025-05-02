@@ -138,3 +138,20 @@ export const uploadSongListImg = async (transfer: object) => {
         },
     });
 }
+
+export const addSongList = async (transfer: object) => {
+    return await myAxios.post(prefix + '/song-list', transfer, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+            // "Content-Type": "application/octet-stream"
+        },
+    });
+}
+
+export const searchSongList = async (keyword: string) => {
+    return await myAxios.get(prefix + '/song-list/s', {
+        params: {
+            keyword
+        }
+    });
+}

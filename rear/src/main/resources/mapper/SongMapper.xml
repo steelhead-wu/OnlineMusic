@@ -40,9 +40,9 @@
         join singer on song.singer_id = singer.id
         where song.delete_flag = false
         <if test="keyword != null and keyword != ''">
-            and name like concat('%',#{keyword},'%')
+            and(name like concat('%',#{keyword},'%')
             or title like concat('%',#{keyword},'%')
-            or album like concat('%',#{keyword},'%')
+            or album like concat('%',#{keyword},'%'))
         </if>
     </select>
 
