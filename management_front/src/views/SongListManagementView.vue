@@ -52,6 +52,20 @@ const handleDBLClick = (row: any, column: any, cell: HTMLTableCellElement, event
   });
 }
 
+const resetEditing = () => {
+  editing.value.row = null;
+  editing.value.col = null;
+}
+
+const handleEditing = (songList: SongList, rawSongList: SongList) => {
+  if (songList.title != rawSongList.title || songList.rating != rawSongList.rating
+      || songList.introduction != rawSongList.introduction || songList.style != rawSongList.style) {
+    handleBlur(songList);
+  }
+
+  resetEditing();
+}
+
 
 // 单元格编辑后处理函数
 const handleBlur = (songList: SongList) => {
@@ -72,13 +86,6 @@ const handleBlur = (songList: SongList) => {
       ElMessage.error("修改失败！");
     }
   })
-
-
-  editing.value.row = null;
-  editing.value.col = null;
-
-
-  // 这里可以添加保存数据的逻辑
 }
 
 
@@ -119,8 +126,8 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
       <template #default="s">
         <div
             v-if="editing.row!=null && editing.col!=null && editing.row.id==s.row.id && editing.col.property==s.column.property">
-          <el-input ref="inputRef" v-model="editing.row.title" @blur="handleBlur(editing.row)"
-                    @keyup.enter="handleBlur(editing.row)"></el-input>
+          <el-input ref="inputRef" v-model="editing.row.title" @blur="handleEditing(editing.row,s.row)"
+                    @keyup.enter="handleEditing(editing.row,s.row)"></el-input>
         </div>
         <div v-else>{{ s.row.title }}</div>
       </template>
@@ -139,7 +146,7 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
                                 'ID': s.row.id,
                                 }"
                    :show-file-list="false"
-                   :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,HttpHeaders.IMAGE_JPEG,5)"
+                   :before-upload="(file:UploadRawFile)=>beforeFileUpload(file, new Set<string>([ HttpHeaders.IMAGE_JPEG,HttpHeaders.IMAGE_PNG]),5)"
                    :on-success="handleImgFileSuccess"
                    with-credentials
         >
@@ -159,8 +166,8 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
       <template #default="s">
         <div
             v-if="editing.row!=null && editing.col!=null  && editing.row.id==s.row.id && editing.col.property==s.column.property">
-          <el-input ref="inputRef" v-model="editing.row.introduction" @blur="handleBlur(editing.row)"
-                    @keyup.enter="handleBlur(editing.row)"></el-input>
+          <el-input ref="inputRef" v-model="editing.row.introduction" @blur="handleEditing(editing.row,s.row)"
+                    @keyup.enter="handleEditing(editing.row,s.row)"></el-input>
         </div>
 
         <div v-else>
@@ -175,8 +182,11 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
       <template #default="s">
         <div
             v-if="editing.row!=null && editing.col!=null  && editing.row.id==s.row.id && editing.col.property==s.column.property">
-          <el-select v-model="s.row.style">
-            <el-option v-for="style in styles" :key="style">
+          <el-select v-model="editing.row.style" @blur="handleEditing(editing.row,s.row)">
+            <el-option
+                :value="style"
+                v-for="style in styles" :key="style"
+            >
             </el-option>
           </el-select>
         </div>
@@ -189,8 +199,8 @@ const handleImgFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
       <template #default="s">
         <div
             v-if="editing.row!=null && editing.col!=null  && editing.row.id==s.row.id && editing.col.property==s.column.property">
-          <el-input ref="inputRef" v-model="editing.row.rating" @blur="handleBlur(editing.row)"
-                    @keyup.enter="handleBlur(editing.row)"></el-input>
+          <el-input ref="inputRef" v-model="editing.row.rating" @blur="handleEditing(editing.row,s.row)"
+                    @keyup.enter="handleEditing(editing.row,s.row)"></el-input>
         </div>
 
         <div v-else>

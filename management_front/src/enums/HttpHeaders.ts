@@ -7,5 +7,6 @@ export enum HttpHeaders {
     TEXT_PLAIN = 'text/plain',
     AUDIO_MPEG = 'audio/mpeg',
     IMAGE_JPEG = 'image/jpeg',
+    IMAGE_PNG = 'image/png',
 
 }

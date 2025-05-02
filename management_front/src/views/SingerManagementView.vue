@@ -13,6 +13,7 @@ import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import {nonEmpty} from "@/util/StringUtils.ts";
 import {Plus} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
+import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 
 
 const dialogVisible = ref<boolean>(false);
@@ -191,7 +192,7 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
                 }"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
-              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file)"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]))"
               with-credentials
           >
             <el-image v-if="opt && currentSinger.pic" style="width: 100px;height: 100px"

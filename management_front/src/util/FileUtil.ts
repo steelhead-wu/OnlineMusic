@@ -8,9 +8,9 @@ import type Result from "@/util/Result.ts";
  * @param type file type
  * @param size file size in MB
  */
-export const beforeFileUpload = (rawFile: UploadRawFile, type = 'image/jpeg', size = 5) => {
-
-    if (rawFile.type !== type) {
+export const beforeFileUpload = (rawFile: UploadRawFile, type: Set<string>, size = 5) => {
+    console.log(rawFile);
+    if (!type.has(rawFile.type)) {
         ElMessage.error(`file must be ${type} format!`)
         return false
     }

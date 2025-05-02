@@ -332,7 +332,7 @@ const downloadSong = async (song: SongDO) => {
                         }"
               :show-file-list="false"
               :on-success="handleAlbumPictureSuccess"
-              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file)"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]))"
               with-credentials
           >
             <el-image v-if="currentSong.picture" style="width: 100px;height: 100px;top:5px"
@@ -355,7 +355,7 @@ const downloadSong = async (song: SongDO) => {
                                 }"
               :show-file-list="true"
               :on-success="handleSongFileSuccess"
-              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,HttpHeaders.AUDIO_MPEG,100)"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>( [HttpHeaders.AUDIO_MPEG]),100)"
               with-credentials
               accept=".mp3"
 
@@ -384,7 +384,7 @@ const downloadSong = async (song: SongDO) => {
                                 }"
               :show-file-list="true"
               :on-success="handleLyricFileSuccess"
-              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,'')"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>(['']))"
               with-credentials
               accept=".lrc"
 
