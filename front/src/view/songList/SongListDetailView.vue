@@ -33,7 +33,6 @@ const tableData = ref<Array<unknown>>([]);
 
 onMounted(() => {
   getSongBySongListID(current_song_list.value.id).then(value => {
-    console.log('jkl',value.data.data);
     tableData.value = value.data.data;
     // for (const song: Song of value.data.data) {
     //   const split = song.title?.split('-');

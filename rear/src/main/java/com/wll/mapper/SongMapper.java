@@ -36,7 +36,9 @@ public interface SongMapper extends BaseMapper<Song> {
                    lyric_url            
             from song
                      join singer on song.singer_id = singer.id
-            where song.id in (select song_id from list_song where song_list_id = #{songListId})
+            where
+                song.delete_flag = false
+                and song.id in (select song_id from list_song where song_list_id = #{songListId})
             """)
     List<SongDO> getSongBySongListID(Integer songListId);
 

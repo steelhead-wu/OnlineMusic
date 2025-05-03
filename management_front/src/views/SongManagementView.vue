@@ -333,7 +333,7 @@ const downloadSong = async (song: SongDO) => {
                         }"
               :show-file-list="false"
               :on-success="handleAlbumPictureSuccess"
-              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]))"
+              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]),50)"
               with-credentials
           >
             <el-image v-if="currentSong.picture" style="width: 100px;height: 100px;top:5px"

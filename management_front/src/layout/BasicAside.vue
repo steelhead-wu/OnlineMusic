@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import {ref} from 'vue'
 import {Headset, Message, VideoPlay} from '@element-plus/icons-vue'
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {Behavior} from "@/enums/Behavior.ts";
+import {computed} from "vue";
 
 const router = useRouter();
-
+const route = useRoute();
 const goSingerManagement = () => {
   router.push(Behavior.SINGER);
 }
@@ -18,13 +18,17 @@ const goSongManagement = () => {
 const goSongListManagement = () => {
   router.push(Behavior.SONG_LIST);
 }
+
+const activeMenuIndex = computed(() => route.path);
 </script>
 
 
 <template>
   <el-scrollbar height="731px">
-    <el-menu background-color="#545c64" active-text-color="#ffd04b" class="menu">
-      <el-menu-item index="1" @click="goSingerManagement">
+    <el-menu background-color="#545c64" active-text-color="#ffd04b" class="menu" router
+             :default-active="activeMenuIndex">
+      <!--      <el-menu-item index="1" :route="Behavior.SINGER">-->
+      <el-menu-item :index="Behavior.SINGER" :route="Behavior.SINGER">
         <template #title>
           <el-icon>
             <Headset/>
@@ -33,7 +37,8 @@ const goSongListManagement = () => {
         </template>
       </el-menu-item>
 
-      <el-menu-item index="2" @click="goSongManagement">
+      <!--      <el-menu-item index="2" @click="goSongManagement">-->
+      <el-menu-item :index="Behavior.SONG" :route="Behavior.SONG">
         <template #title>
           <el-icon>
             <message/>
@@ -42,7 +47,8 @@ const goSongListManagement = () => {
         </template>
       </el-menu-item>
 
-      <el-menu-item index="3" @click="goSongListManagement">
+      <!--      <el-menu-item index="3" @click="goSongListManagement">-->
+      <el-menu-item :index="Behavior.SONG_LIST" :route="Behavior.SONG_LIST">
         <template #title>
           <el-icon>
             <VideoPlay/>

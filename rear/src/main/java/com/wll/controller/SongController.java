@@ -104,7 +104,9 @@ public class SongController {
 
     @GetMapping(params = "singerId")
     public R getAllSongBySingerId(Integer singerId) {
-        return R.success(songService.list(new LambdaQueryWrapper<Song>().eq(Song::getSingerId, singerId)));
+        return R.success(songService.list(new LambdaQueryWrapper<Song>()
+                .eq(Song::getDeleteFlag, false)
+                .eq(Song::getSingerId, singerId)));
     }
 
 

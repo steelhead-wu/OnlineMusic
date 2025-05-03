@@ -104,9 +104,9 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
         // 更新新的歌词和专辑地址到数据库
 
         return update(new LambdaUpdateWrapper<Song>()
-                .set(Song::getPicture, "%s\\%s".formatted(des_album.substring(des_album.indexOf("\\asset")), album_filename))
-                .set(Song::getLyricUrl, "%s\\%s".formatted(des_lyric.substring(des_lyric.indexOf("\\asset")), lyric_filename))
-                .set(Song::getUrl, "%s\\%s".formatted(des_song.substring(des_song.indexOf("\\asset")), song_filename))
+                .set(Song::getPicture, des_album.substring(des_album.indexOf("\\asset")).concat(album_filename))
+                .set(Song::getLyricUrl, des_lyric.substring(des_lyric.indexOf("\\asset")).concat(lyric_filename))
+                .set(Song::getUrl, des_song.substring(des_song.indexOf("\\asset")).concat(song_filename))
                 .eq(Song::getId, song.getId())
         );
 

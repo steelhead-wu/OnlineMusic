@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9a117984-b94d-4f9c-9a0a-877e7fa25884" name="Changes" comment="improved the speed of files upload speed.">
-      <change beforePath="$PROJECT_DIR$/../management_front/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../management_front/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../management_front/src/api/admin/AdminApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/src/api/admin/AdminApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../management_front/src/views/SingerManagementView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/src/views/SingerManagementView.vue" afterDir="false" />
+    <list default="true" id="9a117984-b94d-4f9c-9a0a-877e7fa25884" name="Changes" comment="add 歌单管理 module">
+      <change beforePath="$PROJECT_DIR$/../front/src/view/songList/SongListDetailView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front/src/view/songList/SongListDetailView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../management_front/src/layout/BasicAside.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/src/layout/BasicAside.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../management_front/src/views/SongManagementView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../management_front/src/views/SongManagementView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/controller/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/controller/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/enums/ResourcesPath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/enums/ResourcesPath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/service/impl/SingerServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/service/impl/SingerServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/controller/SongController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/controller/SongController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/mapper/SongMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/mapper/SongMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/service/impl/SongServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/service/impl/SongServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/wll/utils/FilesUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wll/utils/FilesUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/asset/lyrics/1/仰望星空-张杰.lrc" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,9 +35,9 @@
       <list>
         <option value="MyBatisMapper" />
         <option value="AnnotationType" />
-        <option value="Enum" />
         <option value="Record" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -58,20 +59,21 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/steelheadz/OnlineMusic.git",
-    "accountId": "bf762147-46db-489b-9192-a9610f0157cc"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/steelheadz/OnlineMusic.git&quot;,
+    &quot;accountId&quot;: &quot;bf762147-46db-489b-9192-a9610f0157cc&quot;
   }
-}]]></component>
+}</component>
   <component name="HierarchyBrowserManager">
     <option name="SORT_ALPHABETICALLY" value="true" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.4.3/spring-security-web-6.4.3-sources.jar!/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/src/main/java/com/wll/controller/UserController.java" root0="FORCE_HIGHLIGHTING" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/6.2.3/spring-webmvc-6.2.3-sources.jar!/org/springframework/web/servlet/HandlerExecutionChain.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="jar://$PROJECT_DIR$/../../../../DevTools/Java/jdk-17.0.12/lib/src.zip!/java.base/java/util/AbstractList.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/security/spring-security-web/6.4.3/spring-security-web-6.4.3-sources.jar!/org/springframework/security/web/authentication/UsernamePasswordAuthenticationFilter.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/6.2.3/spring-web-6.2.3-sources.jar!/org/springframework/web/bind/annotation/RequestPart.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/6.2.3/spring-webmvc-6.2.3-sources.jar!/org/springframework/web/servlet/HandlerExecutionChain.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main/java/com/wll/controller/UserController.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -97,40 +99,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Database Script.OM.sql.executor": "Run",
-    "Database Script.OM1.sql.executor": "Run",
-    "Database Script.allsql.sql.executor": "Run",
-    "JUnit.Main.test.executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.OnlineMusicApplication.executor": "Debug",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.OM.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.OM1.sql.executor&quot;: &quot;Run&quot;,
+    &quot;Database Script.allsql.sql.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.Main.test.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.OnlineMusicApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Project/JavaPro/OnlineMusic/rear/src/main/resources/static/asset&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "RunConfigurationTargetLRU": [
-      "b67b982e-5048-4e57-a0a7-0f8797baceb4/schema/\"online_music\"",
-      "b67b982e-5048-4e57-a0a7-0f8797baceb4"
+  &quot;keyToStringList&quot;: {
+    &quot;RunConfigurationTargetLRU&quot;: [
+      &quot;b67b982e-5048-4e57-a0a7-0f8797baceb4/schema/\&quot;online_music\&quot;&quot;,
+      &quot;b67b982e-5048-4e57-a0a7-0f8797baceb4&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -139,15 +143,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources\static\asset" />
       <recent name="D:\Project\JavaPro\OnlineMusic\rear" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources\mapper" />
       <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources\static" />
+      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com" />
       <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\resources\mapper" />
       <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\service\impl" />
       <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\service" />
-      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\pojo" />
-      <recent name="D:\Project\JavaPro\OnlineMusic\rear\src\main\java\com\wll\mapper" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
@@ -157,11 +164,12 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.OnlineMusicApplication">
-    <configuration name="OM1.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
-      <script-file value="$PROJECT_DIR$/OM1.sql" />
-      <script-mode>FILE</script-mode>
-      <data-source id="b67b982e-5048-4e57-a0a7-0f8797baceb4" />
-      <method v="2" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="rear" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="OM.sql" type="DatabaseScript" editBeforeRun="true" temporary="true" nameIsGenerated="true">
       <script-file value="$PROJECT_DIR$/OM.sql" />
@@ -199,7 +207,7 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Database Script.OM1.sql" />
+      <item itemvalue="Application.Main" />
       <item itemvalue="Database Script.OM.sql" />
       <item itemvalue="Database Script.allsql.sql" />
       <item itemvalue="JUnit.Main.test" />
@@ -207,8 +215,9 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.Main.test" />
         <item itemvalue="Spring Boot.OnlineMusicApplication" />
+        <item itemvalue="JUnit.Main.test" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -341,6 +350,12 @@
       <workItem from="1745334035197" duration="4665000" />
       <workItem from="1745369712332" duration="4619000" />
       <workItem from="1745723513987" duration="18141000" />
+      <workItem from="1745900000812" duration="8686000" />
+      <workItem from="1745928761036" duration="11512000" />
+      <workItem from="1745986661683" duration="29696000" />
+      <workItem from="1746072731153" duration="13424000" />
+      <workItem from="1746163802453" duration="11580000" />
+      <workItem from="1746244493818" duration="19493000" />
     </task>
     <task id="LOCAL-00001" summary="First Commitment">
       <created>1737788384629</created>
@@ -650,7 +665,55 @@
       <option name="project" value="LOCAL" />
       <updated>1745664326258</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="''">
+      <option name="closed" value="true" />
+      <created>1745819723420</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1745819723420</updated>
+    </task>
+    <task id="LOCAL-00045" summary="modified the logic of song name and singer name">
+      <option name="closed" value="true" />
+      <created>1745847663224</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1745847663224</updated>
+    </task>
+    <task id="LOCAL-00046" summary="新增功能预览歌词，下载歌词，更新歌手信息。">
+      <option name="closed" value="true" />
+      <created>1745937721134</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1745937721134</updated>
+    </task>
+    <task id="LOCAL-00047" summary="add song management module.">
+      <option name="closed" value="true" />
+      <created>1746017482571</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1746017482571</updated>
+    </task>
+    <task id="LOCAL-00048" summary="complete song management module">
+      <option name="closed" value="true" />
+      <created>1746026212907</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1746026212907</updated>
+    </task>
+    <task id="LOCAL-00049" summary="add 歌单管理 module">
+      <option name="closed" value="true" />
+      <created>1746115128692</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1746115128692</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -705,12 +768,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="add api of 'getAllSongBySingerId'" />
-    <MESSAGE value="add API 'getAllSongList'" />
-    <MESSAGE value="add SongListDetailView.vue" />
-    <MESSAGE value="add API of rating" />
-    <MESSAGE value="add API of updating rating" />
-    <MESSAGE value="add user's comment directory" />
     <MESSAGE value="fix user upload avatar" />
     <MESSAGE value="perfect search function" />
     <MESSAGE value="add SettingsView.vue" />
@@ -730,7 +787,13 @@
     <MESSAGE value="test" />
     <MESSAGE value="add api of updating singer management" />
     <MESSAGE value="improved the speed of files upload speed." />
-    <option name="LAST_COMMIT_MESSAGE" value="improved the speed of files upload speed." />
+    <MESSAGE value="''" />
+    <MESSAGE value="modified the logic of song name and singer name" />
+    <MESSAGE value="新增功能预览歌词，下载歌词，更新歌手信息。" />
+    <MESSAGE value="add song management module." />
+    <MESSAGE value="complete song management module" />
+    <MESSAGE value="add 歌单管理 module" />
+    <option name="LAST_COMMIT_MESSAGE" value="add 歌单管理 module" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -740,16 +803,12 @@
           <line>76</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/wll/service/impl/SingerServiceImpl.java</url>
-          <line>66</line>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="assistantMessage" />
+        <watch expression="bufferedReader" />
       </configuration>
     </watches-manager>
   </component>
