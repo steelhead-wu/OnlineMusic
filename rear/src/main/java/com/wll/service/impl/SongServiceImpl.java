@@ -116,4 +116,16 @@ public class SongServiceImpl extends ServiceImpl<SongMapper, Song> implements IS
     public List<SongDO> searchSong(String keyword) {
         return songMapper.searchSong(keyword);
     }
+
+    public boolean addSongToSongList(Integer songID, Integer songListID) {
+        return songMapper.addSongToSongList(songID, songListID);
+    }
+
+    public boolean deleteSongFromSongList(Integer songID, Integer songListID) {
+        return songMapper.deleteSongFromSongList(songID, songListID);
+    }
+
+    public List<SongDO> searchSongFromSongList(Integer songListID, String kw) {
+        return songMapper.searchSongFromSongList(songListID, kw);
+    }
 }

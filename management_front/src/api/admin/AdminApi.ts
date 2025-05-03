@@ -164,3 +164,30 @@ export const getSongBySongListID = async (songListID: string) => {
     });
 }
 
+export const addSongToSongList = async (songID: string, songListID: string) => {
+    return await myAxios.post(prefix + '/song', null, {
+        params: {
+            songID,
+            songListID,
+        }
+    });
+}
+
+export const deleteSongFromSongList = async (songID: string, songListID: string) => {
+    return await myAxios.put(prefix + '/song', null, {
+        params: {
+            songID,
+            songListID,
+        }
+    });
+}
+
+
+export const searchSongFromSongList = async (songListID: string, kw: string) => {
+    return await myAxios.get(prefix + '/song-list-detail/s', {
+        params: {
+            kw,
+            songListID,
+        }
+    });
+}

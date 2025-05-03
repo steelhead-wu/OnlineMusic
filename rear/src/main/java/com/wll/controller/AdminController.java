@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -203,7 +204,7 @@ public class AdminController {
                 return Result.serverError("照片上传失败", false);
             }
         } else
-            return Result.serverError("新增失败！",false);
+            return Result.serverError("新增失败！", false);
     }
 
     @GetMapping(value = "/song-list/s", params = "keyword")
@@ -212,12 +213,27 @@ public class AdminController {
     }
 
 
-    @GetMapping(value = "/song-list/detail",params = "songListID")
+    @GetMapping(value = "/song-list/detail", params = "songListID")
     public Result getSongBySongListID(Integer songListID) {
         return Result.success(songService.getSongBySongListID(songListID));
     }
 
 
+    @PostMapping(value = "/song", params = {"songID", "songListID"})
+    public Result addSongToSongList(Integer songID, Integer songListID) {
+        boolean b = songService.addSongToSongList(songID, songListID);
+        return b ? Result.success(true) : Result.serverError("添加失败", false);
+    }
 
+    @PutMapping(value = "/song", params = {"songID", "songListID"})
+    public Result deleteSongFromSongList(Integer songID, Integer songListID) {
+        boolean b = songService.deleteSongFromSongList(songID, songListID);
+        return b ? Result.success(true) : Result.serverError("删除失败", false);
+    }
 
+    @GetMapping(value = "/song-list-detail/s", params = {"songListID", "kw"})
+    public Result searchSongFromSongList(Integer songListID, String kw) {
+        List<SongDO> res = songService.searchSongFromSongList(songListID, kw);
+        return res.isEmpty() ? Result.serverError("查询失败", res) : Result.success(res);
+    }
 }

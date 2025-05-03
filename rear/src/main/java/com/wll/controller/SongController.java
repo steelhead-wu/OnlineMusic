@@ -2,6 +2,7 @@ package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wll.enums.ResourcesPath;
+import com.wll.enums.StaticFilePrefixPath;
 import com.wll.pojo.Song;
 import com.wll.service.impl.SongServiceImpl;
 import com.wll.utils.FilesUtils;
@@ -75,8 +76,7 @@ public class SongController {
         String url = song.getUrl();
         // 从类路径加载文件
 //        org.springframework.core.io.Resource resource = new ClassPathResource("static" + url);
-        org.springframework.core.io.Resource resource = new FileSystemResource
-                ("%s%s".formatted(ResourcesPath.SONG_PATH, url.substring(url.lastIndexOf('\\'))));
+        org.springframework.core.io.Resource resource = new FileSystemResource(StaticFilePrefixPath.STATIC_FILE_PREFIX_PATH.getPath().concat(url));
         // 检查文件是否存在
         if (resource.exists()) {
 

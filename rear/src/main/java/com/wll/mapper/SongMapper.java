@@ -32,7 +32,8 @@ public interface SongMapper extends BaseMapper<Song> {
                    album,
                    picture,
                    lyric,
-                   url
+                   url,
+                   lyric_url            
             from song
                      join singer on song.singer_id = singer.id
             where song.id in (select song_id from list_song where song_list_id = #{songListId})
@@ -54,4 +55,10 @@ public interface SongMapper extends BaseMapper<Song> {
 
 
     List<SongDO> searchSong(String keyword);
+
+    boolean addSongToSongList(Integer songID, Integer songListID);
+
+    boolean deleteSongFromSongList(Integer songID, Integer songListID);
+
+    List<SongDO> searchSongFromSongList(Integer songListID, String kw);
 }

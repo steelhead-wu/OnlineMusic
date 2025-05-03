@@ -2,19 +2,16 @@
 
 import {baseURL} from "@/api/request.ts";
 import {onMounted, ref, watch} from "vue";
-import type Song from "@/pojo/Song.ts";
 import {
-  addSong,
-  deleteSongById,
+  addSongToSongList,
+  deleteSongFromSongList,
   download,
   downloadMusic, getSongBySongListID,
-  querySingerByID, searchSong,
+  searchSong,
   updateSongByID
 } from "@/api/admin/AdminApi.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import {ElMessage, ElMessageBox, type UploadRawFile} from "element-plus";
-import {beforeFileUpload} from "@/util/FileUtil.ts";
-import type Singer from "@/pojo/Singer.ts";
 import type SongDO from "@/pojo/DO/SongDO.ts";
 import type Result from "@/util/Result.ts";
 import {useRoute, useRouter} from "vue-router";
@@ -23,7 +20,7 @@ import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import {Plus, Search} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {PictureRepoType} from "@/enums/PictureRepoType.ts";
-import {nonEmpty} from "@/util/StringUtils.ts";
+import {isEmpty, nonEmpty} from "@/util/StringUtils.ts";
 
 const isUploadLyric = ref(false);
 const songData = ref<Array<SongDO>>([])
@@ -33,38 +30,22 @@ const dialogVisible = ref(false);
 const isAddSong = ref(false);
 const router = useRouter();
 const route = useRoute();
-let singers: Array<Singer> = [];
 const search_res = ref<Array<SongDO>>([]);
 
 const searchStore = useSearchStore();
-watch(() => currentSong.value.title, () => {
-  console.log(currentSong.value.title);
-  if (currentSong.value.title != undefined) {
-    let kw = currentSong.value.title.trim()
-    if (nonEmpty(kw)) {
-      search(kw);
-      return;
-    }
-  }
-  search_res.value = [];
+watch(() => searchStore.getContext, () => {
+  songData.value = searchStore.getContext;
 })
 
 const search = async (kw: string) => {
   const res = await searchSong(kw);
   if (res.data.code == HttpStatusCode.OK) {
     search_res.value = res.data.data;
-    console.log(res.data.data);
-    // currentSong.value.title = res.data.data.title;
-    // currentSong.value.singerName = res.data.data.singerName;
-    // currentSong.value.album = res.data.data.album;
   }
 }
 
 onMounted(async () => {
-  // query all singers
-  const singer: Singer = {};
-  const res = await querySingerByID(singer);
-  singers = res.data.data;
+
 
   // query all songs
   getSongBySongListID(route.params.id as string).then(value => {
@@ -75,15 +56,9 @@ onMounted(async () => {
 })
 
 
-const edit = (song: SongDO) => {
-  currentSong.value = {...song};
-  dialogVisible.value = true;
-  isAddSong.value = false;
-}
-
-const confirm_delete = (id: string) => {
+const confirm_delete = (songID: string, songListID: string) => {
   ElMessageBox.confirm(
-      '确认要删除这个歌曲信息吗？',
+      '确认要这个歌单中删除这个歌曲信息吗？',
       '确认删除',
       {
         confirmButtonText: '确认',
@@ -92,10 +67,9 @@ const confirm_delete = (id: string) => {
       }
   ).then(value => {
     if (value === 'confirm') {
-      deleteSongById(id).then(value => {
+      deleteSongFromSongList(songID, songListID).then(value => {
             if (value.data.code === 200) {
               sessionStorage.setItem('showSuccessMessage', '删除成功！');
-              dialogVisible.value = false;
               router.go(0);
             } else {
               ElMessage({
@@ -207,7 +181,7 @@ const downloadLyricFile = async (song: SongDO) => {
 
 const updateEdit = async () => {
   if (isAddSong.value) {
-    const res = await addSong(currentSong.value);
+    const res = await addSongToSongList(currentSong.value.id, route.params.id);
     if (res.data.code == HttpStatusCode.OK) {
       sessionStorage.setItem('showSuccessMessage', '添加成功！')
       dialogVisible.value = false;
@@ -266,7 +240,20 @@ const downloadSong = async (song: SongDO) => {
   document.body.removeChild(eleLink); // 移除
 }
 
-const value = ref('')
+const choose = (song: SongDO) => {
+  currentSong.value = song;
+  search_res.value = [];
+}
+
+
+const handleSearchBoxChange = (kw: string) => {
+  kw = kw.trim();
+  if (isEmpty(kw)) {
+    search_res.value = [];
+    return;
+  }
+  search(kw);
+}
 
 </script>
 
@@ -313,8 +300,7 @@ const value = ref('')
 
     <el-table-column label="操作" align="left" header-align="center">
       <template #default="s">
-        <el-button type="primary" @click="edit(s.row)">编辑</el-button>
-        <el-button type="danger" @click="confirm_delete(s.row.id )">删除</el-button>
+        <el-button type="danger" @click="confirm_delete(s.row.id,route.params.id)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -327,8 +313,11 @@ const value = ref('')
     <template #default>
       <el-form :model="currentSong" label-width="120px">
         <el-form-item label="歌名">
-          <el-input v-model="currentSong.title" placeholder="输入歌手或者歌名进行搜索"
-                    @keyup.enter="search"
+          <el-input
+              v-model="currentSong.title"
+              placeholder="输入歌手、歌名或者专辑进行搜索"
+              @keyup.enter="search"
+              @input="handleSearchBoxChange"
           >
             <template #append>
               <el-button :icon="Search" @click="search"/>
@@ -336,8 +325,8 @@ const value = ref('')
           </el-input>
           <div v-if="search_res.length>0" class="autocomplete-items">
             <ul>
-              <li v-for="song in search_res" :key="song.id">
-                <strong style="display: flex;justify-content: space-between;">
+              <li v-for="(song) in search_res" :key="song.id">
+                <strong style="display: flex;justify-content: space-between;" @click="choose(song)">
                   <span>{{ song.title }} </span>
                   <span>{{ song.singerName }}</span>
                 </strong>
@@ -351,26 +340,7 @@ const value = ref('')
         </el-form-item>
 
         <el-form-item label="专辑">
-          <!--          上传专辑-->
           <el-input :placeholder="currentSong.album" disabled/>
-          <!--          <el-upload-->
-          <!--              name="blob"-->
-          <!--              :action="baseURL + '/api/files/upload'"-->
-          <!--              :data="{-->
-          <!--                        'Picture-Repo-Type': PictureRepoType.ALBUM_AVATAR,-->
-          <!--                        'ID': currentSong.id,-->
-          <!--                        }"-->
-          <!--              :show-file-list="false"-->
-          <!--              :on-success="handleAlbumPictureSuccess"-->
-          <!--              :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]))"-->
-          <!--              with-credentials-->
-          <!--          >-->
-          <!--            &lt;!&ndash;            <el-image v-if="currentSong.picture" style="width: 100px;height: 100px;top:5px"&ndash;&gt;-->
-          <!--            &lt;!&ndash;                      :src="baseURL + currentSong.picture"/>&ndash;&gt;-->
-          <!--            &lt;!&ndash;            <el-button style="margin-left: 5px" type="info">上传专辑照片</el-button>&ndash;&gt;-->
-
-          <!--          </el-upload>-->
-
         </el-form-item>
       </el-form>
     </template>
