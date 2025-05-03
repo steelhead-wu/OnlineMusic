@@ -13,7 +13,6 @@ import {
   updateSongByID
 } from "@/api/admin/AdminApi.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
-import {PictureRepoType} from "@/enums/PictureRepoType.ts";
 import {ElMessage, ElMessageBox, type UploadRawFile} from "element-plus";
 import {beforeFileUpload} from "@/util/FileUtil.ts";
 import type Singer from "@/pojo/Singer.ts";
@@ -24,12 +23,14 @@ import type Transfer from "@/pojo/Transfer.ts";
 import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import {Plus} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
+import {PictureRepoType} from "@/enums/PictureRepoType.ts";
 
 const isUploadLyric = ref(false);
 const songData = ref<Array<SongDO>>([])
 const currentSong = ref<SongDO>({});
 const dialogVisible = ref(false);
-const opt = ref(false);
+// 判断是添加歌曲还是编辑歌曲
+const isAddSong = ref(false);
 const router = useRouter();
 
 let singers: Array<Singer> = [];
@@ -59,6 +60,7 @@ onMounted(async () => {
 const edit = (song: SongDO) => {
   currentSong.value = {...song};
   dialogVisible.value = true;
+  isAddSong.value = false;
 }
 
 const confirm_delete = (id: string) => {
@@ -96,7 +98,6 @@ const confirm_delete = (id: string) => {
 
 // 处理专辑照片上传成功后处理的函数
 const handleAlbumPictureSuccess = (response: Result, uploadFile: UploadRawFile) => {
-  isUploadLyric.value = true;
   currentSong.value.picture = response.link.substring(response.link.indexOf("\\asset"));
   ElMessage.success('专辑照片上传成功！');
 }
@@ -187,7 +188,7 @@ const downloadLyricFile = async (song: SongDO) => {
 }
 
 const updateEdit = async () => {
-  if (opt.value) {
+  if (isAddSong.value) {
     const res = await addSong(currentSong.value);
     if (res.data.code == HttpStatusCode.OK) {
       sessionStorage.setItem('showSuccessMessage', '添加成功！')
@@ -219,7 +220,7 @@ const updateEdit = async () => {
 const add = () => {
   currentSong.value = {id: '0'};
   dialogVisible.value = true;
-  opt.value = true;
+  isAddSong.value = true;
 }
 // 下载歌曲
 const downloadSong = async (song: SongDO) => {

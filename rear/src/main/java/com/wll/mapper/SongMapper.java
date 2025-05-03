@@ -40,9 +40,11 @@ public interface SongMapper extends BaseMapper<Song> {
     List<SongDO> getSongBySongListID(Integer songListId);
 
 
-    @Select("SELECT song.id,singer_id,title,album,picture,lyric,url,s.id AS singer_id," +
-            "s.name,s.pic,s.sex,s.birth,s.introduction,s.location,s.song_number,s.album_number FROM song " +
-            "left join singer s on song.singer_id = s.id WHERE (title LIKE  concat('%', #{kw},'%'))")
+    @Select("""
+            SELECT song.id,singer_id,title,album,picture,lyric,url,s.id AS singer_id,
+            s.name as singerName,s.pic,s.sex,s.birth,s.introduction,s.location,s.song_number,s.album_number FROM song
+            left join singer s on song.singer_id = s.id WHERE (title LIKE  concat('%', #{kw},'%') or s.name LIKE  concat('%', #{kw},'%') )
+            """)
     List<Map<String, Object>> searchSongByTitle(String kw);
 
     List<SongDO> getLikedSongByUserId(long userId);

@@ -98,10 +98,10 @@ const doDropDown = (dropdown) => {
             style="max-width: 600px; top: 20px;"
             placeholder="请输入内容"
             class="input-with-select "
-
+            @keyup.enter="search"
         >
           <template #append>
-            <el-button :icon="Search" @click="search"/>
+            <el-button :icon="Search"  @click="search"/>
           </template>
           <!--            <template #prepend>-->
           <!--              <el-select v-model="select" placeholder="歌曲" style="width: 115px">-->

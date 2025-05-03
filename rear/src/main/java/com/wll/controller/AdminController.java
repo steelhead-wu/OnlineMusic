@@ -212,6 +212,12 @@ public class AdminController {
     }
 
 
+    @GetMapping(value = "/song-list/detail",params = "songListID")
+    public Result getSongBySongListID(Integer songListID) {
+        return Result.success(songService.getSongBySongListID(songListID));
+    }
+
+
 
 
 }

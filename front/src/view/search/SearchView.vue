@@ -5,6 +5,7 @@ import {searchSong} from "@/api/song/SongApi";
 import {baseURL} from "@/api/request";
 import {useSingersStore} from "@/store/SingersStore";
 import SongList from "@/components/song/SongList.vue";
+import type SongDO from "@/pojo/DO/SongDO.ts";
 
 
 const route = useRoute();
@@ -18,7 +19,7 @@ watch(() => route.query.kw, fetchData, {immediate: true})
 
 const singersStore = useSingersStore();
 
-const tableData = ref(null);
+const tableData = ref<Array<SongDO>>([]);
 
 async function fetchData(kw: string) {
   searchSong(kw).then(value => {
@@ -26,18 +27,19 @@ async function fetchData(kw: string) {
     isShow.value = data.value.length != 0;
     console.log('isShow.value', isShow.value);
     console.log(data.value);
-    tableData.value = [];
+
     if (isShow.value) {
       setTimeout(() => {
         loading_toggle.value = false;
       }, 250);
-
-      for (const song of data.value) {
-        const split = song.title?.split('-');
-        song['song'] = split[1];
-        song['singer'] = split[0];
-        tableData.value.push(song);
-      }
+      tableData.value = value.data.data;
+      // tableData.value = value.data
+      // for (const song of data.value) {
+      //   const split = song.title?.split('-');
+      //   song['song'] = split[1];
+      //   song['singer'] = split[0];
+      //   tableData.value.push(song);
+      // }
     } else {
 
     }
@@ -55,7 +57,7 @@ async function fetchData(kw: string) {
           <el-avatar class="avatar" :src="baseURL + data[0].pic"/>
         </el-aside>
         <el-main>
-          <span class="singer_name" @click="">{{ data[0].name }}</span>
+          <span class="singer_name" @click="">{{ data[0].singerName }}</span>
           <span class="song-number">单曲 {{ data[0].song_number }}</span>
           <span class="album-number">专辑 {{ data[0].album_number }}</span>
         </el-main>

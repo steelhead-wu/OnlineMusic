@@ -28,6 +28,10 @@ const router = createRouter({
                     path: Behavior.SONG_LIST,
                     component: SongListManagementView,
                 },
+                {
+                    path: Behavior.SONG_LIST_DETAIL + '/:id(\\d+)',
+                    component: SongListDetailsView,
+                },
             ]
         },
         {
@@ -38,10 +42,7 @@ const router = createRouter({
             path: Behavior.SIGN_UP,
             component: RegistryView,
         },
-        {
-            path: Behavior.SONG_LIST_DETAIL + '/:id(\\d+)',
-            component: SongListDetailsView,
-        },
+
 
     ],
 })

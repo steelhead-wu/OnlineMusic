@@ -155,3 +155,12 @@ export const searchSongList = async (keyword: string) => {
         }
     });
 }
+
+export const getSongBySongListID = async (songListID: string) => {
+    return await myAxios.get(prefix + '/song-list/detail', {
+        params: {
+            songListID
+        }
+    });
+}
+

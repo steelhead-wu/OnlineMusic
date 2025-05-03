@@ -25,6 +25,7 @@ import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import type Result from "@/util/Result.ts";
 import {Plus} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
+import {Behavior} from "@/enums/Behavior.ts";
 
 const songListData = ref<Array<SongList>>([]);
 const editing = ref({
@@ -59,10 +60,11 @@ onMounted(async () => {
 });
 const inputRef = ref();
 
+
 const handleDBLClick = (row: any, column: any, cell: HTMLTableCellElement, event: Event): void => {
+
   editing.value.row = {...row}
   editing.value.col = {...column}
-
   // 解决无法聚焦
   nextTick(() => {
     inputRef.value.focus();
@@ -79,7 +81,6 @@ const handleEditing = (songList: SongList, rawSongList: SongList) => {
       || songList.introduction != rawSongList.introduction || songList.style != rawSongList.style) {
     handleBlur(songList);
   }
-
   resetEditing();
 }
 
@@ -165,7 +166,6 @@ const handleAddSongList = async (options: UploadRequestOptions) => {
     type: 'application/json'
   });
 
-  console.log(data);
   const res = await addSongList(data);
 
   if (res.data.code == HttpStatusCode.OK) {
@@ -352,7 +352,7 @@ const updateEdit = () => {
           <el-input ref="inputRef" type="number" max="5" min="0" v-model="editing.row.rating"
                     placeholder="输入0-5的整数"
                     @input="validateInput"
-                    @blur="handleEditing(editing.row,s.row)"
+                    @blur="handleEditing(editing.row,s.row) "
                     @keyup.enter="handleEditing(editing.row,s.row)"></el-input>
           <span v-if="inputError" style="color: red">{{ errorMessage }}</span>
         </div>
@@ -367,8 +367,8 @@ const updateEdit = () => {
 
     <el-table-column label="操作" align="left" header-align="center" width="auto">
       <template #default="s">
-        <!--        <el-button type="primary" @click="edit(s.row)">编辑</el-button>-->
-        <div style="display: flex;justify-content: center">
+        <div style="display: flex;flex-direction: row; justify-content: center">
+          <el-button type="primary" @click="router.push(Behavior.SONG_LIST_DETAIL.concat('/',s.row.id))">查看</el-button>
           <el-button type="danger" @click="confirm_delete(s.row.id)">删除</el-button>
         </div>
       </template>
