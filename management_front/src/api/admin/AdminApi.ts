@@ -16,12 +16,25 @@ export const registry = async (registryAdmin: Admin) => {
     return await myAxios.post(prefix + '/registry', registryAdmin);
 }
 
+
+export const deleteAdminByID = async (id: string) => {
+    return await myAxios.delete(prefix, {
+        params: {
+            id
+        }
+    });
+}
+
+export const updateAdminByID = async (admin: Admin) => {
+    return await myAxios.put(prefix, admin);
+}
+
 export const querySingerByID = async (singer: Singer) => {
     return await myAxios.post(prefix + '/singer', singer);
 }
 
 
-export const deleteSingerById = async (id: number) => {
+export const deleteSingerById = async (id: string) => {
     return await myAxios.put(prefix + '/singer/delete', null, {
         params: {
             id

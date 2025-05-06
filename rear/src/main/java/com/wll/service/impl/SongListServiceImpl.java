@@ -95,13 +95,14 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
     public List<SongList> searchSongList(String keyword) {
         return list(new LambdaQueryWrapper<SongList>()
                 .eq(SongList::getDeleteFlag, false)
-                .and((t) -> t.like(StringUtils.isNotEmpty(keyword), SongList::getTitle, keyword)
+                .and(StringUtils.isNotEmpty(keyword), t -> t
+                        .like(SongList::getTitle, keyword)
                         .or()
-                        .like(StringUtils.isNotEmpty(keyword), SongList::getStyle, keyword)
+                        .like(SongList::getStyle, keyword)
                         .or()
-                        .like(StringUtils.isNotEmpty(keyword), SongList::getRating, keyword)
+                        .like(SongList::getRating, keyword)
                         .or()
-                        .like(StringUtils.isNotEmpty(keyword), SongList::getIntroduction, keyword))
+                        .like(SongList::getIntroduction, keyword))
 
         );
     }

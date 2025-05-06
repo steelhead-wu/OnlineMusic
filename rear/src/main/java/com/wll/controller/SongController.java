@@ -1,19 +1,15 @@
 package com.wll.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.wll.enums.ResourcesPath;
 import com.wll.enums.StaticFilePrefixPath;
 import com.wll.pojo.Song;
 import com.wll.service.impl.SongServiceImpl;
-import com.wll.utils.FilesUtils;
 import com.wll.utils.R;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import jakarta.annotation.Resource;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Objects;
 

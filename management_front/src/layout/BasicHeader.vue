@@ -8,6 +8,7 @@ import {Behavior} from "@/enums/Behavior.ts";
 import {searchSinger, searchSong, searchSongFromSongList, searchSongList} from "@/api/admin/AdminApi.ts";
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
+import {dropDownList, UserDropDown} from "@/enums/UserDropDown.ts";
 
 const adminStore = useAdminStore();
 const keyword = ref<string>('');
@@ -46,6 +47,30 @@ const search = async () => {
     }
   }
 }
+
+const doDropDown = (dropdown: object) => {
+  // console.log("进入doDropDown");
+  // console.log(JSON.stringify(userStore));
+  // console.log(JSON.stringify(globalStatusStore));
+  // console.log(userStore.getLoginUser);
+  if (dropdown.name === UserDropDown.SIGN_OUT) {
+    // userStore.isOnline = false;
+    localStorage.removeItem('admin');
+
+    router.push(Behavior.SIGN_IN);
+
+    // document.cookie = `${CookiesName.US_AU}=;Max-Age=0`;
+
+    return;
+  } else if (dropdown.name === UserDropDown.PERSONAL) {
+
+  } else if (dropdown.name === UserDropDown.SETTINGS) {
+
+  } else {
+
+  }
+  router.push(dropdown.path);
+}
 </script>
 
 <template>
@@ -70,7 +95,18 @@ const search = async () => {
       </el-input>
     </div>
     <div class="avatar-area">
-      <img class="avatar" :src="baseURL+adminStore.getAdmin?.avatar">
+      <el-dropdown class="avatar" size="default" trigger="hover">
+        <template #default>
+          <el-avatar style="width: 90px;height: 90px;border-radius: 50%" :src="baseURL+adminStore.getAdmin?.avatar"/>
+        </template>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item v-for="(dropdown,idx) in dropDownList" :key="idx" @click="doDropDown(dropdown)">
+              {{ dropdown.name }}
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </div>
   </div>
 </template>
@@ -124,9 +160,6 @@ const search = async () => {
       margin-right: 20px;
       margin-top: 2px;
       float: right;
-      border-radius: 50%;
-      width: 90px;
-      height: 90px;
     }
   }
 }

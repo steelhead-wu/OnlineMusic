@@ -38,9 +38,9 @@ onMounted(() => {
 
 
 // delete singer
-const confirm_delete = (id: number) => {
+const confirm_delete = (singer: Singer) => {
   ElMessageBox.confirm(
-      '确认要删除这个歌手信息吗？',
+      `确认要删除歌手${singer.name}信息吗？`,
       '确认删除',
       {
         confirmButtonText: '确认',
@@ -49,7 +49,7 @@ const confirm_delete = (id: number) => {
       }
   ).then(value => {
     if (value === 'confirm') {
-      deleteSingerById(id).then(value => {
+      deleteSingerById(singer.id).then(value => {
             if (value.data.code === 200) {
               ElMessage({
                 type: 'success',
@@ -165,7 +165,7 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
     <el-table-column label="操作" align="left" header-align="center">
       <template #default="s">
         <el-button type="primary" @click="edit(s.row )">编辑</el-button>
-        <el-button type="danger" @click="confirm_delete(s.row.id )">删除</el-button>
+        <el-button type="danger" @click="confirm_delete(s.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>

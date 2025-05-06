@@ -63,9 +63,9 @@ const edit = (song: SongDO) => {
   isAddSong.value = false;
 }
 
-const confirm_delete = (id: string) => {
+const confirm_delete = (song: SongDO) => {
   ElMessageBox.confirm(
-      '确认要删除这个歌曲信息吗？',
+      `确认要删除歌曲《${song.title}》的信息吗？`,
       '确认删除',
       {
         confirmButtonText: '确认',
@@ -74,7 +74,7 @@ const confirm_delete = (id: string) => {
       }
   ).then(value => {
     if (value === 'confirm') {
-      deleteSongById(id).then(value => {
+      deleteSongById(song.id).then(value => {
             if (value.data.code === 200) {
               sessionStorage.setItem('showSuccessMessage', '删除成功！');
               dialogVisible.value = false;
@@ -254,7 +254,7 @@ const downloadSong = async (song: SongDO) => {
 <template>
   <div class="add-context">
     <!--    add singer-->
-    <el-icon class="animated-icon" size="32" color="red" @click="add" title="新增歌手">
+    <el-icon class="animated-icon" size="32" color="red" @click="add" title="新增歌曲">
       <template #default>
 
         <Plus/>
@@ -294,7 +294,7 @@ const downloadSong = async (song: SongDO) => {
     <el-table-column label="操作" align="left" header-align="center">
       <template #default="s">
         <el-button type="primary" @click="edit(s.row)">编辑</el-button>
-        <el-button type="danger" @click="confirm_delete(s.row.id )">删除</el-button>
+        <el-button type="danger" @click="confirm_delete(s.row)">删除</el-button>
       </template>
     </el-table-column>
   </el-table>

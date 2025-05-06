@@ -7,6 +7,7 @@ import SingerManagementView from "@/views/SingerManagementView.vue";
 import SongManagementView from "@/views/SongManagementView.vue";
 import SongListManagementView from "@/views/SongListManagement/SongListManagementView.vue";
 import SongListDetailsView from "@/views/SongListManagement/SongListDetailsView.vue";
+import SettingsView from "@/views/admin/SettingsView.vue";
 
 
 const router = createRouter({
@@ -31,6 +32,10 @@ const router = createRouter({
                 {
                     path: Behavior.SONG_LIST_DETAIL + '/:id(\\d+)',
                     component: SongListDetailsView,
+                },
+                {
+                    path: Behavior.SETTINGS,
+                    component: SettingsView,
                 },
             ]
         },

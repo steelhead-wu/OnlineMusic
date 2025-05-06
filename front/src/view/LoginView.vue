@@ -179,7 +179,7 @@ const signUp = () => {
   <div id="userForm">
     <div class="Ad-word">
       <h1 :style="ad_word_h1">
-        欢迎{{ globalStatusStore.isLogin ? '登录' : '注册' }}XX音乐
+        欢迎{{ globalStatusStore.isLogin ? '登录' : '注册' }}在线音乐
       </h1>
       <h3 :style="/*{position:'fixed',bottom:bot}*/ad_word_h3">烦恼时，放松自己。</h3>
 

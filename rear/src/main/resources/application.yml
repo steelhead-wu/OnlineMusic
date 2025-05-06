@@ -59,6 +59,21 @@ spring:
     user:
       password: 123
 
+  mail:
+    host: smtp.qq.com
+    username: 691523943@qq.com
+    password: sdmmzwilojhobbjh
+    protocol: smtp
+    default-encoding: utf-8
+    ssl:
+      enabled: true
+    properties:
+      "[mail.smtp.connectiontimeout]": 5000
+      "[mail.smtp.timeout]": 3000
+      "[mail.smtp.writetimeout]": 5000
+      "[mail.smtp.port]": 465
+
+
 
 
 

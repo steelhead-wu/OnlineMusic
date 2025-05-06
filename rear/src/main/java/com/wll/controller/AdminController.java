@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -71,6 +72,34 @@ public class AdminController {
             return Result.success("注册成功", res);
         } else {
             return Result.other(HTTPStatus.CLIENT_ERROR.getCode(), "不合规范", res);
+        }
+    }
+
+
+    @DeleteMapping(params = "id")
+    public Result deleteAdminByID(Long id) {
+        boolean res = adminService.updateAdminByID(Admin.builder()
+                .id(id)
+                .deleteFlag(true)
+                .build()
+        );
+
+        if (res) {
+            return Result.success("删除成功", res);
+        } else {
+            return Result.other(HTTPStatus.CLIENT_ERROR.getCode(), "删除失败", res);
+        }
+    }
+
+
+    @PutMapping
+    public Result updateAdminByID(@RequestBody Admin admin) {
+        boolean res = adminService.updateAdminByID(admin);
+
+        if (res) {
+            return Result.success("更新成功", res);
+        } else {
+            return Result.other(HTTPStatus.CLIENT_ERROR.getCode(), "更新失败", res);
         }
     }
 

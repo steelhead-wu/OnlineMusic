@@ -107,15 +107,24 @@ const handleBlur = (songList: SongList) => {
 }
 
 
-const confirm_delete = async (id: string) => {
-  const res = await deleteSongListByID(id);
-  if (res.data.code === HttpStatusCode.OK) {
-    sessionStorage.setItem('showSuccessMessage', '删除成功！');
-    router.go(0);
-  } else {
-    ElMessage.error("删除失败！");
-  }
-
+const confirm_delete = async (songList: SongList) => {
+  ElMessageBox.confirm(
+      `确认要删除歌单《${songList.title}》吗？`,
+      '确认删除',
+      {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }
+  ).then(async () => {
+    const res = await deleteSongListByID(songList.id);
+    if (res.data.code === HttpStatusCode.OK) {
+      sessionStorage.setItem('showSuccessMessage', '删除成功！');
+      router.go(0);
+    } else {
+      ElMessage.error("删除失败！");
+    }
+  })
 }
 
 const uploadImg = async (option: UploadRequestOptions) => {
@@ -368,8 +377,9 @@ const updateEdit = () => {
     <el-table-column label="操作" align="left" header-align="center" width="auto">
       <template #default="s">
         <div style="display: flex;flex-direction: row; justify-content: center">
-          <el-button type="primary" @click="router.push(Behavior.SONG_LIST_DETAIL.concat('/',s.row.id))">查看</el-button>
-          <el-button type="danger" @click="confirm_delete(s.row.id)">删除</el-button>
+          <el-button type="primary" @click="router.push(Behavior.SONG_LIST_DETAIL.concat('/',s.row.id))">查看
+          </el-button>
+          <el-button type="danger" @click="confirm_delete(s.row)">删除</el-button>
         </div>
       </template>
     </el-table-column>

@@ -7,8 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -20,6 +19,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("admin")
 public class Admin implements Serializable {
 
@@ -36,4 +38,7 @@ public class Admin implements Serializable {
 
     @TableField("avatar")
     private String avatar;
+
+    @TableField("delete_flag")
+    private Boolean deleteFlag;
 }

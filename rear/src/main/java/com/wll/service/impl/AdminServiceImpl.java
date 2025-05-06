@@ -1,6 +1,7 @@
 package com.wll.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.wll.pojo.Admin;
 import com.wll.mapper.AdminMapper;
 import com.wll.service.IAdminService;
@@ -35,8 +36,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
 
     public Admin login(Admin loginAdmin) {
         return getOne(new LambdaQueryWrapper<Admin>()
-                .eq(Objects.nonNull(loginAdmin.getUsername()), Admin::getUsername, loginAdmin.getUsername())
-                .eq(Objects.nonNull(loginAdmin.getPassword()), Admin::getPassword, loginAdmin.getPassword()));
+                .eq(StringUtils.isNotEmpty(loginAdmin.getUsername()), Admin::getUsername, loginAdmin.getUsername())
+                .eq(StringUtils.isNotEmpty(loginAdmin.getPassword()), Admin::getPassword, loginAdmin.getPassword())
+                .eq(Admin::getDeleteFlag, false)
+        );
     }
 
     public boolean registry(Admin registryAdmin) {
@@ -55,5 +58,21 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         }
 
         return save(registryAdmin);
+    }
+
+    public boolean updateAdminByID(Admin admin) {
+        return update(new LambdaUpdateWrapper<Admin>()
+                .set(StringUtils.isNotEmpty(admin.getUsername()), Admin::getUsername, admin.getUsername())
+                .set(StringUtils.isNotEmpty(admin.getPassword()), Admin::getPassword, admin.getPassword())
+                .set(StringUtils.isNotEmpty(admin.getAvatar()), Admin::getAvatar, admin.getAvatar())
+                .set(Objects.nonNull(admin.getDeleteFlag()), Admin::getDeleteFlag, admin.getDeleteFlag())
+                .eq(Objects.nonNull(admin.getId()), Admin::getId, admin.getId())
+        );
+
+    }
+
+    public boolean deleteAdminByID(Long id) {
+
+        return false;
     }
 }
