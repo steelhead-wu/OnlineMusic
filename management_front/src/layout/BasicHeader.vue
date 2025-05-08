@@ -9,6 +9,7 @@ import {searchSinger, searchSong, searchSongFromSongList, searchSongList} from "
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import {dropDownList, UserDropDown} from "@/enums/UserDropDown.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 const adminStore = useAdminStore();
 const keyword = ref<string>('');
@@ -56,7 +57,7 @@ const doDropDown = (dropdown: object) => {
   if (dropdown.name === UserDropDown.SIGN_OUT) {
     // userStore.isOnline = false;
     localStorage.removeItem('admin');
-
+    document.cookie = `${CookiesName.AD_AU}=;Max-Age=0`;
     router.push(Behavior.SIGN_IN);
 
     // document.cookie = `${CookiesName.US_AU}=;Max-Age=0`;

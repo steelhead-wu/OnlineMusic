@@ -16,7 +16,16 @@ public class HTTPUtils {
 
 
     public static Object validateCookie(Cookie cookie) {
-        User user = JWTUtils.verify(cookie.getValue(), "user");
+//        User user = JWTUtils.verify(cookie.getValue(), "user");
+        User user = JWTUtils.verify(cookie.getValue(), "user", User.class);
+
+        return user;
+    }
+
+
+    public static <T> T validateToken(String token, Class<T> clazz) {
+//        User user = JWTUtils.verify(cookie.getValue(), "user");
+        T user = JWTUtils.verify(token, "user", clazz);
 
         return user;
     }

@@ -17,11 +17,11 @@ import {logoff, updateUserById} from "@/api/user/UserApi";
 import {PictureRepoType} from "@/enum/PictureRepoType";
 import {baseURL} from "@/api/request";
 import {formatDate, getFormatTime} from "@/api/utils/MyUtils";
-import {useRouter} from "vue-router";
 import router from "@/routers/router";
 import {Behavior} from "@/enum/Behavior";
 import {beforeFileUpload} from "@/api/utils/FileUtil.ts";
 import {HttpStatusCode} from "axios";
+import type {User} from "@/pojo/User.ts";
 
 
 const userStore = useUserStore();

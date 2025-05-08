@@ -1,4 +1,6 @@
 import axios from "axios";
+import {CookiesName} from "@/enums/CookiesName.ts";
+import {Cookie} from "@/util/Cookie.ts";
 
 
 export const baseURL = 'http://localhost:80';
@@ -6,24 +8,24 @@ export const baseURL = 'http://localhost:80';
 const myAxios = axios.create({
     baseURL,
     timeout: 10000,
-    withCredentials: true
-
+    withCredentials: true,
 })
 
-
-// 添加请求拦截器
-axios.interceptors.request.use(function (config) {
-    // 在发送请求之前做些什么
-    console.log("进入请求拦截器");
-    return config;
+myAxios.interceptors.request.use(function (req) {
+    console.log("进入请求拦截器1");
+    let ad_au = Cookie.get(CookiesName.AD_AU);
+    if (ad_au) {
+        req.headers.Authorization = ad_au;
+    }
+    return req;
 }, function (error) {
     // 对请求错误做些什么
     return Promise.reject(error);
 });
 
-// 添加响应拦截器
-axios.interceptors.response.use(function (response) {
-    console.log("进入响应拦截器");
+
+myAxios.interceptors.response.use(function (response) {
+    console.log("进入响应拦截器1");
     // 2xx 范围内的状态码都会触发该函数。
     // 对响应数据做点什么
     return response;
@@ -32,6 +34,7 @@ axios.interceptors.response.use(function (response) {
     // 对响应错误做点什么
     return Promise.reject(error);
 });
+
 
 export default myAxios;
 

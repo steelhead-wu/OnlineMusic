@@ -9,10 +9,10 @@ export enum UserDropDown {
 
 
 export const dropDownList = [
-    {
-        name: UserDropDown.PERSONAL,
-        path: Behavior.PERSONAL,
-    },
+    // {
+    //     name: UserDropDown.PERSONAL,
+    //     path: Behavior.PERSONAL,
+    // },
     {
         name: UserDropDown.SETTINGS,
         path: Behavior.SETTINGS,

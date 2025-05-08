@@ -2,19 +2,13 @@ package com.wll.controller;
 
 import com.wll.enums.HTTPStatus;
 import com.wll.enums.ResourcesPath;
-import com.wll.pojo.Admin;
+import com.wll.pojo.*;
 import com.wll.pojo.DO.SongDO;
-import com.wll.pojo.Singer;
-import com.wll.pojo.Song;
-import com.wll.pojo.SongList;
 import com.wll.service.impl.AdminServiceImpl;
 import com.wll.service.impl.SingerServiceImpl;
 import com.wll.service.impl.SongListServiceImpl;
 import com.wll.service.impl.SongServiceImpl;
-import com.wll.utils.FilesUtils;
-import com.wll.utils.R;
-import com.wll.utils.Result;
-import com.wll.utils.StringUtils;
+import com.wll.utils.*;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
@@ -59,7 +53,9 @@ public class AdminController {
         if (Objects.isNull(admin)) {
             return Result.other(HTTPStatus.CLIENT_ERROR.getCode(), "用户名或者密码错误", null);
         } else {
-            return Result.success("登录成功", admin);
+            return Result.success("登录成功",
+                    List.of(admin, JWTUtils.create(Map.of("admin", admin), 1000 * 60 * 60 * 24 * 3))
+            );
         }
     }
 

@@ -33,14 +33,24 @@ public class JWTUtils {
         return sign;
     }
 
-
-    public static User verify(String sign, String attribute) throws JWTVerificationException, TokenExpiredException {
+    public static <T> T verify(String sign, String attribute, Class<T> clazz) throws JWTVerificationException {
         Algorithm algorithm = Algorithm.HMAC256("123");
         JWTVerifier verifier = JWT.require(algorithm).build();
 
         DecodedJWT jwt = verifier.verify(sign); // 验证JWT
 
         Claim user = jwt.getHeaderClaim(attribute);
-        return user.as(User.class);
+        return user.as(clazz);
     }
+
+
+//    public static User verify(String sign, String attribute) throws JWTVerificationException, TokenExpiredException {
+//        Algorithm algorithm = Algorithm.HMAC256("123");
+//        JWTVerifier verifier = JWT.require(algorithm).build();
+//
+//        DecodedJWT jwt = verifier.verify(sign); // 验证JWT
+//
+//        Claim user = jwt.getHeaderClaim(attribute);
+//        return user.as(User.class);
+//    }
 }

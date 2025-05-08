@@ -1,15 +1,14 @@
 package com.wll.config;
 
-import com.alibaba.druid.support.json.JSONUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wll.pojo.Admin;
 import com.wll.pojo.User;
 import com.wll.utils.HTTPUtils;
+import com.wll.utils.JWTUtils;
 import com.wll.utils.R;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.ai.model.Media;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,10 +18,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Objects;
 
@@ -54,39 +53,33 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addInterceptor(new HandlerInterceptor() {
                     @Override
                     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-                        Cookie[] cookies = request.getCookies();
                         String path = request.getRequestURI();
                         System.out.println("Request Path: " + path);
                         System.out.println("Request Method: " + request.getMethod());
                         System.out.println("Request Headers: " + Collections.list(request.getHeaderNames()));
-                        Cookie us_au;
-                        // cookies为空或者不存在名字为us_au的cookie
-                        if (Objects.isNull(cookies) || Objects.isNull(us_au = HTTPUtils.getCookie(cookies, "us_au"))
-                        ) {
-                            System.out.println("拦截器: preHandle - 拦截路径: " + path);
 
+                        String authorization = request.getHeader("authorization");
+                        if (Objects.isNull(authorization)) {
+                            System.out.println("拦截器: preHandle - 拦截路径: " + path);
                             // 未登录无法评论
                             if ("/api/comment".equals(path)) {
                                 response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                                 response.setCharacterEncoding("utf-8");
                                 new ObjectMapper().writeValue(response.getWriter(), R.unAuthorization());
+                                return false;
                             }
-
-
                             return false;
                         }
+//                        Admin admin = null;
+//                        User user = JWTUtils.verify(authorization, "user", User.class);
+//                        if (Objects.isNull(user)) {
+                        // 是管理员的请求
+//                            admin = JWTUtils.verify(authorization, "admin", Admin.class);
+//                        } else {
+                        // 是用户的请求
 
-                        User user;
-                        try {
-                            user = (User) HTTPUtils.validateCookie(us_au);
-                        } catch (Exception e) {
-                            System.out.println("拦截器: preHandle - 拦截路径: " + path);
-                            return false;
-                        }
-//                        userContext.setCurrentUser(user);
-//                        userContext.setCurrentUser(user.getId());
+//                        }
 
-                        System.out.println("拦截器: preHandle - 释放路径: " + path);
                         return true;
                     }
 
@@ -105,7 +98,8 @@ public class WebConfig implements WebMvcConfigurer {
                         , "/api/song"
                         , "/api/song/s"
 //                        , "/api/ai/**"
-                        , "/api/admin/**"
+                        , "/api/admin/login"
+                        , "/api/admin/registry"
                         , "/asset/**"
                 )
         ;

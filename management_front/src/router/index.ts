@@ -8,6 +8,8 @@ import SongManagementView from "@/views/SongManagementView.vue";
 import SongListManagementView from "@/views/SongListManagement/SongListManagementView.vue";
 import SongListDetailsView from "@/views/SongListManagement/SongListDetailsView.vue";
 import SettingsView from "@/views/admin/SettingsView.vue";
+import {Cookie} from "@/util/Cookie.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 
 const router = createRouter({
@@ -50,6 +52,19 @@ const router = createRouter({
 
 
     ],
+})
+
+
+router.beforeEach((to, from, next) => {
+    const cookie = Cookie.get(CookiesName.AD_AU);
+    // admin is not login.
+    if (cookie == '') {
+        if (to.path == Behavior.SINGER || to.path == Behavior.SONG || to.path == Behavior.SONG_LIST || to.path.startsWith(Behavior.SONG_LIST_DETAIL)) {
+            next(Behavior.SIGN_IN);
+            return;
+        }
+    }
+    next();
 })
 
 export default router

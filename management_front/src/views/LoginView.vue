@@ -10,6 +10,7 @@ import {HttpStatusCode} from "@/enums/HttpStatusCode.ts";
 import {Behavior} from "@/enums/Behavior.ts";
 import {useRouter} from "vue-router";
 import {useAdminStore} from "@/stores/AdminStore.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 const loginFormRef = ref<FormInstance>()
 const adminStore = useAdminStore();
@@ -85,7 +86,9 @@ const signIn = () => {
         if (value.data.code == HttpStatusCode.OK) {
           // store to pinia
           adminStore.setIsLogin(true);
-          adminStore.setAdmin(value.data.data);
+          adminStore.setAdmin(value.data.data[0]);
+
+          document.cookie = `${CookiesName.AD_AU}=${value.data.data[1]};Max-Age=${60 * 60 * 24 * 3};path=/;`;
 
           router.push(Behavior.HOME);
           ElMessage.success(value.data.message);
