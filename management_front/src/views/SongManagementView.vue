@@ -24,6 +24,8 @@ import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import {Plus} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {PictureRepoType} from "@/enums/PictureRepoType.ts";
+import {Cookie} from "@/util/Cookie.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 const isUploadLyric = ref(false);
 const songData = ref<Array<SongDO>>([])
@@ -112,7 +114,7 @@ const handleLyricFileSuccess = (response: Result, uploadFile: UploadRawFile) => 
 // 上传歌曲文件成功后的处理函数
 const handleSongFileSuccess = (response: Result, uploadFile: UploadRawFile) => {
   currentSong.value.url = response.link.substring(response.link.indexOf("\\asset"));
-
+  console.log(currentSong.value.url);
   // console.log('上传的文件', uploadFile);
   ElMessage.success('歌曲文件上传成功！');
 }
@@ -188,6 +190,7 @@ const downloadLyricFile = async (song: SongDO) => {
 }
 
 const updateEdit = async () => {
+  console.log(currentSong.value);
   if (isAddSong.value) {
     const res = await addSong(currentSong.value);
     if (res.data.code == HttpStatusCode.OK) {
@@ -331,10 +334,12 @@ const downloadSong = async (song: SongDO) => {
                         'Picture-Repo-Type': PictureRepoType.ALBUM_AVATAR,
                         'ID': currentSong.id,
                         }"
+              :headers="{
+                'authorization':Cookie.get(CookiesName.AD_AU)
+              }"
               :show-file-list="false"
               :on-success="handleAlbumPictureSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]),50)"
-              with-credentials
           >
             <el-image v-if="currentSong.picture" style="width: 100px;height: 100px;top:5px"
                       :src="baseURL + currentSong.picture"/>
@@ -354,6 +359,9 @@ const downloadSong = async (song: SongDO) => {
                                 'Picture-Repo-Type': PictureRepoType.SONG,
                                 'ID': currentSong.id,
                                 }"
+              :headers="{
+                'authorization':Cookie.get(CookiesName.AD_AU)
+              }"
               :show-file-list="true"
               :on-success="handleSongFileSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>( [HttpHeaders.AUDIO_MPEG]),100)"
@@ -383,10 +391,12 @@ const downloadSong = async (song: SongDO) => {
                                 'Picture-Repo-Type': PictureRepoType.LYRIC,
                                 'ID': currentSong.id,
                                 }"
+              :headers="{
+                'authorization':Cookie.get(CookiesName.AD_AU)
+              }"
               :show-file-list="true"
               :on-success="handleLyricFileSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>(['']))"
-              with-credentials
               accept=".lrc"
 
           >

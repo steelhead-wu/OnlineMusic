@@ -6,6 +6,7 @@ import com.wll.pojo.User;
 import com.wll.utils.HTTPUtils;
 import com.wll.utils.JWTUtils;
 import com.wll.utils.R;
+import com.wll.utils.StringUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,7 +60,7 @@ public class WebConfig implements WebMvcConfigurer {
                         System.out.println("Request Headers: " + Collections.list(request.getHeaderNames()));
 
                         String authorization = request.getHeader("authorization");
-                        if (Objects.isNull(authorization)) {
+                        if (StringUtils.isEmpty(authorization)) {
                             System.out.println("拦截器: preHandle - 拦截路径: " + path);
                             // 未登录无法评论
                             if ("/api/comment".equals(path)) {

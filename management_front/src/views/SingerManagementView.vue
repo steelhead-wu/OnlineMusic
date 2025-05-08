@@ -14,6 +14,8 @@ import {nonEmpty} from "@/util/StringUtils.ts";
 import {Plus} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {HttpHeaders} from "@/enums/HttpHeaders.ts";
+import {Cookie} from "@/util/Cookie.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 
 const dialogVisible = ref<boolean>(false);
@@ -190,10 +192,12 @@ const handleAvatarSuccess = (response: Result, uploadFile: UploadRawFile) => {
                 'Picture-Repo-Type': PictureRepoType.SINGER_AVATAR,
                 'ID': currentSinger.id,
                 }"
+              :headers="{
+                'authorization':Cookie.get(CookiesName.AD_AU)
+              }"
               :show-file-list="false"
               :on-success="handleAvatarSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG]))"
-              with-credentials
           >
             <el-image v-if="opt && currentSinger.pic" style="width: 100px;height: 100px"
                       :src="baseURL + currentSinger.pic"/>

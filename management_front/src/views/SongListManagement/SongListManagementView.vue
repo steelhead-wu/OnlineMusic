@@ -26,6 +26,8 @@ import type Result from "@/util/Result.ts";
 import {Plus} from "@element-plus/icons-vue";
 import {useSearchStore} from "@/stores/SearchStore.ts";
 import {Behavior} from "@/enums/Behavior.ts";
+import {Cookie} from "@/util/Cookie.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 const songListData = ref<Array<SongList>>([]);
 const editing = ref({
@@ -218,11 +220,13 @@ const updateEdit = () => {
                   "{
             'Picture-Repo-Type': PictureRepoType.SONG_LIST,
                     }"
+              :headers="{
+                'authorization':Cookie.get(CookiesName.AD_AU)
+              }"
               :http-request="handleAddSongList"
               :show-file-list="true"
               :on-success="handleAddSongListPictureSuccess"
               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set<string>([HttpHeaders.IMAGE_JPEG,HttpHeaders.IMAGE_PNG]))"
-              with-credentials
           >
             <!--            <el-image v-if="currentSongList.picture" style="width: 100px;height: 100px;top:5px"-->
             <!--                      :src="baseURL + currentSong.picture"/>-->
@@ -304,10 +308,12 @@ const updateEdit = () => {
                                 'Picture-Repo-Type': PictureRepoType.SONG_LIST,
                                 'ID': s.row.id,
                                 }"
+                   :headers="{
+                     'authorization':Cookie.get(CookiesName.AD_AU)
+                   }"
                    :show-file-list="false"
                    :before-upload="(file:UploadRawFile)=>beforeFileUpload(file, new Set<string>([ HttpHeaders.IMAGE_JPEG,HttpHeaders.IMAGE_PNG]),5)"
                    :on-success="handleImgFileSuccess"
-                   with-credentials
         >
           <template #default>
             <img :src="baseURL+s.row.pic" style="border-radius: 10%;width: 150px;height: 150px">
