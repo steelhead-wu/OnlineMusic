@@ -9,6 +9,8 @@ import {useUserStore} from "@/store/UserStore";
 import {baseURL} from "@/api/request";
 import {updateUserById} from "@/api/user/UserApi";
 import {PictureRepoType} from "@/enum/PictureRepoType";
+import {Cookie} from "@/api/utils/Cookie.ts";
+import {CookiesName} from "@/enum/CookiesName.ts";
 
 
 const imageUrl = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
@@ -47,7 +49,10 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile) => {
       :action="act"
       :data="{
         'Picture-Repo-Type': PictureRepoType.USER_AVATAR,
-        'User-ID': userStore.getLoginUser.id,
+        'ID': userStore.getLoginUser.id,
+      }"
+      :headers="{
+        'authorization':Cookie.get(CookiesName.US_AU)
       }"
       :show-file-list="false"
       :on-success="handleAvatarSuccess"

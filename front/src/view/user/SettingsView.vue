@@ -22,6 +22,8 @@ import {Behavior} from "@/enum/Behavior";
 import {beforeFileUpload} from "@/api/utils/FileUtil.ts";
 import {HttpStatusCode} from "axios";
 import type {User} from "@/pojo/User.ts";
+import {Cookie} from "@/api/utils/Cookie.ts";
+import {CookiesName} from "@/enum/CookiesName.ts";
 
 
 const userStore = useUserStore();
@@ -286,9 +288,12 @@ const validateChangePWD = () => {
                               name="blob"
                               :action="baseURL + '/api/files/upload'"
                               :data="{
-                          'Picture-Repo-Type': PictureRepoType.USER_AVATAR,
-                          'ID': userStore.getLoginUser.id,
+                                'Picture-Repo-Type': PictureRepoType.USER_AVATAR,
+                                'ID': userStore.getLoginUser.id,
                                 }"
+                              :headers="{
+                                'authorization':Cookie.get(CookiesName.US_AU)
+                              }"
                               :show-file-list="false"
                               :on-success="handleAvatarSuccess"
                               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,'image/jpeg',5)"

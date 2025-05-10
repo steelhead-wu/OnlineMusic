@@ -19,6 +19,8 @@ import {ElMessage} from "element-plus";
 // import type {SongList} from "@/pojo/SongList.ts";
 import SongList from "@/components/song/SongList.vue";
 import type Song from "@/pojo/Song.ts";
+import {Cookie} from "@/api/utils/Cookie.ts";
+import {CookiesName} from "@/enum/CookiesName.ts";
 
 const route = useRoute();
 const userStore = useUserStore();
@@ -119,7 +121,9 @@ const myComment = ref();
 const froala_config = ref({
   placeholderText: '理性发言，改善世界~',
   language: 'zh_cn',
-
+  requestHeaders: {
+    'authorization': Cookie.get(CookiesName.US_AU),
+  },
   // Set the image upload URL.
   imageUploadURL: baseURL + '/api/files/upload',
   // imageUploadURL: 'http://localhost:5173' + '/api/files/upload',
@@ -130,8 +134,9 @@ const froala_config = ref({
   // Additional upload params.
   imageUploadParams: {
     'Picture-Repo-Type': PictureRepoType.USER_COMMENT,
-    'User-ID': userStore.getLoginUser.id,
+    'ID': userStore.getLoginUser.id,
   },
+
 
   // Set request type.
   imageUploadMethod: 'POST',

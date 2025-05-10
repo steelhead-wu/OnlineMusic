@@ -99,7 +99,6 @@ public class UserController {
         User user = userService.login(loginUser);
         if (Objects.isNull(user)) return R.error("用户名或密码错误！");
         else {
-            user.setPassword(null);
             return R.success("登录成功", List.of(user,
                     JWTUtils.create(Map.of("user", new User(user.getAccount(), user.getId())), 1000 * 60 * 60 * 24 * 3)));
         }

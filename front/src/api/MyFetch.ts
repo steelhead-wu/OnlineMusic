@@ -1,4 +1,6 @@
 import {baseURL} from "@/api/request";
+import {Cookie} from "@/api/utils/Cookie.ts";
+import {CookiesName} from "@/enum/CookiesName.ts";
 
 
 export const fetchPost = async (url: string, body: object) => {
@@ -12,7 +14,7 @@ export const fetchGet = async (url: string) => {
 export const fetchCommon = async (url: string, method: string, body = null) => {
     method = method.toUpperCase();
     if (method == 'GET' || method == 'HEAD') {
-       // console.log('body', body != {})
+        // console.log('body', body != {})
 
         if (body == null) {
             return await fetch(baseURL + url, {
@@ -31,6 +33,7 @@ export const fetchCommon = async (url: string, method: string, body = null) => {
         body: JSON.stringify(body),
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': Cookie.get(CookiesName.US_AU),
         },
         credentials: 'include' // 允许携带 Cookie
     })
