@@ -1,3 +1,5 @@
+import type {User} from "@/pojo/User.ts";
+
 export default interface CommentDO {
     id: string,
     user: User,

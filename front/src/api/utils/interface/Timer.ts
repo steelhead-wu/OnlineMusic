@@ -1,8 +1,8 @@
 export class Timer {
 
-    private _timer: number;
-    private _remainingTime: number;
-    private _savedData: Array<object>;
+    private _timer: number = 0;
+    private _remainingTime: number = 0;
+    private _savedData: Array<object> = [];
 
     constructor(private store_key: string, private total_time: number,
                 doStuff: Function, ...argument: any[]) {
@@ -16,7 +16,7 @@ export class Timer {
                 savedTime,
                 savedData,
             }: { remainingTime: number, savedTime: number, savedData: Array<object> }
-                = JSON.parse(localStorage.getItem(this.store_key));
+                = JSON.parse(item);
 
             this._savedData = savedData;
             this._remainingTime = remainingTime + savedTime - Date.now();
@@ -47,11 +47,15 @@ export class Timer {
 
     getRemainingTime = (): number => {
         // {millisecond,millisecond}
+        const item = localStorage.getItem(this.store_key);
+        if (item == null) {
+            throw new Error('store_key的内容为空');
+        }
         let {
             remainingTime,
             savedTime,
         }: { remainingTime: number, savedTime: number, savedData: any }
-            = JSON.parse(localStorage.getItem(this.store_key));
+            = JSON.parse(item);
 
         return remainingTime + savedTime - Date.now();
     }

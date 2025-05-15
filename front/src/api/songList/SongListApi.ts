@@ -1,4 +1,5 @@
 import myAxios from "@/api/request";
+import type {SongList} from "@/pojo/SongList.ts";
 
 
 const prefix = '/api/songList';
@@ -7,7 +8,7 @@ export const getAllSongList = async () => {
 }
 
 
-export const getSongListByStyle = async (id) => {
+export const getSongListByStyle = async (id:string) => {
     return await myAxios.get(prefix, {
         params: {
             id

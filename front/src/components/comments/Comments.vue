@@ -1,13 +1,9 @@
 <script setup lang="ts">
 
-import {useUserStore} from "@/store/UserStore";
-import {onMounted, ref, watch} from "vue";
+import {onMounted} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import CommentDO from "@/pojo/DO/CommentDO";
-import Comment from "@/pojo/Comment";
+import type CommentDO from "@/pojo/DO/CommentDO";
 
-
-const userStore = useUserStore();
 
 
 const props = defineProps<{
