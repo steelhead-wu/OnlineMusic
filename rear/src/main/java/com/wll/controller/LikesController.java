@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-
 import java.util.*;
 
 /**
@@ -36,9 +35,9 @@ public class LikesController {
     @DeleteMapping
     public R conditionalDelete(@RequestBody Likes likes) {
         return R.success(likesService.remove(new LambdaQueryWrapper<Likes>()
-                .eq(!Objects.isNull(likes.getId()), Likes::getId, likes.getId())
-                .eq(!Objects.isNull(likes.getUserId()), Likes::getUserId, likes.getUserId())
-                .eq(!Objects.isNull(likes.getSongId()), Likes::getSongId, likes.getSongId())
+                .eq(Objects.nonNull(likes.getId()), Likes::getId, likes.getId())
+                .eq(Objects.nonNull(likes.getUserId()), Likes::getUserId, likes.getUserId())
+                .eq(Objects.nonNull(likes.getSongId()), Likes::getSongId, likes.getSongId())
         ));
     }
 

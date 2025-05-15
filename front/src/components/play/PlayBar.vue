@@ -148,6 +148,9 @@ const playThisMusic = (song: Song, song_idx: number) => {
   songStore.setCurrentSongIdx(song_idx);
   songStore.setCurrentSong(song);
   playMusic();
+  if (userStore.getIsOnline) {
+    queryIsLikedSong();
+  }
 }
 
 // 歌曲结束的时候调用

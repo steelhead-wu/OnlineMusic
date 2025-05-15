@@ -1,37 +1,23 @@
 <script setup lang="ts">
 
-import {computed, defineOptions, ref} from "vue";
-import {baseURL} from "@/api/request";
-import {useSongStore} from "@/store/SongStore";
-import {getSingerBySex} from "@/api/singer/SingerApi";
-import {getAllSongList, getSongListByStyle, updateOrSaveRating} from "@/api/songList/SongListApi";
-import {SongListEnum} from "@/enum/SongListEnum";
-import {getLikedSongByUserId, getSongBySongListID} from "@/api/song/SongApi";
-import {conditionalDelete, conditionalQuery, conditionalUpdate} from "@/api/likes/LikesApi";
+import {onMounted} from "vue";
+import {ElMessage} from "element-plus";
 
-const like1: Likes = {
-  // userId: '1',
-  // songId: '2',
-  // id: null,
-}
-//
-const like2: Likes = {
-  // userId: '1',
-  // songId: '2',
-  // userId: null,
-  // songId: null,
-  // id: '-2'
-}
-// conditionalQuery(like1, like2).then(value => {
-//   console.log(value.data);
-// })
-// conditionalDelete(like).then(value => {
-//   console.log(value.data);
-// })
+onMounted(() => {
+// after statement router.go(0) ran, display 修改成功
+  const showMessage = sessionStorage.getItem('showSuccessMessage')
+  if (showMessage) {
+    ElMessage.success(showMessage)
+    sessionStorage.removeItem('showSuccessMessage') // 清除状态
+  }
 
-// conditionalUpdate(like1, like2).then(value => {
+  // const cookie = Cookie.get(CookiesName.AD_AU);
 
-// })
+  // if (cookie == '') {
+  //   ElMessage.info('请先去注册或登录');
+  // router.push(Behavior.SIGN_IN);
+  // }
+})
 
 </script>
 

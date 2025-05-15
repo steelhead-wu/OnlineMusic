@@ -45,7 +45,9 @@ public class SongListServiceImpl extends ServiceImpl<SongListMapper, SongList> i
 
     @Override
     public List<SongList> getRandomSongList(Integer capacity) {
-        List<SongList> songLists = songListMapper.selectList(new LambdaQueryWrapper<>());
+        List<SongList> songLists = songListMapper.selectList(new LambdaQueryWrapper<SongList>()
+                .eq(SongList::getDeleteFlag,false)
+        );
         Random random = new Random(System.currentTimeMillis());
         Set<Integer> set = new HashSet<>(capacity);
         List<SongList> ans = new ArrayList<>(capacity);

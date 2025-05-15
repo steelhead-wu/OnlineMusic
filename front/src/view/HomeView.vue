@@ -33,28 +33,6 @@ onUnmounted(() => {
   console.log("卸载")
   songList_timer.deconstructor(singersStore.getSongList);
   singers_timer.deconstructor(singersStore.getSingers);
-
-  // localStorage.setItem(SONG_LIST_KEY, JSON.stringify(
-  //     {
-  //       remainingTime: remainingTime.value,
-  //       savedTime: new Date().valueOf(),
-  //     }));
-  // clearInterval(timer);
-
-  // localStorage.setItem(SONG_LIST_KEY, JSON.stringify(
-  //     {
-  //       remainingTime: songList_timer.remainingTime,
-  //       savedTime: new Date().valueOf(),
-  //     }));
-  //
-  // localStorage.setItem(SINGERS_KEY, JSON.stringify(
-  //     {
-  //       remainingTime: singers_timer.remainingTime,
-  //       savedTime: new Date().valueOf(),
-  //     }));
-  //
-  // clearInterval(songList_timer.timer);
-  // clearInterval(singers_timer.timer);
 });
 
 onMounted(() => {
@@ -80,55 +58,6 @@ const handleBeforeUnload = (event) => {
   songList_timer.deconstructor(singersStore.getSongList);
   singers_timer.deconstructor(singersStore.getSingers);
 };
-
-// window.addEventListener('beforeunload', handleBeforeUnload);
-
-// remaining time format : second
-// const getRemainingTime = (): number => {
-//   // {millisecond,millisecond}
-//   let {
-//     remainingTime,
-//     savedTime
-//   }: { remainingTime: number, savedTime: number }
-//       = JSON.parse(localStorage.getItem(SONG_LIST_KEY));
-//
-//   return remainingTime + savedTime - Date.now();
-// }
-
-
-// const updateTimer = (doStuff: Function) => {
-//   console.log('remaining time', Math.floor(remainingTime.value / 1000));
-//   remainingTime.value -= 1000;
-//   if (remainingTime.value <= 0) {
-//     doStuff();
-//     resetRemainingTime();
-//   }
-// }
-
-
-// const startTimer = () => {
-//   // console.log("start");
-//   timer = setInterval(updateTimer, 1000, refreshSongList);
-//   // console.log('timer', timer);
-// }
-
-// const resetRemainingTime = () => {
-//   remainingTime.value = TOTAL_TIME * 1000;
-// }
-
-// const initializeTimer = () => {
-//   const item = localStorage.getItem(SONG_LIST_KEY);
-//   // console.log("remainingTime", item);
-//   if (item) {
-//     remainingTime.value = getRemainingTime();
-//     if (remainingTime.value <= 0) {
-//       resetRemainingTime();
-//     }
-//   } else {
-//     resetRemainingTime();
-//   }
-//   startTimer();
-// }
 
 
 const refreshSongList = () => {

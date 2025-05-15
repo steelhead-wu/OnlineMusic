@@ -3,6 +3,13 @@ import {download} from "@/api/song/SongApi";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {useSongStore} from "@/store/SongStore";
 import type Song from "@/pojo/Song.ts";
+import {useRoute, useRouter} from "vue-router";
+import {Behavior} from "@/enum/Behavior.ts";
+import {useUserStore} from "@/store/UserStore.ts";
+import {addLike, conditionalDelete, conditionalQuery} from "@/api/likes/LikesApi.ts";
+import type Likes from "@/pojo/Likes.ts";
+import {ElMessage} from "element-plus";
+import {tips} from "@/api/utils/MyUtils.ts";
 
 const props = defineProps<{
   tableData: Song & {
@@ -13,10 +20,10 @@ const props = defineProps<{
 
 }>();
 
-
+const userStore = useUserStore();
 const songStore = useSongStore();
-
-
+const route = useRoute();
+const router = useRouter();
 const doRowClick = (row: any, column: any, event: Event) => {
   // console.log(row);
   // console.log(column);
@@ -65,19 +72,67 @@ const doDownloadMusic = (song: Song) => {
   }
 }
 
+
+const removeMyLikeSong = async (songID: string) => {
+  const likes: Likes = {
+    songId: songID,
+    userId: userStore.getLoginUser.id
+  }
+  const res = await conditionalDelete(likes);
+  if (res.data.data) {
+    sessionStorage.setItem('showSuccessMessage', '成功删除')
+    router.go(0);
+  } else {
+    ElMessage.info("删除失败！");
+  }
+
+
+}
+// add song to my like
+const addToMyFavorite = async (songID: string) => {
+  if (!userStore.getIsOnline) {
+    tips();
+  } else {
+
+    const conditionalLike: Likes = {
+      userId: userStore.getLoginUser.id,
+      songId: songID,
+    }
+
+    const fieldLike: Likes = {
+      id: '1',
+      userId: '1',
+      songId: '1'
+    }
+
+    const response = await conditionalQuery(fieldLike, conditionalLike);
+    if (response.data.data.length == 0) {
+      addLike(conditionalLike).then(value => {
+        if (value.data.data) {
+          ElMessage.success('添加成功！');
+          // sessionStorage.setItem('showSuccessMessage', '添加成功！')
+          // router.go(0);
+        }
+      })
+    } else {
+      ElMessage.success('已在我喜欢中！');
+    }
+  }
+}
 </script>
 
 <template>
   <div id="song-list">
     <!--    <h2>我的喜欢</h2>-->
     <!--    <br>-->
-    <el-table v-loading="props.loading" element-loading-text="请稍等" highlight-current-row class="song-list"
+    <el-table v-loading="props.loading" element-loading-text="请稍等" height="350px" highlight-current-row
+              class="song-list"
               :data="props.tableData" stripe @row-click="doRowClick"
               scrollbar-always-on>
-      <el-table-column prop="title" label="歌曲" width="250" align="center"/>
-      <el-table-column prop="singerName" label="歌手" width="250" align="center"/>
-      <el-table-column prop="album" label="专辑" width="250" align="center"/>
-      <el-table-column prop="op" label="操作" width="150" align="center">
+      <el-table-column prop="title" label="歌曲" width="250px" align="center"/>
+      <el-table-column prop="singerName" label="歌手" width="250px" align="center"/>
+      <el-table-column prop="album" label="专辑" width="250px" align="center"/>
+      <el-table-column prop="op" label="操作" width="250px" align="center">
         <template #default="table">
           <el-dropdown>
             <FontAwesomeIcon icon="fa-edit" size="2x"/>
@@ -86,7 +141,16 @@ const doDownloadMusic = (song: Song) => {
                 <el-dropdown-item @click="doDownloadMusic(table.row)">
                   <FontAwesomeIcon icon="fa-download" size="lg"/> &nbsp; 下载
                 </el-dropdown-item>
+
+                <el-dropdown-item v-if="route.path==Behavior.PERSONAL" @click="removeMyLikeSong(table.row.id)">
+                  <FontAwesomeIcon icon="fa-remove" size="lg"/> &nbsp;&nbsp;&nbsp; 删除
+                </el-dropdown-item>
+
+                <el-dropdown-item v-if="route.path!=Behavior.PERSONAL" @click="addToMyFavorite(table.row.id)">
+                  <FontAwesomeIcon icon="fa-heart" style="color: red" size="lg"/> &nbsp;添加到我喜欢
+                </el-dropdown-item>
               </el-dropdown-menu>
+
             </template>
           </el-dropdown>
         </template>
@@ -102,7 +166,7 @@ const doDownloadMusic = (song: Song) => {
 
   .song-list {
     z-index: 0;
-    //width: 1500px;
+    width: 100%;
   }
 }
 

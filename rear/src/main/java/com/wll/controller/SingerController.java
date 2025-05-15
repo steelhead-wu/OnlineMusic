@@ -54,7 +54,9 @@ public class SingerController {
 
     @GetMapping(value = "/random", params = "capacity")
     public R getRandomSinger(Integer capacity) {
-        List<Singer> list = singerService.list();
+        List<Singer> list = singerService.list(new LambdaQueryWrapper<Singer>()
+                .eq(Singer::getDeleteFlag, false)
+        );
         Random random = new Random(System.currentTimeMillis());
         Set<Integer> set = new HashSet<>(capacity);
         List<Singer> res = new ArrayList<>(capacity);

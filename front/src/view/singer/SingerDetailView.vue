@@ -35,12 +35,18 @@ onMounted(() => {
       <div class="album-info">
         <h2>基本信息</h2>
         <ul>
+          <!--          <li>出生: {{current_singer.birth}}</li>-->
+          <!--          <li>年龄: {{-->
+          <!--              `${new Date().getFullYear() - current_singer.birth.split('-')[0]}岁`-->
+          <!--            }}-->
+          <!--          </li>-->
           <li>出生: {{ `${current_singer.birth[0]}-${current_singer.birth[1]}-${current_singer.birth[2]}` }}</li>
           <li>年龄: {{
               `${new Date().getFullYear() - current_singer.birth[0]}岁`
             }}
           </li>
-          <li>性别: {{ current_singer.sex ? '男' : '女' }}</li>
+          <li>性别: {{ current_singer.sex == 2 ? '男' : '女' }}</li>
+<!--          <li>性别: {{ current_singer.sex  }}</li>-->
           <li>家乡: {{ current_singer.location }}</li>
         </ul>
       </div>
