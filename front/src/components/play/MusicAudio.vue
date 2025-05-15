@@ -23,9 +23,11 @@ function pause() {
   music.value.pause();
 }
 
-function setVolume(vol) {
+function setVolume(vol: number) {
   const audio = document.getElementById("myAudio");
-  audio.volume = vol; // 0.0 ~ 1.0
+  if (audio != null) {
+    audio.volume = vol; // 0.0 ~ 1.0
+  }
 }
 
 // 监听播放结束事件
@@ -36,14 +38,14 @@ function setVolume(vol) {
 
 
 <template>
-<!--  <button @click="play">播放</button>-->
+  <!--  <button @click="play">播放</button>-->
   <audio ref="music" controls id="myAudio">
     <source :src="music_src" type="audio/mpeg">
     <!--    <source src="../../assets/孝琳 - 안녕 (再见).mp3" type="audio/mpeg">-->
   </audio>
 
-<!--  <button @click="pause()">暂停</button>-->
-<!--  <button @click="setVolume(0.5)">半音量</button>-->
+  <!--  <button @click="pause()">暂停</button>-->
+  <!--  <button @click="setVolume(0.5)">半音量</button>-->
 </template>
 
 

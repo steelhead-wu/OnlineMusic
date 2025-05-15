@@ -100,7 +100,7 @@ const sendMessage = async () => {
     <div class="chat-window" v-show="isShowAi">
       <div class="chat-header">
         <h3>ChatBot</h3>
-        <button @click="isShowAi=false">Close</button>
+        <button @click="isShowAi=false">关闭</button>
       </div>
 
       <div class="chat-body" ref="chatBody">
@@ -116,9 +116,9 @@ const sendMessage = async () => {
         </div>
       </div>
       <div class="chat-input">
-        <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Type a message..."/>
-        <button @click="sendMessage">Send</button>
-        <button @click="sendMessage">Stop</button>
+        <input v-model="userInput" @keyup.enter="sendMessage" placeholder="输入你的消息..."/>
+        <button @click="sendMessage">发送</button>
+        <button @click="sendMessage">停止</button>
       </div>
     </div>
   </div>

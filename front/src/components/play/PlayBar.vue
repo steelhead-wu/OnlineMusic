@@ -11,7 +11,7 @@ import {addLike, conditionalDelete, conditionalQuery} from "@/api/likes/LikesApi
 import {useUserStore} from "@/store/UserStore";
 import {tips} from "@/api/utils/MyUtils";
 import {ElIcon} from 'element-plus'
-import type {Likes} from "@/pojo/Likes.ts";
+import type Likes from "@/pojo/Likes.ts";
 import type Song from "@/pojo/Song.ts";
 
 

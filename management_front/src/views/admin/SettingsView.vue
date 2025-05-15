@@ -29,6 +29,8 @@ import {Behavior} from "@/enums/Behavior.ts";
 import {HttpHeaders} from "@/enums/HttpHeaders.ts";
 import {deleteAdminByID, updateAdminByID} from "@/api/admin/AdminApi.ts";
 import type Result from "@/util/Result.ts";
+import {Cookie} from "@/util/Cookie.ts";
+import {CookiesName} from "@/enums/CookiesName.ts";
 
 
 const adminStore = useAdminStore();
@@ -276,6 +278,9 @@ const validateChangePWD = () => {
                           'Picture-Repo-Type': PictureRepoType.ADMIN_AVATAR,
                           'ID': adminStore.getAdmin.id,
                                 }"
+                              :headers="{
+                                'authorization':Cookie.get(CookiesName.AD_AU)
+                              }"
                               :show-file-list="false"
                               :on-success="handleAvatarSuccess"
                               :before-upload="(file:UploadRawFile)=>beforeFileUpload(file,new Set([HttpHeaders.IMAGE_JPEG,HttpHeaders.IMAGE_PNG]),5)"
