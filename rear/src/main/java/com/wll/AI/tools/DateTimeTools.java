@@ -1,6 +1,6 @@
 package com.wll.AI.tools;
 
-import org.springframework.ai.tool.ToolCallbacks;
+//import org.springframework.ai.tool.ToolCallbacks;
 import org.springframework.ai.tool.annotation.Tool;
 import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.context.i18n.LocaleContextHolder;

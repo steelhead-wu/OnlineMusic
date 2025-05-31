@@ -36,7 +36,7 @@ export const logoff = async (id: string) => {
     return await myAxios.get(prefix + '/logoff', {
         params: {
             id
-        }
+        },
     });
 }
 

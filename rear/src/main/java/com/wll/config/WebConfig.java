@@ -1,13 +1,8 @@
 package com.wll.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wll.pojo.Admin;
-import com.wll.pojo.User;
-import com.wll.utils.HTTPUtils;
-import com.wll.utils.JWTUtils;
 import com.wll.utils.R;
 import com.wll.utils.StringUtils;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +17,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @time 2025/2/3 15:32 周一
