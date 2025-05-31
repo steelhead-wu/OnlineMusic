@@ -1,17 +1,11 @@
-server:
-  port: 80
-
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/online_music
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
+  profiles:
+    include: ai
+    active: dev
   devtools:
     restart:
       enabled: true # 开启 hot swapping
@@ -20,63 +14,7 @@ spring:
     #        - resources/static/**
     livereload:
       enabled: true # 开启资源重载
-
-
-  mvc:
-    pathmatch:
-      matching-strategy: ant-path-matcher
-
-  web:
-    resources:
-      static-locations: file:src/main/resources/static # Locations of static resources.Defaults to classpath:[/META-INF/resources/, /resources/, /static/, /public/].
-
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
-
-
-  ai:
-    openai:
-      api-key: ${DEEPSEEK_AI_API_KEY}
-      base-url: https://api.deepseek.com
-      chat:
-        options:
-          model: deepseek-chat
-          temperature: 1.3
-      embedding:
-        enabled: false
-
-
-    zhipuai:
-      api-key: ${ZHIPU_AI_API_KEY}
-      base-url: https://open.bigmodel.cn/api/paas
-      chat:
-        options:
-          model: GLM-3-Turbo
-
-  security:
-    user:
-      password: 123
-
-  mail:
-    host: smtp.qq.com
-    username: 691523943@qq.com
-    password: sdmmzwilojhobbjh
-    protocol: smtp
-    default-encoding: utf-8
-    ssl:
-      enabled: true
-    properties:
-      "[mail.smtp.connectiontimeout]": 5000
-      "[mail.smtp.timeout]": 3000
-      "[mail.smtp.writetimeout]": 5000
-      "[mail.smtp.port]": 465
-
-
-
-
-
+      port: 35730
 
 logging:
   level:

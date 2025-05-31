@@ -1,37 +1,24 @@
 package com.wll.config;
 
 import com.alibaba.dashscope.aigc.generation.Generation;
-import com.alibaba.dashscope.aigc.generation.GenerationParam;
-import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.client.advisor.PromptChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
+import org.springframework.ai.chat.memory.ChatMemoryRepository;
+import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
+import org.springframework.ai.chat.memory.repository.jdbc.MysqlChatMemoryRepositoryDialect;
 import org.springframework.ai.chat.model.ChatModel;
 //import org.springframework.ai.openai.OpenAiChatModel;
 //import org.springframework.ai.openai.OpenAiChatOptions;
 //import org.springframework.ai.openai.api.OpenAiApi;
-import org.springframework.ai.chat.prompt.ChatOptions;
-import org.springframework.ai.model.tool.ToolCallingChatOptions;
-import org.springframework.ai.zhipuai.ZhiPuAiChatModel;
-import org.springframework.ai.zhipuai.ZhiPuAiChatOptions;
-import org.springframework.ai.zhipuai.api.ZhiPuAiApi;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
-import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
- * @time 2025/3/13 6:11 周四
+ * @datetime 2025/3/13 6:11 周四
  */
 @Configuration
 public class AiConfig {
@@ -70,9 +57,26 @@ public class AiConfig {
                 .build();
     }
 
-
     @Bean
-    public InMemoryChatMemory inMemoryChatMemory() {
-        return new InMemoryChatMemory();
+    public ChatMemoryRepository getChatMemoryRepository(JdbcTemplate jdbcTemplate) {
+        return JdbcChatMemoryRepository.builder()
+                .jdbcTemplate(jdbcTemplate)
+                .dialect(new MysqlChatMemoryRepositoryDialect())
+                .build();
     }
+
+
+//    @Bean
+//    public ChatMemory chatMemory() {
+//        return MessageWindowChatMemory.builder()
+//                 设置最大的聊天记录条数，也就是说只能保存50条聊天记录
+//                .chatMemoryRepository(chatMemoryRepository)
+//                .maxMessages(50)
+//                .build();
+//    }
+
+//    @Bean
+//    public InMemoryChatMemory inMemoryChatMemory() {
+//        return new InMemoryChatMemory();
+//    }
 }

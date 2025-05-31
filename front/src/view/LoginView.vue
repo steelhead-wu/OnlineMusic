@@ -130,7 +130,6 @@ const singIn = () => {
         console.log("退出signIn");
 
 
-
       }, reason => {
         ElMessage({
           type: 'info',
@@ -214,6 +213,7 @@ const signUp = () => {
             placeholder="请输入你的密码"
             show-password
             clearable
+            @keyup.enter="singIn"
         />
       </el-form-item>
 
