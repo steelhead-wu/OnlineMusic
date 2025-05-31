@@ -18,6 +18,6 @@ spring:
       memory:
         repository:
           jdbc:
-            initialize-schema: embedded
+            initialize-schema: never
             #            schema: classpath:org/springframework/ai/chat/memory/repository/jdbc/schema-@@platform@@.sql
-            schema: classpath:/com/wll/AI/script/schema-mysql.sql
+#            schema: classpath:/com/wll/AI/script/schema-mysql.sql

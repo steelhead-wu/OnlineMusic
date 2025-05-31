@@ -1,12 +1,16 @@
 package com.wll.config;
 
 import com.alibaba.dashscope.aigc.generation.Generation;
+import com.datastax.oss.driver.internal.core.context.DefaultDriverContext;
+import com.datastax.oss.driver.internal.core.session.DefaultSession;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
-import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
-import org.springframework.ai.chat.memory.repository.jdbc.MysqlChatMemoryRepositoryDialect;
+import org.springframework.ai.chat.memory.repository.cassandra.CassandraChatMemoryRepository;
+import org.springframework.ai.chat.memory.repository.cassandra.CassandraChatMemoryRepositoryConfig;
+//import org.springframework.ai.chat.memory.repository.jdbc.JdbcChatMemoryRepository;
+//import org.springframework.ai.chat.memory.repository.jdbc.MysqlChatMemoryRepositoryDialect;
 import org.springframework.ai.chat.model.ChatModel;
 //import org.springframework.ai.openai.OpenAiChatModel;
 //import org.springframework.ai.openai.OpenAiChatOptions;
@@ -57,14 +61,24 @@ public class AiConfig {
                 .build();
     }
 
-    @Bean
-    public ChatMemoryRepository getChatMemoryRepository(JdbcTemplate jdbcTemplate) {
-        return JdbcChatMemoryRepository.builder()
-                .jdbcTemplate(jdbcTemplate)
-                .dialect(new MysqlChatMemoryRepositoryDialect())
-                .build();
-    }
 
+//    @Bean
+//    public ChatMemoryRepository getChatMemoryRepository(JdbcTemplate jdbcTemplate) {
+//        return JdbcChatMemoryRepository.builder()
+//                .jdbcTemplate(jdbcTemplate)
+//                .dialect(new MysqlChatMemoryRepositoryDialect())
+//                .build();
+//    }
+
+
+//    @Bean
+//    @Primary
+//    public ChatMemoryRepository chatMemoryRepository() {
+//        return CassandraChatMemoryRepository
+//                .create(CassandraChatMemoryRepositoryConfig.builder()
+//                        .withCqlSession(DefaultSession.init())
+//                        .build());
+//    }
 
 //    @Bean
 //    public ChatMemory chatMemory() {
