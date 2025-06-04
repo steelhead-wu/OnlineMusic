@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wll.mapper.SongMapper">
+    <insert id="addSongToSongList">
+        insert into list_song (song_id, song_list_id)
+        values (#{songID}, #{songListID});
+    </insert>
+
+    <delete id="deleteSongFromSongList">
+        delete
+        from list_song
+        where (song_id = #{songID}
+                   and song_list_id = #{songListID})
+    </delete>
+
+    <select id="getLikedSongByUserId" resultType="com.wll.pojo.DO.SongDO">
+        select song.id,
+               singer_id,
+               title,
+               singer.name singer_name,
+               album,
+               picture,
+               lyric,
+               url
+        from song
+                 join singer on song.singer_id = singer.id
+        where song.id in (select song_id
+                          from likes
+                          where user_id = #{userId});
+    </select>
+
+    <select id="querySongByID" resultType="com.wll.pojo.DO.SongDO">
+        select song.id, singer_id, title, singer.name singer_name, album, picture, lyric, url,lyric_url
+        from song join singer on song.singer_id = singer.id
+        where song.delete_flag = false
+        <if test="id != null">and song.id = #{id}</if>
+    </select>
+
+    <select id="searchSong" resultType="com.wll.pojo.DO.SongDO">
+        select
+        song.id,
+        song.singer_id,
+        song.title,
+        song.album,
+        song.picture,
+        song.lyric,
+        song.url,
+        song.lyric_url,
+        singer.name as singer_name
+        from song
+        join singer on song.singer_id = singer.id
+        where song.delete_flag = false
+        <if test="keyword != null and keyword != ''">
+            and(name like concat('%',#{keyword},'%')
+            or title like concat('%',#{keyword},'%')
+            or album like concat('%',#{keyword},'%'))
+        </if>
+    </select>
+    <select id="searchSongFromSongList" resultType="com.wll.pojo.DO.SongDO">
+        select song.id,
+        singer_id,
+        title,
+        album,
+        picture,
+        lyric,
+        url,
+        lyric_url,
+        singer.id,
+        singer.name as singer_name
+        from song
+        join singer on song.singer_id = singer.id
+        where song.id in (select song_id
+        from list_song
+        where song_list_id = #{songListID})
+        and song.delete_flag = false
+        and singer.delete_flag = false
+        <if test="kw != null and kw != ''">
+            and (
+                title like concat('%', #{kw}, '%')
+                or singer.name like concat('%', #{kw}, '%')
+                or album like concat('%', #{kw}, '%')
+            )
+        </if>
+    </select>
+
+</mapper>

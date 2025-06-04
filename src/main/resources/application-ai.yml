@@ -1,0 +1,23 @@
+spring:
+  ai:
+    openai:
+      api-key: ${DEEPSEEK_AI_API_KEY}
+      base-url: https://api.deepseek.com
+      chat:
+        options:
+          model: deepseek-chat
+          temperature: 1.3
+
+    zhipuai:
+      api-key: ${ZHIPU_AI_API_KEY}
+      base-url: https://open.bigmodel.cn/api/paas
+      chat:
+        options:
+          model: GLM-3-Turbo
+    chat:
+      memory:
+        repository:
+          jdbc:
+            initialize-schema: never
+            #            schema: classpath:org/springframework/ai/chat/memory/repository/jdbc/schema-@@platform@@.sql
+#            schema: classpath:/com/wll/AI/script/schema-mysql.sql

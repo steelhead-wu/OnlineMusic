@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wll.mapper.SongListMapper">
+
+    <update id="updateOrSaveRating">
+        update user_songlist_rating
+        set score = #{rating}
+        where user_id = #{userId}
+          and song_list_id = #{songListId};
+    </update>
+    <select id="count" resultType="java.lang.Integer">
+        select count(*) from  us
+    </select>
+    <select id="getScoreByMaps" resultType="java.util.Map">
+        select id
+        from user_songlist_rating
+        where song_list_id = 1;
+    </select>
+
+    <!--    <select id="getScoreBy" resultType="java.util.Map">-->
+<!--        select id from user_songlist_rating where song_list_id = #{songListId} and user_id = #{userId}-->
+<!--    </select>-->
+</mapper>

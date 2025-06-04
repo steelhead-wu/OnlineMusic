@@ -1,0 +1,27 @@
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  profiles:
+    include: ai
+    active: dev
+  devtools:
+    restart:
+      enabled: true # 开启 hot swapping
+      log-condition-evaluation-delta: true  #  Whether to log the condition evaluation delta upon restart.
+    #      additional-paths:
+    #        - resources/static/**
+    livereload:
+      enabled: true # 开启资源重载
+      port: 35730
+
+logging:
+  level:
+    org:
+      springframework:
+        security: TRACE
+        ai:
+          chat:
+            client:
+              advisor: DEBUG
